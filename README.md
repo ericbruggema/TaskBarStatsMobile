@@ -1,5 +1,7 @@
 # TaskBarStatsMobile (experimental)
 
+**English** · [Nederlands](README.nl.md) · [Deutsch](README.de.md)
+
 [![Android CI](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg)](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml) · MIT · Android 8.0+ (API 26)
 
 TaskBarStatsMobile is the Android companion of the Windows monitor [TaskbarStats](https://github.com/ericbruggema/TaskbarStats): live memory, network, storage, ping and temperature on an Android
@@ -20,7 +22,7 @@ colour themes and the layout of the Windows app, nothing else.
 
 **Demo:** [57 s teaser](docs/videos/taskbarstatsmobile-teaser-en.mp4) · [151 s full tour](docs/videos/taskbarstatsmobile-tour-en.mp4) · [gif](docs/videos/taskbarstatsmobile-hero-en.gif) (portrait; screen recordings of the emulator with made-up traffic; toolkit in [tools/demo](tools/demo)).
 
-[Privacy policy](PRIVACY.md): the app collects nothing and sends nothing except one ping connection to `1.1.1.1`.
+[Privacy policy](PRIVACY.md) ([nl](PRIVACY.nl.md), [de](PRIVACY.de.md)): the app collects nothing and sends nothing except one ping connection to `1.1.1.1`.
 
 All screenshots come from an Android 15 emulator with its own (fake) traffic; no personal data.
 
@@ -36,14 +38,14 @@ All screenshots come from an Android 15 emulator with its own (fake) traffic; no
 | CPU % | `/proc/stat` | **blocked for normal apps since Android 8.** Works through [Shizuku](https://shizuku.rikka.app/) (below), or on rooted / old devices |
 | GPU, FPS | not available | |
 
-All values are clamped to 0â€“100 % before they are drawn, so a bar can never be longer than its track.
+All values are clamped to 0–100 % before they are drawn, so a bar can never be longer than its track.
 
 ## Status bar mini-stats
 
 Android does not let apps draw inside the status bar, so the app shows a small, non-touchable overlay window of
 exactly the status-bar height (permission *Display over other apps*; the button opens the right settings page).
 
-- Two lines of tiny text: `CPU | RAM | â†“â†‘ | PING`. CPU only appears when it is available.
+- Two lines of tiny text: `CPU | RAM | ↓↑ | PING`. CPU only appears when it is available.
 - Position: **After clock** or **Before icons**, plus â—€ â–¶ buttons to nudge it in 8 dp steps to a free spot.
 - The pill is sized by its content (with fixed minimum widths so it does not jitter) and shrinks, then drops the
   CPU and ping cells, on narrow screens so it never covers the clock or system icons.
@@ -133,13 +135,13 @@ one for a foreground service).
 
 ## Lock screen
 
-The ongoing notification (`MEM 50% â†“ â†‘ / Disk 13% Ping 17 ms`, with a **Stop** button that ends the live monitor) is public on the lock screen. The channel has normal
+The ongoing notification (`MEM 50% ↓ ↑ / Disk 13% Ping 17 ms`, with a **Stop** button that ends the live monitor) is public on the lock screen. The channel has normal
 importance (Android hides low-importance notifications on the lock screen) but no sound or vibration.
 
 ## Themes
 
 The same 14 colour themes as the Windows app (Default, Dark, Light, Love, CGA, Matrix, Amber, Game Boy, Dracula,
-Ocean, Sunset, Forest, Neon, â€¦) plus the app's own. They colour the app, the widget and the notification;
+Ocean, Sunset, Forest, Neon, …) plus the app's own. They colour the app, the widget and the notification;
 on light themes the fixed series colours are darkened automatically for contrast. **Import Windows theme (.json)**
 reads a theme file from the Windows app (`TextColor`, `BackgroundColor`, `AccentColor`, `WarnColor`).
 
@@ -161,7 +163,6 @@ Shizuku has to be started again after a reboot (except on Android 13+ with its a
 Needs JDK 17 and the Android SDK (platform 35, build-tools 35). Gradle comes from the wrapper.
 
 ```
-cd android
 ./gradlew assembleDebug        # -> app/build/outputs/apk/debug/app-debug.apk
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
@@ -173,12 +174,12 @@ the Shizuku flow was tested on the emulator with the Shizuku server started thro
 
 ## Release build
 
-`android/build-release.bat` (or `./gradlew assembleRelease bundleRelease`) makes a signed, shrunk (R8) APK of
+`build-release.bat` (or `./gradlew assembleRelease bundleRelease`) makes a signed, shrunk (R8) APK of
 about 1 MB and an AAB. It needs `keystore.properties` and `taskbarstats-release.jks` next to `gradlew`; both are
 **git-ignored** and are generated once with `keytool` (RSA 2048, valid 10000 days). **Back them up**: a release signed
 with another key cannot update an installed one. R8 keeps the Shizuku `UserService` and the AIDL stubs
 (`app/proguard-rules.pro`). The release build was tested on the emulator: UI, widget, Quick Settings tile and the
-Shizuku CPU source all work after shrinking. A draft store listing is in [PLAY-STORE.md](PLAY-STORE.md). The CI job (`.github/workflows/android.yml`) builds the debug APK and runs lint on every change under `android/`.
+Shizuku CPU source all work after shrinking. A draft store listing is in [PLAY-STORE.md](PLAY-STORE.md). The CI job (`.github/workflows/android.yml`) builds the debug APK and runs lint on every change to the code.
 
 ## Code overview
 
@@ -201,5 +202,5 @@ Shizuku CPU source all work after shrinking. A draft store listing is in [PLAY-S
 
 ## Not done yet
 
-Persistent history (it is kept in memory only), the Play Store graphics and privacy-policy URL, and a check on real
-hardware (everything was tested on an Android 15 emulator; the CI workflow has not run on GitHub yet).
+Persistent history (it is kept in memory only), the Play Store graphics, and a check on real
+hardware (everything was tested on an Android 15 emulator).

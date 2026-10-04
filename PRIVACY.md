@@ -1,5 +1,7 @@
 # Privacy policy: TaskBarStatsMobile
 
+**English** · [Nederlands](PRIVACY.nl.md) · [Deutsch](PRIVACY.de.md)
+
 _Last updated: 4 October 2026_
 
 TaskBarStatsMobile shows live statistics of your own phone. It is open source (MIT):
