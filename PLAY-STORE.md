@@ -29,3 +29,5 @@ The battery is left out on purpose: Android already shows it.
 - `PACKAGE_USAGE_STATS` (usage access) and `QUERY_ALL_PACKAGES` need a declaration in Play Console and may be refused; if so, remove the Apps tab sections that need them (the manifest and `AppData.kt` are the only places).
 - Not yet made: feature graphic (1024x500), 512x512 icon PNG (the app icon is a vector), privacy-policy URL (required even without data collection). Screenshots: `docs/screenshots/android/`.
 - Upload `app-release.aab` and enrol in Play App Signing; the local keystore then becomes the upload key.
+
+**Privacy policy URL:** https://github.com/ericbruggema/TaskBarStatsMobile/blob/main/PRIVACY.md (available once `PRIVACY.md` is pushed to `main`)

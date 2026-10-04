@@ -20,6 +20,8 @@ colour themes and the layout of the Windows app, nothing else.
 
 **Demo:** [57 s teaser](docs/videos/taskbarstatsmobile-teaser-en.mp4) · [151 s full tour](docs/videos/taskbarstatsmobile-tour-en.mp4) · [gif](docs/videos/taskbarstatsmobile-hero-en.gif) (portrait; screen recordings of the emulator with made-up traffic; toolkit in [tools/demo](tools/demo)).
 
+[Privacy policy](PRIVACY.md): the app collects nothing and sends nothing except one ping connection to `1.1.1.1`.
+
 All screenshots come from an Android 15 emulator with its own (fake) traffic; no personal data.
 
 ## What it shows, and what Android allows
