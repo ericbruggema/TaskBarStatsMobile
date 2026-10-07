@@ -1,11 +1,21 @@
+<div align="center">
+
 # TaskBarStatsMobile (experimentell)
+
+**Arbeitsspeicher, Netzwerk, Speicher und Ping live auf deinem Android-Telefon: Statusleiste, Widgets, Benachrichtigung und Cockpit.**
+
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Neueste APK herunterladen" src="https://img.shields.io/badge/Neueste%20APK%20herunterladen-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
+
+<sub>Öffne die Seite und tippe unter <em>Assets</em> auf die <code>.apk</code>-Datei. Die App kann auch selbst nach Updates suchen (standardmäßig aus).</sub>
+
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7"></a>
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml"><img alt="Android CI" src="https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg"></a>
+<img alt="Android 8.0+" src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white">
+<img alt="MIT" src="https://img.shields.io/badge/license-MIT-lightgrey">
 
 [English](README.md) · [Nederlands](README.nl.md) · **Deutsch**
 
-**[Neueste Version herunterladen (APK)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)**  [![Latest release](https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)
-Öffne die Seite und tippe unter *Assets* auf die `.apk`-Datei. Die App kann auch selbst nach Updates suchen (standardmäßig aus, siehe *Updates* unten).
-
-[![Android CI](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg)](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml) · MIT · Android 8.0+ (API 26)
+</div>
 
 TaskBarStatsMobile ist der Android-Begleiter des Windows-Monitors [TaskbarStats](https://github.com/ericbruggema/TaskbarStats): Arbeitsspeicher, Netzwerk, Speicher, Ping und Temperatur live auf einem Android-Smartphone oder -Tablet, als Dashboard, Vollbild-Cockpit, Widget auf dem Startbildschirm, dauerhafte Benachrichtigung (auch auf dem Sperrbildschirm), Schnelleinstellungs-Kachel und winzige Zahlen **in der Statusleiste** neben Uhr und Systemsymbolen. Kacheln lassen sich ausblenden und umsortieren, jedes Widget hat eigene Einstellungen, und die CPU-Auslastung ist optional (siehe unten).
 Der Akku fehlt mit Absicht: Android zeigt ihn schon überall an.

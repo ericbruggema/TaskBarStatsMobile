@@ -1,11 +1,21 @@
+<div align="center">
+
 # TaskBarStatsMobile (experimental)
+
+**Live memory, network, storage and ping on your Android phone: status bar, widgets, notification and cockpit.**
+
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Download latest APK" src="https://img.shields.io/badge/Download%20latest%20APK-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
+
+<sub>Open the page and tap the <code>.apk</code> under <em>Assets</em>. The app can also check for updates itself (off by default).</sub>
+
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7"></a>
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml"><img alt="Android CI" src="https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg"></a>
+<img alt="Android 8.0+" src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white">
+<img alt="MIT" src="https://img.shields.io/badge/license-MIT-lightgrey">
 
 **English** · [Nederlands](README.nl.md) · [Deutsch](README.de.md)
 
-**[Download the latest version (APK)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)**  [![Latest release](https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)
-Open the page and tap the `.apk` file under *Assets*. The app can also check for updates itself (off by default, see *Updates* below).
-
-[![Android CI](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg)](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml) · MIT · Android 8.0+ (API 26)
+</div>
 
 TaskBarStatsMobile is the Android companion of the Windows monitor [TaskbarStats](https://github.com/ericbruggema/TaskbarStats): live memory, network, storage, ping and temperature on an Android
 phone or tablet, as a dashboard, a fullscreen cockpit, a home-screen widget, an ongoing notification (also on the

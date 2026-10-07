@@ -1,11 +1,21 @@
+<div align="center">
+
 # TaskBarStatsMobile (experimenteel)
+
+**Live geheugen, netwerk, opslag en ping op je Android-telefoon: statusbalk, widgets, melding en cockpit.**
+
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Download nieuwste APK" src="https://img.shields.io/badge/Download%20nieuwste%20APK-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
+
+<sub>Open de pagina en tik op het <code>.apk</code>-bestand onder <em>Assets</em>. De app kan ook zelf op updates controleren (standaard uit).</sub>
+
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7"></a>
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml"><img alt="Android CI" src="https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg"></a>
+<img alt="Android 8.0+" src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white">
+<img alt="MIT" src="https://img.shields.io/badge/license-MIT-lightgrey">
 
 [English](README.md) · **Nederlands** · [Deutsch](README.de.md)
 
-**[Download de nieuwste versie (APK)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)**  [![Latest release](https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)
-Open de pagina en tik op het `.apk`-bestand onder *Assets*. De app kan ook zelf op updates controleren (standaard uit, zie *Updates* hieronder).
-
-[![Android CI](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg)](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml) · MIT · Android 8.0+ (API 26)
+</div>
 
 TaskBarStatsMobile is de Android-companion van de Windows-monitor [TaskbarStats](https://github.com/ericbruggema/TaskbarStats): live geheugen, netwerk, opslag, ping en temperatuur op een Android-telefoon of -tablet, als dashboard, fullscreen cockpit, widget op het beginscherm, doorlopende melding (ook op het vergrendelscherm), Snelle-instellingen-tegel en kleine cijfers **in de statusbalk** naast de klok en de systeemiconen. Tegels kun je verbergen en herschikken, elke widget heeft eigen instellingen en CPU % is optioneel (zie hieronder).
 De batterij is bewust weggelaten: Android toont die al overal.
