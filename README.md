@@ -2,6 +2,9 @@
 
 **English** · [Nederlands](README.nl.md) · [Deutsch](README.de.md)
 
+**[Download the latest version (APK)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)**  [![Latest release](https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)
+Open the page and tap the `.apk` file under *Assets*. The app can also check for updates itself (off by default, see *Updates* below).
+
 [![Android CI](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg)](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml) · MIT · Android 8.0+ (API 26)
 
 TaskBarStatsMobile is the Android companion of the Windows monitor [TaskbarStats](https://github.com/ericbruggema/TaskbarStats): live memory, network, storage, ping and temperature on an Android
@@ -137,7 +140,15 @@ one for a foreground service).
 
 A front camera in the middle of the top edge no longer hides part of the app. With **Keep clear of the camera** (Widget tab, on by default) the dashboard, the fullscreen cockpit and the status bar strip are drawn around the cut-out instead of behind it; the strip stays on its side of the camera and shrinks or drops cells if there is too little room. Choose **Centered, around camera** as the position and the strip is split in two halves, one left and one right of the camera (without a camera it is one centered strip). Every chosen item stays in the strip (CPU, ping, temperature, storage and so on); the text just gets smaller when space is tight. Switch on **Hide items when space is tight** to let CPU, ping, temperature and storage drop out instead. The halves are balanced by the room on each side. Top: with the switch on; bottom: camera option off.
 
-![All positions of the status bar strip, with the settings](docs/screenshots/statusbar-positions.png) The main notification icon always shows a live figure (the first chosen item, by default the download speed), never the fixed app icon.
+![All positions of the status bar strip, with the settings](docs/screenshots/statusbar-positions.png)
+
+Pick the position in a **preview of the status bar**: tap the left (next to the clock), the middle (around the camera) or the right (before the icons). The preview shows the camera, the free space and the strip to scale. If part of the strip still ends up behind the camera, switch off *Detect the camera automatically* and set the **camera width**, the **extra free space** on both sides and the **position** yourself; the preview and the real status bar follow immediately.
+
+![The preview and the camera settings](docs/screenshots/strip-preview.png)
+
+**One icon that rotates:** many phones show only one of the status bar icons. Switch on *Rotate in one icon* and the single icon switches between the chosen items every few seconds (off by default).
+
+![One rotating icon](docs/screenshots/rotate-icon.png) The main notification icon always shows a live figure (the first chosen item, by default the download speed), never the fixed app icon.
 
 ![Cockpit with the switch off and on](docs/screenshots/camera-cutout.png)
 

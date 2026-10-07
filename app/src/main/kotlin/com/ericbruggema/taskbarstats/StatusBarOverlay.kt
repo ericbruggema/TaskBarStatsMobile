@@ -41,6 +41,38 @@ object StatusBarOverlay {
     fun autoHide(ctx: Context) = prefs(ctx).getBoolean("strip_autohide", false)
     fun avoidCutout(ctx: Context) = prefs(ctx).getBoolean("avoid_cutout", true)
 
+    /** Camera automatisch herkennen (standaard) of zelf de breedte en plek instellen (dp). */
+    fun camAuto(ctx: Context) = prefs(ctx).getBoolean("cam_auto", true)
+    fun camWidth(ctx: Context) = prefs(ctx).getInt("cam_width", 40)
+    fun camMargin(ctx: Context) = prefs(ctx).getInt("cam_margin", 0)
+    fun camShift(ctx: Context) = prefs(ctx).getInt("cam_shift", 0)
+
+    /** Wat Android over het cameragat meldt (voor de weergave in de app), of null. */
+    fun detected(view: android.view.View): android.graphics.Rect? {
+        if (android.os.Build.VERSION.SDK_INT < 28) return null
+        val r = view.rootWindowInsets?.displayCutout?.boundingRects?.firstOrNull { it.top <= 0 && it.width() > 0 } ?: return null
+        return android.graphics.Rect(r)
+    }
+
+    /**
+     * Het deel van de statusbalk dat vrij moet blijven (in pixels van links) of null: het gemelde cameragat of een zelf
+     * ingestelde breedte en plek, plus de extra ruimte aan beide kanten.
+     */
+    private fun cameraRect(ctx: Context, wm: WindowManager): android.graphics.Rect? {
+        if (!avoidCutout(ctx)) return null
+        val d = ctx.resources.displayMetrics
+        val r = if (camAuto(ctx)) cutoutTop(wm) ?: return null
+        else {
+            val half = (camWidth(ctx) * d.density / 2).toInt(); val c = d.widthPixels / 2
+            android.graphics.Rect(c - half, 0, c + half, statusBarHeight(ctx))
+        }
+        val shift = (camShift(ctx) * d.density).toInt(); val m = (camMargin(ctx) * d.density).toInt()
+        return android.graphics.Rect(r.left + shift - m, r.top, r.right + shift + m, r.bottom)
+    }
+
+    /** Past de strook direct aan als de instellingen veranderen (anders pas bij de volgende verversing). */
+    fun refresh(ctx: Context) { if (enabled(ctx)) update(ctx, Sampler.snapshot) }
+
     private fun cutoutTop(wm: WindowManager) = if (android.os.Build.VERSION.SDK_INT >= 28) cutoutTopApi28(wm) else null
 
     /** Het cameragat bovenin (in pixels van links), of null als het toestel geen uitsparing heeft. */
@@ -69,7 +101,7 @@ object StatusBarOverlay {
         val h = statusBarHeight(ctx)
         val pos = position(ctx)
         // staan de onderdelen ook als iconen naast de klok (~20 dp per icoon), dan begint de strook daarachter
-        val dx = nudge(ctx) + if (StatusItems.iconsOn(ctx) && pos == LEFT) 20 * StatusItems.selected(ctx).size else 0
+        val dx = nudge(ctx) + if (pos == LEFT) 20 * StatusItems.iconCount(ctx) else 0
         // ruimte tussen klok/meldingsiconen (~112 dp) en systeemiconen (~104 dp breed vanaf rechts), met de verschuiving erbij
         var free = if (pos == LEFT) d.widthPixels - (112 + dx + 100) * d.density else d.widthPixels - (104 - dx + 112) * d.density
         val items = StatusItems.selected(ctx)
@@ -77,7 +109,7 @@ object StatusBarOverlay {
         if (pos == CENTER) { updateCenter(ctx, wm, s, h, items); return }
         removeSlot(ctx, 1)
         // het cameragat bovenin: de strook past in de ruimte tot of na de camera, en komt er nooit overheen
-        val cut = if (avoidCutout(ctx)) cutoutTop(wm) else null
+        val cut = cameraRect(ctx, wm)
         var minW = 120 * d.density
         if (cut != null) {
             val gap = 6 * d.density
@@ -102,7 +134,7 @@ object StatusBarOverlay {
      */
     private fun updateCenter(ctx: Context, wm: WindowManager, s: Snapshot, h: Int, items: List<String>) {
         val d = ctx.resources.displayMetrics
-        val cut = if (avoidCutout(ctx)) cutoutTop(wm) else null
+        val cut = cameraRect(ctx, wm)
         if (cut == null) {
             val free = d.widthPixels - 2 * 112 * d.density
             show(ctx, wm, 0, render(s, h, d.density, free, items, autoHide(ctx)), h, Gravity.TOP or Gravity.CENTER_HORIZONTAL, (nudge(ctx) * d.density).toInt())
@@ -115,7 +147,7 @@ object StatusBarOverlay {
             id == "down" && "up" in items -> groups += listOf("down", "up")
             else -> groups += listOf(id)
         }
-        val iconShift = if (StatusItems.iconsOn(ctx)) 20 * StatusItems.selected(ctx).size else 0
+        val iconShift = 20 * StatusItems.iconCount(ctx)
         val freeL = cut.left - gap - (112 + iconShift) * d.density
         val freeR = d.widthPixels - cut.right - gap - 100 * d.density
         // verdeel de groepen zo over links en rechts dat de krapste kant het minst overschrijdt (op natuurlijke breedte)
@@ -123,7 +155,7 @@ object StatusBarOverlay {
         var best = 0; var bestScore = Float.MAX_VALUE
         for (k in 0..groups.size) {
             val lw = nat.take(k).sum(); val rw = nat.drop(k).sum()
-            val score = maxOf(lw / freeL.coerceAtLeast(1f), rw / freeR.coerceAtLeast(1f))
+            val score = maxOf(lw / freeL.coerceAtLeast(60 * d.density), rw / freeR.coerceAtLeast(60 * d.density))
             if (score < bestScore) { bestScore = score; best = k }
         }
         val left = groups.take(best).flatten(); val right = groups.drop(best).flatten()

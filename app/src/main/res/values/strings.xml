@@ -235,4 +235,14 @@
     <string name="update_later">Later</string>
     <string name="update_tap">Tap to open the app.</string>
     <string name="update_channel">Updates</string>
+    <string name="strip_preview_hint">Tap where the strip goes: left, in the middle (around the camera) or right.</string>
+    <string name="cam_auto">Detect the camera automatically</string>
+    <string name="cam_auto_hint">Off: set the width and position of the camera yourself.</string>
+    <string name="cam_detected">Camera detected: %1$d dp wide.</string>
+    <string name="cam_none">No camera cut-out reported by this phone. Switch off automatic detection to set one yourself.</string>
+    <string name="cam_width">Camera width</string>
+    <string name="cam_margin">Extra free space on both sides</string>
+    <string name="cam_shift">Move the camera area left / right</string>
+    <string name="rotate_icon">Rotate in one icon</string>
+    <string name="rotate_icon_hint">One status bar icon that switches between the chosen items every few seconds. Use this if your phone shows only one icon. Replaces the separate icons.</string>
 </resources>

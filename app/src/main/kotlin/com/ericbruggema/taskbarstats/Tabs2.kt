@@ -253,7 +253,7 @@ internal fun AppsTab() {
 
 /** Een aan/uit-instelling in de gedeelde voorkeuren (bijv. voor de melding). */
 @Composable
-internal fun PrefSwitch(label: String, hint: String?, key: String, default: Boolean = false) {
+internal fun PrefSwitch(label: String, hint: String?, key: String, default: Boolean = false, onChange: (Boolean) -> Unit = {}) {
     val ctx = LocalContext.current
     var on by remember { mutableStateOf(StatusBarOverlay.prefs(ctx).getBoolean(key, default)) }
     Row(
@@ -261,7 +261,7 @@ internal fun PrefSwitch(label: String, hint: String?, key: String, default: Bool
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Switch(
-            checked = on, onCheckedChange = { on = it; StatusBarOverlay.prefs(ctx).edit().putBoolean(key, it).apply() },
+            checked = on, onCheckedChange = { on = it; StatusBarOverlay.prefs(ctx).edit().putBoolean(key, it).apply(); onChange(it); StatusBarOverlay.refresh(ctx) },
             colors = SwitchDefaults.colors(checkedTrackColor = CMem, checkedThumbColor = Bg),
         )
         Column(Modifier.padding(start = 12.dp).weight(1f)) {

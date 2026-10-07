@@ -2,6 +2,9 @@
 
 [English](README.md) · **Nederlands** · [Deutsch](README.de.md)
 
+**[Download de nieuwste versie (APK)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)**  [![Latest release](https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)
+Open de pagina en tik op het `.apk`-bestand onder *Assets*. De app kan ook zelf op updates controleren (standaard uit, zie *Updates* hieronder).
+
 [![Android CI](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg)](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml) · MIT · Android 8.0+ (API 26)
 
 TaskBarStatsMobile is de Android-companion van de Windows-monitor [TaskbarStats](https://github.com/ericbruggema/TaskbarStats): live geheugen, netwerk, opslag, ping en temperatuur op een Android-telefoon of -tablet, als dashboard, fullscreen cockpit, widget op het beginscherm, doorlopende melding (ook op het vergrendelscherm), Snelle-instellingen-tegel en kleine cijfers **in de statusbalk** naast de klok en de systeemiconen. Tegels kun je verbergen en herschikken, elke widget heeft eigen instellingen en CPU % is optioneel (zie hieronder).
@@ -115,7 +118,15 @@ Beide kunnen tegelijk aan staan. *Start* start de live monitor meteen. Op het ta
 
 Een selfiecamera in het midden van de bovenrand verbergt niet langer een stuk van de app. Met **Camera vrijhouden** (tabblad Widget, standaard aan) worden het dashboard, de fullscreen cockpit en de statusbalkstrook om het cameragat heen getekend in plaats van erachter; de strook blijft aan zijn kant van de camera en krimpt of laat cellen weg als er te weinig ruimte is. Kies als positie **Midden, om de camera** en de strook wordt in twee helften gesplitst, één links en één rechts van de camera (zonder camera is het één gecentreerde strook). Elk gekozen onderdeel blijft in de strook staan (CPU, ping, temperatuur, opslag enzovoort); de tekst wordt alleen kleiner als de ruimte krap is. Zet **Onderdelen weglaten bij te weinig ruimte** aan om CPU, ping, temperatuur en opslag juist te laten wegvallen. De helften worden verdeeld naar de ruimte aan elke kant. Boven: met de schakelaar aan; onder: camera-optie uit.
 
-![Alle posities van de statusbalkstrook, met de instellingen](docs/screenshots/statusbar-positions.png) Het hoofdicoon van de melding toont altijd een live cijfer (het eerste gekozen onderdeel, standaard de downloadsnelheid), nooit het vaste app-icoon.
+![Alle posities van de statusbalkstrook, met de instellingen](docs/screenshots/statusbar-positions.png)
+
+Kies de positie in een **voorbeeld van de statusbalk**: tik links (naast de klok), in het midden (om de camera) of rechts (voor de iconen). Het voorbeeld toont de camera, de vrije ruimte en de strook op schaal. Komt er toch nog een stuk achter de camera, zet dan *Camera automatisch herkennen* uit en stel zelf de **breedte van de camera**, de **extra vrije ruimte** aan beide kanten en de **plek** in; het voorbeeld en de echte statusbalk volgen direct.
+
+![Het voorbeeld en de camera-instellingen](docs/screenshots/strip-preview.png)
+
+**Eén icoon dat wisselt:** veel telefoons tonen maar één van de statusbalkiconen. Zet *Wisselen in één icoon* aan en het ene icoon wisselt om de paar seconden tussen de gekozen onderdelen (standaard uit).
+
+![Eén wisselend icoon](docs/screenshots/rotate-icon.png) Het hoofdicoon van de melding toont altijd een live cijfer (het eerste gekozen onderdeel, standaard de downloadsnelheid), nooit het vaste app-icoon.
 
 ![Cockpit met de schakelaar uit en aan](docs/screenshots/camera-cutout.png)
 

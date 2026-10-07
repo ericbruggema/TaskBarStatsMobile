@@ -28,6 +28,12 @@ object StatusItems {
     fun setSelected(ctx: Context, ids: Collection<String>) =
         StatusBarOverlay.prefs(ctx).edit().putString("items", ALL.filter { it in ids }.joinToString(",")).apply()
 
+    /** Eén statusbalkicoon dat langs de gekozen onderdelen wisselt in plaats van een icoon per onderdeel. */
+    fun rotate(ctx: Context) = StatusBarOverlay.prefs(ctx).getBoolean("rotate", false)
+
+    /** Hoeveel statusbalkiconen er naast de klok staan (één bij wisselen). */
+    fun iconCount(ctx: Context) = if (!iconsOn(ctx)) 0 else if (rotate(ctx)) 1 else selected(ctx).size
+
     fun iconsOn(ctx: Context) = StatusBarOverlay.prefs(ctx).getBoolean("icons", false)
 
     fun nameRes(id: String) = when (id) {

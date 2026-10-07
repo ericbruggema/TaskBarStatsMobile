@@ -229,4 +229,14 @@
     <string name="update_later">Later</string>
     <string name="update_tap">Tik om de app te openen.</string>
     <string name="update_channel">Updates</string>
+    <string name="strip_preview_hint">Tik waar de strook komt: links, in het midden (om de camera) of rechts.</string>
+    <string name="cam_auto">Camera automatisch herkennen</string>
+    <string name="cam_auto_hint">Uit: stel de breedte en plek van de camera zelf in.</string>
+    <string name="cam_detected">Camera herkend: %1$d dp breed.</string>
+    <string name="cam_none">Deze telefoon meldt geen cameragat. Zet automatisch herkennen uit om er zelf een in te stellen.</string>
+    <string name="cam_width">Breedte van de camera</string>
+    <string name="cam_margin">Extra vrije ruimte aan beide kanten</string>
+    <string name="cam_shift">Cameragebied naar links / rechts</string>
+    <string name="rotate_icon">Wisselen in één icoon</string>
+    <string name="rotate_icon_hint">Eén statusbalkicoon dat om de paar seconden wisselt tussen de gekozen onderdelen. Handig als je telefoon maar één icoon toont. Vervangt de losse iconen.</string>
 </resources>

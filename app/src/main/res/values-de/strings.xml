@@ -229,4 +229,14 @@
     <string name="update_later">Später</string>
     <string name="update_tap">Tippen, um die App zu öffnen.</string>
     <string name="update_channel">Updates</string>
+    <string name="strip_preview_hint">Tippe, wohin der Streifen kommt: links, in die Mitte (um die Kamera) oder rechts.</string>
+    <string name="cam_auto">Kamera automatisch erkennen</string>
+    <string name="cam_auto_hint">Aus: Breite und Position der Kamera selbst einstellen.</string>
+    <string name="cam_detected">Kamera erkannt: %1$d dp breit.</string>
+    <string name="cam_none">Dieses Telefon meldet keine Kamera-Aussparung. Schalte die automatische Erkennung aus, um selbst eine einzustellen.</string>
+    <string name="cam_width">Breite der Kamera</string>
+    <string name="cam_margin">Zusätzlicher freier Platz auf beiden Seiten</string>
+    <string name="cam_shift">Kamerabereich nach links / rechts</string>
+    <string name="rotate_icon">In einem Symbol wechseln</string>
+    <string name="rotate_icon_hint">Ein Statusleistensymbol, das alle paar Sekunden zwischen den gewählten Werten wechselt. Nützlich, wenn dein Telefon nur ein Symbol zeigt. Ersetzt die einzelnen Symbole.</string>
 </resources>

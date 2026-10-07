@@ -2,6 +2,9 @@
 
 [English](README.md) · [Nederlands](README.nl.md) · **Deutsch**
 
+**[Neueste Version herunterladen (APK)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)**  [![Latest release](https://img.shields.io/github/v/release/ericbruggema/TaskBarStatsMobile?label=latest&color=4FC3F7)](https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest)
+Öffne die Seite und tippe unter *Assets* auf die `.apk`-Datei. Die App kann auch selbst nach Updates suchen (standardmäßig aus, siehe *Updates* unten).
+
 [![Android CI](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml/badge.svg)](https://github.com/ericbruggema/TaskBarStatsMobile/actions/workflows/android.yml) · MIT · Android 8.0+ (API 26)
 
 TaskBarStatsMobile ist der Android-Begleiter des Windows-Monitors [TaskbarStats](https://github.com/ericbruggema/TaskbarStats): Arbeitsspeicher, Netzwerk, Speicher, Ping und Temperatur live auf einem Android-Smartphone oder -Tablet, als Dashboard, Vollbild-Cockpit, Widget auf dem Startbildschirm, dauerhafte Benachrichtigung (auch auf dem Sperrbildschirm), Schnelleinstellungs-Kachel und winzige Zahlen **in der Statusleiste** neben Uhr und Systemsymbolen. Kacheln lassen sich ausblenden und umsortieren, jedes Widget hat eigene Einstellungen, und die CPU-Auslastung ist optional (siehe unten).
@@ -115,7 +118,15 @@ Beides kann gleichzeitig an sein. *Start* startet den Live-Monitor sofort. Im Ta
 
 Eine Frontkamera in der Mitte des oberen Rands verdeckt keinen Teil der App mehr. Mit **Kamera freihalten** (Tab Widget, standardmäßig an) werden Dashboard, Vollbild-Cockpit und Statusleistenstreifen um die Aussparung herum gezeichnet statt dahinter; der Streifen bleibt auf seiner Seite der Kamera und schrumpft oder lässt Zellen weg, wenn zu wenig Platz ist. Wähle als Position **Mitte, um die Kamera** und der Streifen wird in zwei Hälften geteilt, eine links und eine rechts der Kamera (ohne Kamera ist es ein zentrierter Streifen). Jeder gewählte Wert bleibt im Streifen (CPU, Ping, Temperatur, Speicher usw.); bei Platzmangel wird nur der Text kleiner. Schalte **Werte bei Platzmangel ausblenden** ein, damit CPU, Ping, Temperatur und Speicher stattdessen wegfallen. Die Hälften werden nach dem Platz auf beiden Seiten verteilt. Oben: mit eingeschaltetem Schalter; unten: Kameraoption aus.
 
-![Alle Positionen des Statusleistenstreifens, mit den Einstellungen](docs/screenshots/statusbar-positions.png) Das Hauptsymbol der Benachrichtigung zeigt immer einen Live-Wert (den ersten gewählten Wert, standardmäßig die Download-Geschwindigkeit), nie das feste App-Symbol.
+![Alle Positionen des Statusleistenstreifens, mit den Einstellungen](docs/screenshots/statusbar-positions.png)
+
+Wähle die Position in einer **Vorschau der Statusleiste**: Tippe links (neben der Uhr), in die Mitte (um die Kamera) oder rechts (vor den Symbolen). Die Vorschau zeigt Kamera, freien Platz und Streifen maßstabsgetreu. Landet trotzdem ein Teil hinter der Kamera, schalte *Kamera automatisch erkennen* aus und stelle **Kamerabreite**, **zusätzlichen freien Platz** auf beiden Seiten und **Position** selbst ein; Vorschau und echte Statusleiste folgen sofort.
+
+![Die Vorschau und die Kamera-Einstellungen](docs/screenshots/strip-preview.png)
+
+**Ein Symbol, das wechselt:** Viele Telefone zeigen nur eines der Statusleistensymbole. Schalte *In einem Symbol wechseln* ein, und das eine Symbol wechselt alle paar Sekunden zwischen den gewählten Werten (standardmäßig aus).
+
+![Ein wechselndes Symbol](docs/screenshots/rotate-icon.png) Das Hauptsymbol der Benachrichtigung zeigt immer einen Live-Wert (den ersten gewählten Wert, standardmäßig die Download-Geschwindigkeit), nie das feste App-Symbol.
 
 ![Cockpit mit ausgeschaltetem und eingeschaltetem Schalter](docs/screenshots/camera-cutout.png)
 

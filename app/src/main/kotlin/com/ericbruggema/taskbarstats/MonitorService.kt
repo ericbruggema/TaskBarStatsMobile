@@ -54,7 +54,7 @@ class MonitorService : Service() {
         val s = Sampler.snapshot
         val offline = s.netKind == NET_NONE && StatusBarOverlay.prefs(this).getBoolean("notif_online_only", false)
         val chosen = StatusItems.selected(this)
-        val shown = if (offline || !StatusItems.iconsOn(this)) emptyList() else chosen
+        val shown = if (offline || !StatusItems.iconsOn(this) || StatusItems.rotate(this)) emptyList() else chosen
         // het eerste onderdeel zit altijd op het icoon van de hoofdmelding (die melding moet er toch zijn), ook bij alleen de tekststrook
         nm.notify(ID, build(mainItem()))
         for ((i, id) in StatusItems.ALL.withIndex()) {
@@ -63,7 +63,12 @@ class MonitorService : Service() {
     }
 
     /** Het onderdeel op het hoofdicoon: het eerste gekozen onderdeel, of de downloadsnelheid; nooit het vaste app-icoon. */
-    private fun mainItem() = StatusItems.selected(this).firstOrNull() ?: "down"
+    private fun mainItem(): String {
+        val sel = StatusItems.selected(this)
+        // optioneel: één icoon dat langs alle gekozen onderdelen wisselt (om de ~4 s), voor toestellen die maar één icoon tonen
+        if (StatusItems.rotate(this) && sel.size > 1) return sel[((System.currentTimeMillis() / 4000) % sel.size).toInt()]
+        return sel.firstOrNull() ?: "down"
+    }
 
     private fun itemNotification(id: String, s: Snapshot): Notification {
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
