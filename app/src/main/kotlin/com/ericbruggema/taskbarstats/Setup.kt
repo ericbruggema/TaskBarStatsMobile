@@ -84,7 +84,7 @@ internal fun SetupScreen() {
     var overlay by remember { mutableStateOf(false) }
     var pos by remember { mutableIntStateOf(StatusBarOverlay.position(ctx)) }
     @Suppress("UNUSED_EXPRESSION") resumeTick
-    Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding().verticalScroll(rememberScrollState()).padding(16.dp),
+    Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM),
         verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(R.string.setup_title), color = Fg, fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Text(stringResource(R.string.setup_intro), color = Dim, fontSize = 14.sp)

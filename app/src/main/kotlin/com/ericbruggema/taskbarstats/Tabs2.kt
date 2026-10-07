@@ -160,7 +160,7 @@ internal fun AppsTab() {
     var procSel by remember { mutableStateOf<AppData.Proc?>(null) }
     var sys by remember { mutableStateOf(false) }
     val names = listOf(R.string.apps_data, R.string.apps_traffic, R.string.apps_storage, R.string.apps_usage, R.string.apps_autostart, R.string.apps_procs)
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Chips(names.map { stringResource(it) }, sec) { sec = it }
         val needsAccess = sec in 0..3
         if (needsAccess && !AppData.hasUsageAccess(ctx)) {
@@ -277,7 +277,7 @@ internal fun PrefSwitch(label: String, hint: String?, key: String, default: Bool
 internal fun HistoryTab() {
     val m = Sampler.minutes
     val n = m.mem.size
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         H(stringResource(R.string.tab_history)); Hint(stringResource(R.string.history_hint))
         val window = if (n >= 60) "${n / 60} h" else "$n min"
         val sub = if (n < 2) stringResource(R.string.history_collecting) else stringResource(R.string.history_window, window)
@@ -298,7 +298,7 @@ private fun HistTile(label: String, value: String, sub: String, color: Color, hi
 @Composable
 internal fun AlertsTab() {
     val ctx = LocalContext.current
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         H(stringResource(R.string.alerts_title)); Hint(stringResource(R.string.alerts_hint))
         @Suppress("UNUSED_EXPRESSION") resumeTick
         if (!ctx.getSystemService(NotificationManager::class.java).areNotificationsEnabled())
@@ -361,7 +361,7 @@ internal fun PermissionsTab() {
     val ctx = LocalContext.current
     @Suppress("UNUSED_EXPRESSION") resumeTick
     val shizuku = ShizukuCpu.state
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         H(stringResource(R.string.perm_title)); Hint(stringResource(R.string.perm_hint))
 
         val notifOn = ctx.getSystemService(NotificationManager::class.java).areNotificationsEnabled()

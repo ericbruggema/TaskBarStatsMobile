@@ -59,7 +59,7 @@ class WidgetConfigActivity : ComponentActivity() {
             val opts = WidgetOptions(cells, opacity, graphs)
             val s = Sampler.snapshot
             val bmp = remember(s, cells, opacity, graphs) { StatsRenderer.render(s, 800, (800 * kind.aspect).toInt().coerceAtLeast(130), opts) }
-            Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding().verticalScroll(rememberScrollState()).padding(16.dp),
+            Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM),
                 verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(stringResource(R.string.widget_config_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
                 // lichte achtergrond onder het voorbeeld, zodat de doorzichtigheid zichtbaar is

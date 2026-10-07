@@ -56,6 +56,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.layout.ContentScale
 
+/** Extra ruimte onderaan elke scrollbare pagina, zodat de laatste knoppen niet achter de navigatiebalk of een pop-upmenu verdwijnen. */
+internal val PAGE_BOTTOM = 120.dp
 internal val Bg get() = Color(StatsRenderer.BG)
 internal val Card get() = Color(StatsRenderer.CARD)
 internal val Fg get() = Color(StatsRenderer.FG)
@@ -155,7 +157,7 @@ private fun App() {
 @Composable
 private fun Dashboard(s: Snapshot) {
     val ids = Tiles.visible()
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         var i = 0
         while (i < ids.size) {
             if (Tiles.isSmall(ids[i]) && i + 1 < ids.size && Tiles.isSmall(ids[i + 1])) {
@@ -342,7 +344,7 @@ private fun WidgetTab(s: Snapshot) {
     val ctx = LocalContext.current
     var live by remember { mutableStateOf(MonitorService.running) }
     val bmp = remember(s) { StatsRenderer.render(s, 800, 340) }
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text(stringResource(R.string.widget_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
         Text(stringResource(R.string.widget_hint), color = Dim, fontSize = 14.sp)
         Image(bmp.asImageBitmap(), null, Modifier.fillMaxWidth(), contentScale = ContentScale.FillWidth)
@@ -504,7 +506,7 @@ private fun tileName(id: String) = stringResource(when (id) {
 @Composable
 private fun TilesTab() {
     val ctx = LocalContext.current
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(stringResource(R.string.tiles_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
         Text(stringResource(R.string.tiles_hint), color = Dim, fontSize = 14.sp)
         Text(stringResource(R.string.data_period), color = Dim, fontSize = 14.sp)
