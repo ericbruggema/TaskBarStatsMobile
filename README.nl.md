@@ -19,7 +19,7 @@ Dit is een aparte Kotlin / Jetpack Compose-app, geen port van de WinForms-code. 
 
 **Demo (Engels):** [teaser van 57 s](docs/videos/taskbarstatsmobile-teaser-en.mp4) · [volledige tour van 151 s](docs/videos/taskbarstatsmobile-tour-en.mp4) · [gif](docs/videos/taskbarstatsmobile-hero-en.gif) (staand; schermopnames van de emulator met verzonnen verkeer; gereedschap in [tools/demo](tools/demo)).
 
-[Privacyverklaring](PRIVACY.nl.md): de app verzamelt niets en verstuurt niets behalve één ping-verbinding naar `1.1.1.1`.
+[Privacyverklaring](PRIVACY.nl.md): de app verzamelt niets en verstuurt niets behalve één ping-verbinding naar `1.1.1.1` (en, alleen als je dat aanzet, een dagelijkse updatecontrole bij GitHub).
 
 Alle screenshots komen uit een Android 15-emulator met eigen (verzonnen) verkeer; geen persoonlijke gegevens. De screenshots tonen de Engelse interface.
 
@@ -115,7 +115,7 @@ Beide kunnen tegelijk aan staan. *Start* start de live monitor meteen. Op het ta
 
 Een selfiecamera in het midden van de bovenrand verbergt niet langer een stuk van de app. Met **Camera vrijhouden** (tabblad Widget, standaard aan) worden het dashboard, de fullscreen cockpit en de statusbalkstrook om het cameragat heen getekend in plaats van erachter; de strook blijft aan zijn kant van de camera en krimpt of laat cellen weg als er te weinig ruimte is. Kies als positie **Midden, om de camera** en de strook wordt in twee helften gesplitst, één links en één rechts van de camera (zonder camera is het één gecentreerde strook). Elk gekozen onderdeel blijft in de strook staan (CPU, ping, temperatuur, opslag enzovoort); de tekst wordt alleen kleiner als de ruimte krap is. Zet **Onderdelen weglaten bij te weinig ruimte** aan om CPU, ping, temperatuur en opslag juist te laten wegvallen. De helften worden verdeeld naar de ruimte aan elke kant. Boven: met de schakelaar aan; onder: camera-optie uit.
 
-![Gecentreerde strook om de camera](docs/screenshots/statusbar-center.png) Het hoofdicoon van de melding toont altijd een live cijfer (het eerste gekozen onderdeel, standaard de downloadsnelheid), nooit het vaste app-icoon.
+![Alle posities van de statusbalkstrook, met de instellingen](docs/screenshots/statusbar-positions.png) Het hoofdicoon van de melding toont altijd een live cijfer (het eerste gekozen onderdeel, standaard de downloadsnelheid), nooit het vaste app-icoon.
 
 ![Cockpit met de schakelaar uit en aan](docs/screenshots/camera-cutout.png)
 
@@ -126,6 +126,12 @@ De doorlopende melding (`MEM 50% ↓ ↑ / Disk 13% Ping 17 ms`, met een **Stop*
 ## Thema's
 
 Dezelfde 14 kleurthema's als de Windows-app (Default, Dark, Light, Love, CGA, Matrix, Amber, Game Boy, Dracula, Ocean, Sunset, Forest, Neon, …) plus die van de app zelf. Ze kleuren de app, de widget en de melding; bij lichte thema's worden de vaste reeksenkleuren automatisch donkerder gemaakt voor het contrast. **Windows-thema importeren (.json)** leest een themabestand van de Windows-app (`TextColor`, `BackgroundColor`, `AccentColor`, `WarnColor`).
+
+## Updates
+
+Optioneel en standaard uit: *Op updates controleren* (tabblad Widget) vraagt één keer per dag bij GitHub naar de nieuwste release en meldt een nieuwe versie één keer. *Downloaden en installeren* opent de APK-link in je browser; Android vraagt om bevestiging voor het installeren. Verborgen als de app uit de Play Store komt. Zie de [privacyverklaring](PRIVACY.nl.md).
+
+![De updatecontrole in vier toestanden](docs/screenshots/updates.png)
 
 ## Talen
 

@@ -217,4 +217,16 @@
     <string name="pos_center">Mitte, um die Kamera</string>
     <string name="strip_autohide">Werte bei Platzmangel ausblenden</string>
     <string name="strip_autohide_hint">Aus: Jeder gewählte Wert bleibt im Streifen (nur der Text wird kleiner). An: CPU, Ping, Temperatur und Speicher fallen zuerst weg.</string>
+    <string name="update_title">Updates</string>
+    <string name="update_check">Nach Updates suchen</string>
+    <string name="update_check_hint">Einmal täglich fragt die App bei GitHub nach der neuesten Version (es wird nichts über dich gesendet) und meldet eine neue Version einmal. Standardmäßig aus.</string>
+    <string name="update_now">Jetzt prüfen</string>
+    <string name="update_none">Du hast die neueste Version (%1$s).</string>
+    <string name="update_failed">Prüfung fehlgeschlagen (keine Verbindung?).</string>
+    <string name="update_available">Version %1$s ist verfügbar</string>
+    <string name="update_text">Lade die neue APK herunter; Android fragt vor der Installation nach deiner Bestätigung.</string>
+    <string name="update_download">Herunterladen und installieren</string>
+    <string name="update_later">Später</string>
+    <string name="update_tap">Tippen, um die App zu öffnen.</string>
+    <string name="update_channel">Updates</string>
 </resources>

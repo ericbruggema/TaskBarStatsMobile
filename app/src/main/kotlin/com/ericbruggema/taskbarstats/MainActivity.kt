@@ -114,6 +114,18 @@ private fun App() {
             androidx.core.graphics.ColorUtils.calculateLuminance(StatsRenderer.BG) > 0.5
     }
     val appCtx = LocalContext.current
+    var update by remember { mutableStateOf(UpdateChecker.pending(appCtx)) }
+    androidx.compose.runtime.LaunchedEffect(Unit) { UpdateChecker.checkIfDue(appCtx) { update = it } }
+    update?.let { u ->
+        androidx.compose.material3.AlertDialog(
+            containerColor = Card, titleContentColor = Fg, textContentColor = Dim,
+            onDismissRequest = { UpdateChecker.clearPending(appCtx); update = null },
+            title = { Text(stringResource(R.string.update_available, u.version)) },
+            text = { Text(stringResource(R.string.update_text)) },
+            confirmButton = { androidx.compose.material3.TextButton(colors = androidx.compose.material3.ButtonDefaults.textButtonColors(contentColor = CMem), onClick = { UpdateChecker.open(appCtx, u); UpdateChecker.clearPending(appCtx); update = null }) { Text(stringResource(R.string.update_download)) } },
+            dismissButton = { androidx.compose.material3.TextButton(colors = androidx.compose.material3.ButtonDefaults.textButtonColors(contentColor = Fg), onClick = { UpdateChecker.clearPending(appCtx); update = null }) { Text(stringResource(R.string.update_later)) } },
+        )
+    }
     val cutoutMod = if (StatusBarOverlay.avoidCutout(appCtx)) Modifier.windowInsetsPadding(WindowInsets.displayCutout) else Modifier
     Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding().then(cutoutMod)) {
         if (tab != 1) Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -380,6 +392,21 @@ private fun WidgetTab(s: Snapshot) {
         PrefSwitch(stringResource(R.string.setup_icons), stringResource(R.string.setup_icons_hint), "icons")
         Button(onClick = { showSetup = true }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) {
             Text(stringResource(R.string.setup_again))
+        }
+        if (!UpdateChecker.fromPlay(ctx)) {
+            Text(stringResource(R.string.update_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
+            PrefSwitch(stringResource(R.string.update_check), stringResource(R.string.update_check_hint), "update_check")
+            var upMsg by remember { mutableStateOf<String?>(null) }
+            var upInfo by remember { mutableStateOf<UpdateChecker.Info?>(null) }
+            val upCtx = LocalContext.current
+            val upNone = stringResource(R.string.update_none, UpdateChecker.current(ctx))
+            val upFail = stringResource(R.string.update_failed)
+            Button(onClick = {
+                upMsg = "…"
+                UpdateChecker.checkNow(ctx) { i, ok -> upInfo = i; upMsg = if (!ok) upFail else if (i == null) upNone else upCtx.getString(R.string.update_available, i.version) }
+            }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) { Text(stringResource(R.string.update_now)) }
+            upMsg?.let { Text(it, color = Dim, fontSize = 14.sp) }
+            upInfo?.let { i -> Button(onClick = { UpdateChecker.open(ctx, i) }, colors = ButtonDefaults.buttonColors(containerColor = CMem, contentColor = Bg)) { Text(stringResource(R.string.update_download)) } }
         }
         Text(stringResource(R.string.theme_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {

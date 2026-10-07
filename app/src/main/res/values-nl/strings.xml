@@ -217,4 +217,16 @@
     <string name="pos_center">Midden, om de camera</string>
     <string name="strip_autohide">Onderdelen weglaten bij te weinig ruimte</string>
     <string name="strip_autohide_hint">Uit: elk gekozen onderdeel blijft in de strook (de tekst wordt alleen kleiner). Aan: CPU, ping, temperatuur en opslag vallen eerst weg.</string>
+    <string name="update_title">Updates</string>
+    <string name="update_check">Op updates controleren</string>
+    <string name="update_check_hint">Eén keer per dag vraagt de app bij GitHub naar de nieuwste versie (er wordt niets over jou verstuurd) en meldt een nieuwe versie één keer. Standaard uit.</string>
+    <string name="update_now">Nu controleren</string>
+    <string name="update_none">Je hebt de nieuwste versie (%1$s).</string>
+    <string name="update_failed">Controleren lukte niet (geen verbinding?).</string>
+    <string name="update_available">Versie %1$s is beschikbaar</string>
+    <string name="update_text">Download de nieuwe APK; Android vraagt om je bevestiging voor het installeren.</string>
+    <string name="update_download">Downloaden en installeren</string>
+    <string name="update_later">Later</string>
+    <string name="update_tap">Tik om de app te openen.</string>
+    <string name="update_channel">Updates</string>
 </resources>

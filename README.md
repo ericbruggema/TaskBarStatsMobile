@@ -22,7 +22,7 @@ colour themes and the layout of the Windows app, nothing else.
 
 **Demo:** [57 s teaser](docs/videos/taskbarstatsmobile-teaser-en.mp4) · [151 s full tour](docs/videos/taskbarstatsmobile-tour-en.mp4) · [gif](docs/videos/taskbarstatsmobile-hero-en.gif) (portrait; screen recordings of the emulator with made-up traffic; toolkit in [tools/demo](tools/demo)).
 
-[Privacy policy](PRIVACY.md) ([nl](PRIVACY.nl.md), [de](PRIVACY.de.md)): the app collects nothing and sends nothing except one ping connection to `1.1.1.1`.
+[Privacy policy](PRIVACY.md) ([nl](PRIVACY.nl.md), [de](PRIVACY.de.md)): the app collects nothing and sends nothing except one ping connection to `1.1.1.1` (and, only if you switch it on, a daily update check on GitHub).
 
 All screenshots come from an Android 15 emulator with its own (fake) traffic; no personal data.
 
@@ -137,7 +137,7 @@ one for a foreground service).
 
 A front camera in the middle of the top edge no longer hides part of the app. With **Keep clear of the camera** (Widget tab, on by default) the dashboard, the fullscreen cockpit and the status bar strip are drawn around the cut-out instead of behind it; the strip stays on its side of the camera and shrinks or drops cells if there is too little room. Choose **Centered, around camera** as the position and the strip is split in two halves, one left and one right of the camera (without a camera it is one centered strip). Every chosen item stays in the strip (CPU, ping, temperature, storage and so on); the text just gets smaller when space is tight. Switch on **Hide items when space is tight** to let CPU, ping, temperature and storage drop out instead. The halves are balanced by the room on each side. Top: with the switch on; bottom: camera option off.
 
-![Centered strip around the camera](docs/screenshots/statusbar-center.png) The main notification icon always shows a live figure (the first chosen item, by default the download speed), never the fixed app icon.
+![All positions of the status bar strip, with the settings](docs/screenshots/statusbar-positions.png) The main notification icon always shows a live figure (the first chosen item, by default the download speed), never the fixed app icon.
 
 ![Cockpit with the switch off and on](docs/screenshots/camera-cutout.png)
 
@@ -152,6 +152,12 @@ The same 14 colour themes as the Windows app (Default, Dark, Light, Love, CGA, M
 Ocean, Sunset, Forest, Neon, …) plus the app's own. They colour the app, the widget and the notification;
 on light themes the fixed series colours are darkened automatically for contrast. **Import Windows theme (.json)**
 reads a theme file from the Windows app (`TextColor`, `BackgroundColor`, `AccentColor`, `WarnColor`).
+
+## Updates
+
+Optional and off by default: *Check for updates* (Widget tab) asks GitHub once a day for the latest release and tells you once per new version. *Download and install* opens the APK link in your browser; Android asks for confirmation before installing. Hidden when the app comes from the Play Store. See the [privacy policy](PRIVACY.md).
+
+![The update check in its four states](docs/screenshots/updates.png)
 
 ## Languages
 

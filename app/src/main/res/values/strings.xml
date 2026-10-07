@@ -223,4 +223,16 @@
     <string name="pos_center">Centered, around camera</string>
     <string name="strip_autohide">Hide items when space is tight</string>
     <string name="strip_autohide_hint">Off: every chosen item stays in the strip (the text just gets smaller). On: CPU, ping, temperature and storage drop out first.</string>
+    <string name="update_title">Updates</string>
+    <string name="update_check">Check for updates</string>
+    <string name="update_check_hint">Once a day the app asks GitHub for the latest version (nothing about you is sent) and tells you once per new version. Off by default.</string>
+    <string name="update_now">Check now</string>
+    <string name="update_none">You have the latest version (%1$s).</string>
+    <string name="update_failed">Could not check (no connection?).</string>
+    <string name="update_available">Version %1$s is available</string>
+    <string name="update_text">Download the new APK; Android asks for your confirmation before installing.</string>
+    <string name="update_download">Download and install</string>
+    <string name="update_later">Later</string>
+    <string name="update_tap">Tap to open the app.</string>
+    <string name="update_channel">Updates</string>
 </resources>

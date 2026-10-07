@@ -19,7 +19,7 @@ Dies ist eine eigenständige Kotlin- / Jetpack-Compose-App, keine Portierung des
 
 **Demo (Englisch):** [57-s-Teaser](docs/videos/taskbarstatsmobile-teaser-en.mp4) · [151-s-Tour](docs/videos/taskbarstatsmobile-tour-en.mp4) · [Gif](docs/videos/taskbarstatsmobile-hero-en.gif) (Hochformat; Bildschirmaufnahmen des Emulators mit erfundenem Datenverkehr; Werkzeuge in [tools/demo](tools/demo)).
 
-[Datenschutzerklärung](PRIVACY.de.md): Die App sammelt nichts und sendet nichts, außer einer Ping-Verbindung zu `1.1.1.1`.
+[Datenschutzerklärung](PRIVACY.de.md): Die App sammelt nichts und sendet nichts, außer einer Ping-Verbindung zu `1.1.1.1` (und, nur wenn du es einschaltest, einer täglichen Update-Prüfung bei GitHub).
 
 Alle Screenshots stammen aus einem Android-15-Emulator mit eigenem (erfundenem) Datenverkehr; keine personenbezogenen Daten. Die Screenshots zeigen die englische Oberfläche.
 
@@ -115,7 +115,7 @@ Beides kann gleichzeitig an sein. *Start* startet den Live-Monitor sofort. Im Ta
 
 Eine Frontkamera in der Mitte des oberen Rands verdeckt keinen Teil der App mehr. Mit **Kamera freihalten** (Tab Widget, standardmäßig an) werden Dashboard, Vollbild-Cockpit und Statusleistenstreifen um die Aussparung herum gezeichnet statt dahinter; der Streifen bleibt auf seiner Seite der Kamera und schrumpft oder lässt Zellen weg, wenn zu wenig Platz ist. Wähle als Position **Mitte, um die Kamera** und der Streifen wird in zwei Hälften geteilt, eine links und eine rechts der Kamera (ohne Kamera ist es ein zentrierter Streifen). Jeder gewählte Wert bleibt im Streifen (CPU, Ping, Temperatur, Speicher usw.); bei Platzmangel wird nur der Text kleiner. Schalte **Werte bei Platzmangel ausblenden** ein, damit CPU, Ping, Temperatur und Speicher stattdessen wegfallen. Die Hälften werden nach dem Platz auf beiden Seiten verteilt. Oben: mit eingeschaltetem Schalter; unten: Kameraoption aus.
 
-![Zentrierter Streifen um die Kamera](docs/screenshots/statusbar-center.png) Das Hauptsymbol der Benachrichtigung zeigt immer einen Live-Wert (den ersten gewählten Wert, standardmäßig die Download-Geschwindigkeit), nie das feste App-Symbol.
+![Alle Positionen des Statusleistenstreifens, mit den Einstellungen](docs/screenshots/statusbar-positions.png) Das Hauptsymbol der Benachrichtigung zeigt immer einen Live-Wert (den ersten gewählten Wert, standardmäßig die Download-Geschwindigkeit), nie das feste App-Symbol.
 
 ![Cockpit mit ausgeschaltetem und eingeschaltetem Schalter](docs/screenshots/camera-cutout.png)
 
@@ -126,6 +126,12 @@ Die dauerhafte Benachrichtigung (`MEM 50% ↓ ↑ / Disk 13% Ping 17 ms`, mit ei
 ## Themen
 
 Dieselben 14 Farbthemen wie die Windows-App (Default, Dark, Light, Love, CGA, Matrix, Amber, Game Boy, Dracula, Ocean, Sunset, Forest, Neon, …) plus die der App selbst. Sie färben App, Widget und Benachrichtigung; bei hellen Themen werden die festen Serienfarben für den Kontrast automatisch abgedunkelt. **Windows-Thema importieren (.json)** liest eine Themendatei der Windows-App (`TextColor`, `BackgroundColor`, `AccentColor`, `WarnColor`).
+
+## Updates
+
+Optional und standardmäßig aus: *Nach Updates suchen* (Tab Widget) fragt einmal täglich bei GitHub nach der neuesten Version und meldet eine neue Version einmal. *Herunterladen und installieren* öffnet den APK-Link im Browser; Android fragt vor der Installation nach Bestätigung. Ausgeblendet, wenn die App aus dem Play Store stammt. Siehe die [Datenschutzerklärung](PRIVACY.de.md).
+
+![Die Update-Prüfung in vier Zuständen](docs/screenshots/updates.png)
 
 ## Sprachen
 

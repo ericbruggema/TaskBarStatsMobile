@@ -22,6 +22,7 @@ class MonitorService : Service() {
             StatusBarOverlay.update(this@MonitorService, Sampler.snapshot)
             Alerts.check(this@MonitorService, Sampler.snapshot)
             updateNotifications()
+            UpdateChecker.checkIfDue(this@MonitorService) { UpdateChecker.notify(this@MonitorService, it) }
             handler.postDelayed(this, 2000)
         }
     }

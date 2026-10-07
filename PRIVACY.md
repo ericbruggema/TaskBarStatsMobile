@@ -2,7 +2,7 @@
 
 **English** · [Nederlands](PRIVACY.nl.md) · [Deutsch](PRIVACY.de.md)
 
-_Last updated: 4 October 2026_
+_Last updated: 7 October 2026_
 
 TaskBarStatsMobile shows live statistics of your own phone. It is open source (MIT):
 https://github.com/ericbruggema/TaskBarStatsMobile
@@ -27,9 +27,11 @@ All of this is shown on your own screen and nowhere else:
 
 Every special permission is optional and can be withdrawn in Android's settings; the app then simply hides the features that need it.
 
-## The one network connection
+## The network connections
 
 To measure the ping the app opens a short TCP connection to `1.1.1.1` (Cloudflare's public DNS service) on port 443 and measures how long it takes. No personal data and no identifier is sent. Cloudflare can see that your IP address connected to its service, like any connection to it. If you do not want this, leave the ping item off.
+
+**Update check (off by default).** If you switch on *Check for updates*, the app asks `api.github.com` once a day for the latest release of this repository and tells you once per new version. Only the request itself is sent (like any web request, GitHub can see your IP address); nothing about you or your phone. The app never installs anything by itself: *Download and install* opens the APK link in your browser and Android asks for your confirmation. The check is not available when the app was installed from the Google Play Store.
 
 ## Storage and deletion
 
