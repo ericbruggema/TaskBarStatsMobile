@@ -115,6 +115,17 @@ object StatusBarOverlay {
         return android.graphics.Rect(r)
     }
 
+    /**
+     * Android zelf zet een melding "<app> wordt over andere apps weergegeven" (met het app-logo) in de statusbalk zolang
+     * de strook aan staat. Een app kan die niet verwijderen; de gebruiker kan hem op veel telefoons uitzetten in de
+     * instellingen van dat systeemkanaal. Deze intent opent die pagina.
+     */
+    fun overlayNoticeIntent(ctx: Context) =
+        Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+            .putExtra(Settings.EXTRA_APP_PACKAGE, "android")
+            .putExtra(Settings.EXTRA_CHANNEL_ID, "com.android.server.wm.AlertWindowNotification - ${ctx.packageName}")
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
     fun permissionIntent(ctx: Context) =
         Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${ctx.packageName}"))
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

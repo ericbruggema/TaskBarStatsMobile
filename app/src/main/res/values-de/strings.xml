@@ -239,4 +239,6 @@
     <string name="cam_shift">Kamerabereich nach links / rechts</string>
     <string name="rotate_icon">In einem Symbol wechseln</string>
     <string name="rotate_icon_hint">Ein Statusleistensymbol, das alle paar Sekunden zwischen den gewählten Werten wechselt. Nützlich, wenn dein Telefon nur ein Symbol zeigt. Ersetzt die einzelnen Symbole.</string>
+    <string name="overlay_notice_hint">Android selbst zeigt ein kleines &quot;über anderen Apps einblenden&quot;-Symbol mit dem App-Logo, solange der Streifen an ist. Eine App kann es nicht entfernen, aber auf vielen Telefonen kannst du diese Benachrichtigung ausschalten:</string>
+    <string name="overlay_notice_button">Android-Symbol &quot;über anderen Apps&quot; ausblenden</string>
 </resources>

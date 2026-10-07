@@ -134,6 +134,8 @@ Wähle die Position in einer **Vorschau der Statusleiste**: Tippe links (neben d
 
 ![Die Vorschau und die Kamera-Einstellungen](docs/screenshots/strip-preview.png)
 
+**Das App-Logo neben der Uhr:** Solange der Streifen an ist, zeigt Android selbst ein kleines "über anderen Apps einblenden"-Symbol mit dem App-Logo. Eine App kann es nicht entfernen, aber die Schaltfläche *Android-Symbol "über anderen Apps" ausblenden* öffnet die Systemeinstellung, in der du diese Benachrichtigung ausschalten kannst (auf vielen Telefonen; manche sperren es).
+
 **Ein Symbol, das wechselt:** Viele Telefone zeigen nur eines der Statusleistensymbole. Schalte *In einem Symbol wechseln* ein, und das eine Symbol wechselt alle paar Sekunden zwischen den gewählten Werten (standardmäßig aus).
 
 ![Ein wechselndes Symbol](docs/screenshots/rotate-icon.png) Das Hauptsymbol der Benachrichtigung zeigt immer einen Live-Wert (den ersten gewählten Wert, standardmäßig die Download-Geschwindigkeit), nie das feste App-Symbol.

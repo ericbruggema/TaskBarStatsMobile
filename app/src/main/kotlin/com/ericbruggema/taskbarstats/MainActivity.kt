@@ -376,6 +376,13 @@ private fun WidgetTab(s: Snapshot) {
         val detected = StatusBarOverlay.detected(rootView)
         val density = ctx.resources.displayMetrics.density
         if (ov) {
+            Text(stringResource(R.string.overlay_notice_hint), color = Dim, fontSize = 14.sp)
+            Button(onClick = {
+                try { ctx.startActivity(StatusBarOverlay.overlayNoticeIntent(ctx)) }
+                catch (_: Exception) {
+                    try { ctx.startActivity(Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, ctx.packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } catch (_: Exception) { }
+                }
+            }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) { Text(stringResource(R.string.overlay_notice_button)) }
             Text(stringResource(R.string.strip_preview_hint), color = Dim, fontSize = 14.sp)
             val camDp = (if (camAuto && detected != null) detected.width() else camW) / density
             StripPreview(pos, camOn, camDp, camM / density, camS / density, dx.toFloat()) {

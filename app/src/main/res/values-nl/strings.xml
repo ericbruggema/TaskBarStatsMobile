@@ -239,4 +239,6 @@
     <string name="cam_shift">Cameragebied naar links / rechts</string>
     <string name="rotate_icon">Wisselen in één icoon</string>
     <string name="rotate_icon_hint">Eén statusbalkicoon dat om de paar seconden wisselt tussen de gekozen onderdelen. Handig als je telefoon maar één icoon toont. Vervangt de losse iconen.</string>
+    <string name="overlay_notice_hint">Android zelf toont een klein &quot;weergeven over andere apps&quot;-icoon met het app-logo zolang de strook aan staat. Een app kan dat niet weghalen, maar op veel telefoons kun je die melding uitzetten:</string>
+    <string name="overlay_notice_button">Android-icoon &quot;over andere apps&quot; verbergen</string>
 </resources>

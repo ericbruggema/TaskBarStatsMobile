@@ -156,6 +156,8 @@ Pick the position in a **preview of the status bar**: tap the left (next to the 
 
 ![The preview and the camera settings](docs/screenshots/strip-preview.png)
 
+**The app logo next to the clock:** while the strip is on, Android itself adds a small "displaying over other apps" icon with the app logo. An app cannot remove it, but the button *Hide the Android "over other apps" icon* opens the system setting where you can switch that notification off (on many phones; some phones lock it).
+
 **One icon that rotates:** many phones show only one of the status bar icons. Switch on *Rotate in one icon* and the single icon switches between the chosen items every few seconds (off by default).
 
 ![One rotating icon](docs/screenshots/rotate-icon.png) The main notification icon always shows a live figure (the first chosen item, by default the download speed), never the fixed app icon.
