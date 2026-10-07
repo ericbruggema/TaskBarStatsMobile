@@ -91,20 +91,20 @@ object StatsRenderer {
         p.style = Paint.Style.FILL
         if (!graphs) {
             // zonder grafiekjes en balken krijgt de tekst de hele hoogte
-            p.typeface = Typeface.DEFAULT_BOLD; p.color = cell.color; p.textSize = fit(p, cell.label, h * 0.2f, w)
+            p.typeface = Fonts.typeface(true); p.color = cell.color; p.textSize = fit(p, cell.label, h * 0.2f, w)
             c.drawText(cell.label, x, y + h * 0.2f, p)
             p.textSize = fit(p, cell.value, h * 0.3f, w); p.color = FG
             c.drawText(cell.value, x, y + h * 0.58f, p)
-            p.typeface = Typeface.DEFAULT; p.color = DIM
+            p.typeface = Fonts.typeface(false); p.color = DIM
             p.textSize = fit(p, cell.sub, h * 0.2f, w)
             c.drawText(cell.sub, x, y + h * 0.88f, p)
             return
         }
-        p.typeface = Typeface.DEFAULT_BOLD; p.color = cell.color; p.textSize = fit(p, cell.label, h * 0.16f, w)
+        p.typeface = Fonts.typeface(true); p.color = cell.color; p.textSize = fit(p, cell.label, h * 0.16f, w)
         c.drawText(cell.label, x, y + h * 0.16f, p)
         p.textSize = fit(p, cell.value, h * 0.2f, w); p.color = FG
         c.drawText(cell.value, x, y + h * 0.44f, p)
-        p.typeface = Typeface.DEFAULT; p.color = DIM
+        p.typeface = Fonts.typeface(false); p.color = DIM
         p.textSize = fit(p, cell.sub, h * 0.15f, w)
         c.drawText(cell.sub, x, y + h * 0.62f, p)
         if (cell.hist.size > 1) {

@@ -36,6 +36,14 @@ object Themes {
         p("Neon", "#E6FBFF", "#05060A", "#00E5FF", "#FFD60A"),
     )
 
+    /** Geheim thema: pas zichtbaar nadat je het ontgrendeld hebt (zie Instellingen). */
+    val secret = p("Synthwave", "#F8E8FF", "#1A0033", "#FF2BD6", "#00F0FF")
+
+    var secretOn by mutableStateOf(false)
+        private set
+
+    fun unlockSecret(ctx: Context) { secretOn = true; StatusBarOverlay.prefs(ctx).edit().putBoolean("secret_theme", true).apply() }
+
     var current by mutableStateOf(all[0])
         private set
 
@@ -45,11 +53,12 @@ object Themes {
 
     fun load(ctx: Context) {
         val pr = StatusBarOverlay.prefs(ctx)
+        secretOn = pr.getBoolean("secret_theme", false)
         val name = pr.getString("theme", null) ?: return
         if (name == "custom") {
             val c = pr.getString("theme_custom", null)?.split("|") ?: return
             if (c.size == 5) { custom = Palette(c[0], c[1].toInt(), c[2].toInt(), c[3].toInt(), c[4].toInt()); current = custom!! }
-        } else all.firstOrNull { it.name == name }?.let { current = it }
+        } else (all + secret).firstOrNull { it.name == name }?.let { current = it }
     }
 
     fun select(ctx: Context, pal: Palette) {
@@ -61,6 +70,9 @@ object Themes {
         } else e.putString("theme", pal.name)
         e.apply()
     }
+
+    /** Zet de eerdere toestand terug (na ongedaan maken in de editor). */
+    fun restore(ctx: Context, cur: Palette, cust: Palette?) { custom = cust; select(ctx, cur) }
 
     fun setCustom(ctx: Context, pal: Palette) { custom = pal; select(ctx, pal) }
 

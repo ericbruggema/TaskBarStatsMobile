@@ -32,7 +32,11 @@ object StatusItems {
     fun rotate(ctx: Context) = StatusBarOverlay.prefs(ctx).getBoolean("rotate", false)
 
     /** Hoeveel statusbalkiconen er naast de klok staan (één bij wisselen). */
-    fun iconCount(ctx: Context) = if (!iconsOn(ctx)) 0 else if (rotate(ctx)) 1 else selected(ctx).size
+    /** De strook toont alles al: dan verdwijnen alle eigen iconen naast de klok (optie, standaard aan). */
+    fun stripHides(ctx: Context) = StatusBarOverlay.enabled(ctx) && StatusBarOverlay.canDraw(ctx) &&
+        StatusBarOverlay.prefs(ctx).getBoolean("hide_main_icon", true)
+
+    fun iconCount(ctx: Context) = if (stripHides(ctx) || !iconsOn(ctx)) 0 else if (rotate(ctx)) 1 else selected(ctx).size
 
     fun iconsOn(ctx: Context) = StatusBarOverlay.prefs(ctx).getBoolean("icons", false)
 

@@ -49,11 +49,9 @@ class MonitorService : Service() {
     }
 
     /**
-     * Eigen hoofdicoon onzichtbaar maken als de tekststrook al alles toont (en er geen losse of wisselende iconen
-     * gevraagd zijn). De melding kan niet weg (voorgrondservice), maar een leeg icoon tekent niets in de statusbalk.
+     * Eigen hoofdicoon onzichtbaar maken als de tekststrook al alles toont (ook losse en wisselende iconen verdwijnen dan). De melding kan niet weg (voorgrondservice), maar een leeg icoon tekent niets in de statusbalk.
      */
-    private fun mainHidden() = StatusBarOverlay.enabled(this) && StatusBarOverlay.canDraw(this) && !StatusItems.iconsOn(this) &&
-        !StatusItems.rotate(this) && StatusBarOverlay.prefs(this).getBoolean("hide_main_icon", true)
+    private fun mainHidden() = StatusItems.stripHides(this)
 
     private fun blankIcon(): Icon = Icon.createWithBitmap(android.graphics.Bitmap.createBitmap(96, 96, android.graphics.Bitmap.Config.ARGB_8888))
 
@@ -63,7 +61,7 @@ class MonitorService : Service() {
         val s = Sampler.snapshot
         val offline = s.netKind == NET_NONE && StatusBarOverlay.prefs(this).getBoolean("notif_online_only", false)
         val chosen = StatusItems.selected(this)
-        val shown = if (offline || !StatusItems.iconsOn(this) || StatusItems.rotate(this)) emptyList() else chosen
+        val shown = if (offline || StatusItems.stripHides(this) || !StatusItems.iconsOn(this) || StatusItems.rotate(this)) emptyList() else chosen
         // het eerste onderdeel zit altijd op het icoon van de hoofdmelding (die melding moet er toch zijn), ook bij alleen de tekststrook
         nm.notify(ID, build(mainItem()))
         for ((i, id) in StatusItems.ALL.withIndex()) {

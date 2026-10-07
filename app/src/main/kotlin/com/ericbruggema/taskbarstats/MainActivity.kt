@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -70,11 +71,15 @@ internal val CPing get() = Color(StatsRenderer.PING)
 internal val CTemp get() = Color(StatsRenderer.tone(0xFFFF8A65.toInt()))
 internal val CCpu get() = Color(StatsRenderer.CPU)
 
+/** Verborgen: een ping van precies deze waarde kleurt de pingtegel goud. */
+internal const val GOLD_PING_MS = 1
+internal val GoldColor = Color(0xFFFFD700)
+
 /** Het getoonde tabblad; hoger dan de tabbladen zelf zodat andere schermen er naartoe kunnen verwijzen. */
 internal var currentTab by mutableIntStateOf(0)
 
 class MainActivity : ComponentActivity() {
-    fun goToTab(i: Int) { currentTab = i }
+    fun goToTab(i: Int) { openTab(i) }
 
     /** Kiest een Windows-themabestand (.json) en neemt de kleuren over. */
     val importTheme = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri ->
@@ -95,11 +100,11 @@ class MainActivity : ComponentActivity() {
         Themes.load(this)
         Tiles.load(this)
         ShizukuCpu.init(this)
-        currentTab = intent.getIntExtra("tab", 0)
-        setContent { if (showSetup) SetupScreen() else App() }
+        openTab(intent.getIntExtra("tab", 0))
+        setContent { Fonts.Scope { if (showSetup) SetupScreen() else App() } }
     }
 
-    override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); if (intent.hasExtra("tab")) currentTab = intent.getIntExtra("tab", 0) }
+    override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); if (intent.hasExtra("tab")) openTab(intent.getIntExtra("tab", 0)) }
     override fun onResume() { super.onResume(); resumeTick++ }
     override fun onStart() { super.onStart(); Sampler.acquire(this); ShizukuCpu.refresh() }
     override fun onStop() { Sampler.release(); super.onStop() }
@@ -128,28 +133,78 @@ private fun App() {
             dismissButton = { androidx.compose.material3.TextButton(colors = androidx.compose.material3.ButtonDefaults.textButtonColors(contentColor = Fg), onClick = { UpdateChecker.clearPending(appCtx); update = null }) { Text(stringResource(R.string.update_later)) } },
         )
     }
+    androidx.activity.compose.BackHandler(enabled = tab == TAB_SETTINGS && settingsPage != SP_HUB) { settingsBack() }
     val cutoutMod = if (StatusBarOverlay.avoidCutout(appCtx)) Modifier.windowInsetsPadding(WindowInsets.displayCutout) else Modifier
     Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding().then(cutoutMod)) {
-        if (tab != 1) Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf(R.string.tab_dashboard, R.string.tab_cockpit, R.string.tab_widget, R.string.tab_tiles, R.string.tab_apps, R.string.tab_history, R.string.tab_alerts, R.string.tab_permissions).forEachIndexed { i, id ->
-                val sel = i == tab
-                Text(
-                    stringResource(id),
-                    color = if (sel) Bg else Fg, fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
-                    modifier = Modifier.clip(RoundedCornerShape(50)).background(if (sel) CMem else Card)
-                        .clickable { currentTab = i }.padding(horizontal = 16.dp, vertical = 8.dp),
-                )
+        Box(Modifier.weight(1f)) {
+            when (tab) {
+                0 -> Dashboard(s)
+                1 -> Cockpit(s) { currentTab = 0 }
+                4 -> AppsTab()
+                5 -> HistoryTab()
+                6 -> AlertsTab()
+                else -> SettingsTab(s)
             }
         }
-        when (tab) {
-            0 -> Dashboard(s)
-            1 -> Cockpit(s) { currentTab = 0 }
-            2 -> WidgetTab(s)
-            3 -> TilesTab()
-            4 -> AppsTab()
-            5 -> HistoryTab()
-            6 -> AlertsTab()
-            else -> PermissionsTab()
+        if (tab != 1) NavBar(tab)
+    }
+}
+
+/** Onderbalk met vijf vaste plekken; Instellingen opent het overzicht met categorieën. */
+@Composable
+private fun NavBar(tab: Int) {
+    Column(Modifier.fillMaxWidth()) {
+        Box(Modifier.fillMaxWidth().height(1.dp).background(Fg.copy(alpha = 0.25f)))
+        Row(Modifier.fillMaxWidth().background(Card).padding(top = 8.dp, bottom = 6.dp)) {
+            for ((id, label) in listOf(0 to R.string.nav_live, 4 to R.string.tab_apps, 5 to R.string.tab_history, 6 to R.string.tab_alerts, TAB_SETTINGS to R.string.nav_settings)) {
+                val sel = tab == id
+                val col = if (sel) CMem else Fg.copy(alpha = 0.75f)
+                Column(
+                    Modifier.weight(1f).clickable { if (id == TAB_SETTINGS && sel) settingsPage = SP_HUB else currentTab = id },
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Box(Modifier.clip(RoundedCornerShape(50)).background(if (sel) CMem.copy(alpha = 0.22f) else Color.Transparent).padding(horizontal = 18.dp, vertical = 3.dp)) {
+                        NavIcon(id, col)
+                    }
+                    Text(
+                        stringResource(label), color = col, fontSize = 12.sp, maxLines = 1,
+                        fontWeight = if (sel) FontWeight.Bold else FontWeight.Medium, modifier = Modifier.padding(top = 2.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** Kleine pictogrammen voor de onderbalk, getekend zonder extra bibliotheek. */
+@Composable
+private fun NavIcon(id: Int, c: Color) {
+    Canvas(Modifier.size(24.dp)) {
+        val w = size.width; val sw = 2.2.dp.toPx(); val st = Stroke(width = sw, cap = androidx.compose.ui.graphics.StrokeCap.Round)
+        when (id) {
+            0 -> { // live: hartslaglijn
+                val p = Path(); p.moveTo(w * .08f, w * .55f); p.lineTo(w * .30f, w * .55f); p.lineTo(w * .42f, w * .2f); p.lineTo(w * .58f, w * .85f); p.lineTo(w * .70f, w * .45f); p.lineTo(w * .92f, w * .45f)
+                drawPath(p, c, style = st)
+            }
+            4 -> { // apps: 2x2 blokjes
+                val s = w * .34f; val r = androidx.compose.ui.geometry.CornerRadius(3.dp.toPx())
+                for (x in listOf(.1f, .56f)) for (y in listOf(.1f, .56f)) drawRoundRect(c, Offset(w * x, w * y), androidx.compose.ui.geometry.Size(s, s), r)
+            }
+            5 -> { // historie: staafjes
+                for ((i, h) in listOf(.4f, .7f, .55f, .9f).withIndex()) drawLine(c, Offset(w * (.15f + i * .23f), w * .92f), Offset(w * (.15f + i * .23f), w * (.92f - h * .8f)), sw * 1.5f, cap = androidx.compose.ui.graphics.StrokeCap.Round)
+            }
+            6 -> { // meldingen: bel
+                val p = Path(); p.moveTo(w * .2f, w * .74f); p.lineTo(w * .8f, w * .74f); p.lineTo(w * .72f, w * .62f); p.lineTo(w * .72f, w * .42f)
+                p.cubicTo(w * .72f, w * .16f, w * .28f, w * .16f, w * .28f, w * .42f); p.lineTo(w * .28f, w * .62f); p.close()
+                drawPath(p, c, style = st); drawCircle(c, w * .07f, Offset(w * .5f, w * .88f))
+            }
+            else -> { // instellingen: drie schuifregelaars
+                for ((i, k) in listOf(.28f, .62f, .4f).withIndex()) {
+                    val y = w * (.22f + i * .28f)
+                    drawLine(c, Offset(w * .1f, y), Offset(w * .9f, y), sw, cap = androidx.compose.ui.graphics.StrokeCap.Round)
+                    drawCircle(Color(StatsRenderer.CARD), w * .13f, Offset(w * k + w * .15f, y)); drawCircle(c, w * .12f, Offset(w * k + w * .15f, y), style = st)
+                }
+            }
         }
     }
 }
@@ -158,6 +213,10 @@ private fun App() {
 private fun Dashboard(s: Snapshot) {
     val ids = Tiles.visible()
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Text(
+            stringResource(R.string.tab_cockpit) + " \u203A", color = CMem, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.clip(RoundedCornerShape(50)).background(Card).clickable { currentTab = 1 }.padding(horizontal = 16.dp, vertical = 8.dp),
+        )
         var i = 0
         while (i < ids.size) {
             if (Tiles.isSmall(ids[i]) && i + 1 < ids.size && Tiles.isSmall(ids[i + 1])) {
@@ -179,8 +238,9 @@ private fun DashTile(id: String, s: Snapshot, modifier: Modifier) {
         "net" -> NetTile(s, modifier)
         "storage" -> Tile(stringResource(R.string.storage), Fmt.percent(s.storagePercent),
             stringResource(R.string.free_fmt, Fmt.bytes(s.storageTotal - s.storageUsed)), CDisk, emptyList(), null, modifier, bar = s.storagePercent / 100f)
-        "ping" -> Tile(stringResource(R.string.ping), s.pingMs?.let { "$it ms" } ?: "\u2014",
-            if (s.pingFailed) stringResource(R.string.timeout) else "1.1.1.1", CPing, s.pingHist, null, modifier)
+        "ping" -> { val gold = s.pingMs == GOLD_PING_MS
+            Tile(stringResource(R.string.ping), if (gold) "\u2605 1 ms \u2605" else s.pingMs?.let { "$it ms" } ?: "\u2014",
+                if (gold) stringResource(R.string.ping_gold) else if (s.pingFailed) stringResource(R.string.timeout) else "1.1.1.1", if (gold) GoldColor else CPing, s.pingHist, null, modifier) }
         "temp" -> Tile(stringResource(R.string.temperature), s.tempC?.let { String.format("%.0f \u00B0C", it) } ?: "\u2014",
             thermalName(s.thermalStatus), CTemp, s.tempHist, null, modifier)
         "cpu" -> CpuTile(s)
@@ -310,7 +370,8 @@ private fun Cockpit(s: Snapshot, onExit: () -> Unit) {
             cells += { mod -> Big("\u2191 " + stringResource(R.string.upload), Fmt.rate(s.txBps), "", CUp, s.txHist, null, mod) }
         }
         "storage" -> cells += { mod -> Big(stringResource(R.string.storage), Fmt.percent(s.storagePercent), stringResource(R.string.free_fmt, Fmt.bytes(s.storageTotal - s.storageUsed)), CDisk, emptyList(), null, mod) }
-        "ping" -> cells += { mod -> Big(stringResource(R.string.ping), s.pingMs?.let { "$it ms" } ?: "\u2014", "1.1.1.1", CPing, s.pingHist, null, mod) }
+        "ping" -> cells += { mod -> val gold = s.pingMs == GOLD_PING_MS
+            Big(stringResource(R.string.ping), if (gold) "\u2605 1 ms \u2605" else s.pingMs?.let { "$it ms" } ?: "\u2014", if (gold) stringResource(R.string.ping_gold) else "1.1.1.1", if (gold) GoldColor else CPing, s.pingHist, null, mod) }
         "temp" -> cells += { mod -> Big(stringResource(R.string.temperature), s.tempC?.let { String.format("%.0f \u00B0C", it) } ?: "\u2014", thermalName(s.thermalStatus), CTemp, s.tempHist, null, mod) }
         "wifi" -> cells += { mod -> Big(stringResource(R.string.tile_connection), connName(s), connDetail(s), CNet, emptyList(), null, mod) }
         "uptime" -> cells += { mod -> Big(stringResource(R.string.tile_uptime), uptimeText(s.uptimeMs), "", CMem, emptyList(), null, mod) }
@@ -320,10 +381,40 @@ private fun Cockpit(s: Snapshot, onExit: () -> Unit) {
     }
     // zonder systeembalken ligt de inhoud anders deels achter de selfiecamera (bovenin of opzij in landschap)
     val cutoutMod = if (StatusBarOverlay.avoidCutout(LocalContext.current)) Modifier.windowInsetsPadding(WindowInsets.displayCutout) else Modifier
-    Column(Modifier.fillMaxSize().then(cutoutMod).clickable { onExit() }.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        for (row in cells.chunked(2)) Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-            row.forEach { it(Modifier.weight(1f)) }
+    // verborgen: drie snelle tikken = de tegels "checken in" een voor een, als een vertrekbord; één of twee tikken sluiten de cockpit
+    var taps by remember { mutableIntStateOf(0) }
+    var tapStamp by remember { mutableIntStateOf(0) }
+    var shown by remember { mutableIntStateOf(Int.MAX_VALUE) }
+    var checkin by remember { mutableIntStateOf(0) }
+    androidx.compose.runtime.LaunchedEffect(tapStamp) {
+        if (tapStamp == 0) return@LaunchedEffect
+        kotlinx.coroutines.delay(450)
+        if (taps >= 3) checkin++ else onExit()
+        taps = 0
+    }
+    androidx.compose.runtime.LaunchedEffect(checkin) {
+        if (checkin == 0) return@LaunchedEffect
+        shown = 0
+        for (i in 1..cells.size) { kotlinx.coroutines.delay(230); shown = i }
+        shown = Int.MAX_VALUE
+    }
+    Box(Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize().then(cutoutMod).clickable { taps++; tapStamp++ }.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            cells.chunked(2).forEachIndexed { r, row ->
+                Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                    row.forEachIndexed { c, cell ->
+                        val a by androidx.compose.animation.core.animateFloatAsState(if (r * 2 + c < shown) 1f else 0f, androidx.compose.animation.core.tween(280), label = "checkin")
+                        cell(Modifier.weight(1f).graphicsLayer { rotationX = (1f - a) * 90f; alpha = a; cameraDistance = 14f * density })
+                    }
+                }
+            }
         }
+        // discreet way back to the bottom bar (tapping anywhere also works)
+        Text(
+            "✕  " + stringResource(R.string.nav_live), color = Fg.copy(alpha = 0.7f), fontSize = 12.sp,
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 4.dp).clip(RoundedCornerShape(50))
+                .background(Bg.copy(alpha = 0.8f)).clickable { onExit() }.padding(horizontal = 14.dp, vertical = 5.dp),
+        )
     }
 }
 
@@ -335,164 +426,6 @@ private fun Big(label: String, value: String, sub: String, color: Color, hist: L
         if (sub.isNotEmpty()) Text(sub, color = Dim, fontSize = 14.sp)
         Box(Modifier.weight(1f).fillMaxWidth().padding(top = 8.dp)) {
             if (hist.size > 1) Spark(hist, color, fixedMax, 120.dp, Modifier.align(Alignment.BottomStart))
-        }
-    }
-}
-
-@Composable
-private fun WidgetTab(s: Snapshot) {
-    val ctx = LocalContext.current
-    var live by remember { mutableStateOf(MonitorService.running) }
-    val bmp = remember(s) { StatsRenderer.render(s, 800, 340) }
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        Text(stringResource(R.string.widget_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
-        Text(stringResource(R.string.widget_hint), color = Dim, fontSize = 14.sp)
-        Image(bmp.asImageBitmap(), null, Modifier.fillMaxWidth(), contentScale = ContentScale.FillWidth)
-        Button(
-            onClick = { if (live) MonitorService.stop(ctx) else MonitorService.start(ctx); live = !live },
-            colors = ButtonDefaults.buttonColors(containerColor = CMem, contentColor = Bg),
-        ) { Text(stringResource(if (live) R.string.stop_monitor else R.string.start_monitor)) }
-        var ov by remember { mutableStateOf(StatusBarOverlay.enabled(ctx) && StatusBarOverlay.canDraw(ctx)) }
-        var pos by remember { mutableIntStateOf(StatusBarOverlay.position(ctx)) }
-        Text(stringResource(R.string.statusbar_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
-        Text(stringResource(R.string.statusbar_hint), color = Dim, fontSize = 14.sp)
-        Button(
-            onClick = {
-                if (!ov && !StatusBarOverlay.canDraw(ctx)) { ctx.startActivity(StatusBarOverlay.permissionIntent(ctx)); return@Button }
-                ov = !ov
-                StatusBarOverlay.prefs(ctx).edit().putBoolean("overlay", ov).apply()
-                if (ov && !MonitorService.running) { MonitorService.start(ctx); live = true }
-                if (!ov) StatusBarOverlay.remove(ctx)
-            },
-            colors = ButtonDefaults.buttonColors(containerColor = if (ov) CNet else Card, contentColor = if (ov) Bg else Fg),
-        ) { Text(stringResource(if (ov) R.string.statusbar_on else R.string.statusbar_off)) }
-        var dx by remember { mutableIntStateOf(StatusBarOverlay.nudge(ctx)) }
-        var camOn by remember { mutableStateOf(StatusBarOverlay.avoidCutout(ctx)) }
-        var camAuto by remember { mutableStateOf(StatusBarOverlay.camAuto(ctx)) }
-        var camW by remember { mutableIntStateOf(StatusBarOverlay.camWidth(ctx)) }
-        var camM by remember { mutableIntStateOf(StatusBarOverlay.camMargin(ctx)) }
-        var camS by remember { mutableIntStateOf(StatusBarOverlay.camShift(ctx)) }
-        val rootView = androidx.compose.ui.platform.LocalView.current
-        val detected = StatusBarOverlay.detected(rootView)
-        val density = ctx.resources.displayMetrics.density
-        if (ov) {
-            Text(stringResource(R.string.overlay_notice_hint), color = Dim, fontSize = 14.sp)
-            Button(onClick = {
-                try { ctx.startActivity(StatusBarOverlay.overlayNoticeIntent(ctx)) }
-                catch (_: Exception) {
-                    try { ctx.startActivity(Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, ctx.packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } catch (_: Exception) { }
-                }
-            }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) { Text(stringResource(R.string.overlay_notice_button)) }
-            Text(stringResource(R.string.strip_preview_hint), color = Dim, fontSize = 14.sp)
-            val camDp = (if (camAuto && detected != null) detected.width() else camW) / density
-            StripPreview(pos, camOn, camDp, camM / density, camS / density, dx.toFloat()) {
-                pos = it; StatusBarOverlay.prefs(ctx).edit().putInt("overlay_pos", it).apply(); StatusBarOverlay.refresh(ctx)
-            }
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                for ((label, step) in listOf("◀" to -8, "▶" to 8)) Text(
-                    label, color = Fg, fontSize = 16.sp,
-                    modifier = Modifier.clip(RoundedCornerShape(50)).background(Card)
-                        .clickable { dx = (dx + step).coerceIn(-150, 150); StatusBarOverlay.prefs(ctx).edit().putInt("overlay_dx", dx).apply(); StatusBarOverlay.refresh(ctx) }
-                        .padding(horizontal = 14.dp, vertical = 8.dp),
-                )
-            }
-        }
-        PrefSwitch(stringResource(R.string.avoid_cutout), stringResource(R.string.avoid_cutout_hint), "avoid_cutout", true) { camOn = it }
-        if (camOn) {
-            PrefSwitch(stringResource(R.string.cam_auto), stringResource(R.string.cam_auto_hint), "cam_auto", true) { camAuto = it }
-            val auto = camAuto && detected != null
-            if (auto) Text(stringResource(R.string.cam_detected, detected!!.width()), color = Dim, fontSize = 14.sp)
-            else {
-                if (camAuto) Text(stringResource(R.string.cam_none), color = Dim, fontSize = 14.sp)
-                PrefSlider(stringResource(R.string.cam_width), "cam_w", 100, 0..400, "px") { camW = it }
-            }
-            PrefSlider(stringResource(R.string.cam_margin), "cam_m", 8, 0..120, "px") { camM = it }
-            PrefSlider(stringResource(R.string.cam_shift), "cam_s", 0, -300..300, "px") { camS = it }
-        }
-        PrefSwitch(stringResource(R.string.strip_autohide), stringResource(R.string.strip_autohide_hint), "strip_autohide")
-        Text(stringResource(R.string.notif_opts_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
-        PrefSwitch(stringResource(R.string.notif_only_online), stringResource(R.string.notif_only_online_hint), "notif_online_only")
-        var picked by remember { mutableStateOf(StatusItems.selected(ctx).toSet()) }
-        Text(stringResource(R.string.items_title), color = Dim, fontSize = 14.sp)
-        ItemsPicker(picked) { picked = it; StatusItems.setSelected(ctx, it); StatusBarOverlay.refresh(ctx) }
-        PrefSwitch(stringResource(R.string.setup_icons), stringResource(R.string.setup_icons_hint), "icons")
-        PrefSwitch(stringResource(R.string.hide_main_icon), stringResource(R.string.hide_main_icon_hint), "hide_main_icon", true)
-        PrefSwitch(stringResource(R.string.rotate_icon), stringResource(R.string.rotate_icon_hint), "rotate")
-        Button(onClick = { showSetup = true }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) {
-            Text(stringResource(R.string.setup_again))
-        }
-        if (!UpdateChecker.fromPlay(ctx)) {
-            Text(stringResource(R.string.update_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
-            PrefSwitch(stringResource(R.string.update_check), stringResource(R.string.update_check_hint), "update_check")
-            var upMsg by remember { mutableStateOf<String?>(null) }
-            var upInfo by remember { mutableStateOf<UpdateChecker.Info?>(null) }
-            val upCtx = LocalContext.current
-            val upNone = stringResource(R.string.update_none, UpdateChecker.current(ctx))
-            val upFail = stringResource(R.string.update_failed)
-            Button(onClick = {
-                upMsg = "…"
-                UpdateChecker.checkNow(ctx) { i, ok -> upInfo = i; upMsg = if (!ok) upFail else if (i == null) upNone else upCtx.getString(R.string.update_available, i.version) }
-            }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) { Text(stringResource(R.string.update_now)) }
-            upMsg?.let { Text(it, color = Dim, fontSize = 14.sp) }
-            upInfo?.let { i -> Button(onClick = { UpdateChecker.open(ctx, i) }, colors = ButtonDefaults.buttonColors(containerColor = CMem, contentColor = Bg)) { Text(stringResource(R.string.update_download)) } }
-        }
-        Text(stringResource(R.string.theme_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
-        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            for (pal in listOfNotNull(Themes.custom) + Themes.all) {
-                val sel = Themes.current === pal
-                Row(
-                    Modifier.clip(RoundedCornerShape(50)).background(if (sel) CMem else Card)
-                        .clickable { Themes.select(ctx, pal); StatsWidget.update(ctx) }.padding(horizontal = 14.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Box(Modifier.size(14.dp).clip(RoundedCornerShape(50)).background(Color(pal.accent)))
-                    Text(pal.name, color = if (sel) Bg else Fg, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
-                }
-            }
-        }
-        Button(
-            onClick = { (ctx as MainActivity).importTheme.launch(arrayOf("*/*")) },
-            colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg),
-        ) { Text(stringResource(R.string.theme_import)) }
-        val mgr = AppWidgetManager.getInstance(ctx)
-        Text(stringResource(R.string.widgets_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
-        Text(stringResource(R.string.widgets_hint), color = Dim, fontSize = 14.sp)
-        // galerij: elk soort als plaatje (live, met de beginwaarden van dat soort); tik erop om het op het beginscherm te zetten
-        val cols = mapOf(WidgetKind.MINI to 1, WidgetKind.DUO to 2, WidgetKind.SMALL to 2, WidgetKind.STRIP to 4, WidgetKind.DASHBOARD to 4, WidgetKind.LARGE to 4)
-        for (kind in listOf(WidgetKind.MINI, WidgetKind.DUO, WidgetKind.SMALL, WidgetKind.STRIP, WidgetKind.DASHBOARD, WidgetKind.LARGE)) {
-            val pic = remember(s, kind) { StatsRenderer.render(s, 480, (480 * kind.aspect).toInt().coerceAtLeast(90), kind.defaults) }
-            // elk soort is één grote knop: kader, plaatje en een duidelijke "+ Toevoegen"
-            val add = {
-                if (mgr.isRequestPinAppWidgetSupported) mgr.requestPinAppWidget(ComponentName(ctx, kind.cls), null, null)
-                else android.widget.Toast.makeText(ctx, R.string.widget_pin_unsupported, android.widget.Toast.LENGTH_LONG).show()
-            }
-            Column(
-                Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Card).border(1.5.dp, CMem.copy(alpha = 0.55f), RoundedCornerShape(20.dp))
-                    .clickable { add() }.padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                Image(
-                    pic.asImageBitmap(), stringResource(R.string.add_widget_kind, stringResource(kind.label)),
-                    Modifier.fillMaxWidth((cols.getValue(kind) / 4f).coerceAtLeast(0.3f)).clip(RoundedCornerShape(16.dp)),
-                    contentScale = ContentScale.FillWidth,
-                )
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(kind.label), color = Fg, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-                    Text(
-                        stringResource(R.string.add_short), color = Bg, fontSize = 14.sp, fontWeight = FontWeight.Bold,
-                        modifier = Modifier.clip(RoundedCornerShape(50)).background(CMem).padding(horizontal = 16.dp, vertical = 8.dp),
-                    )
-                }
-            }
-        }
-        // per geplaatste widget een instellingenknop (de launcher opent het instelscherm bij vastgezette widgets zelf niet)
-        var n = 0
-        for (kind in WidgetKind.entries) for (id in kind.ids(ctx)) {
-            n++; val nr = n
-            Button(
-                onClick = { ctx.startActivity(Intent(ctx, WidgetConfigActivity::class.java).putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)) },
-                colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg),
-            ) { Text(stringResource(R.string.widget_settings_n, nr) + " (" + stringResource(kind.label) + ")") }
         }
     }
 }
@@ -514,7 +447,7 @@ private fun tileName(id: String) = stringResource(when (id) {
 
 /** Tegels aan/uit zetten en de volgorde bepalen (geldt voor dashboard en cockpit). */
 @Composable
-private fun TilesTab() {
+internal fun TilesTab() {
     val ctx = LocalContext.current
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = PAGE_BOTTOM), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(stringResource(R.string.tiles_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)

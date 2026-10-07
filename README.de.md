@@ -22,9 +22,9 @@ Der Akku fehlt mit Absicht: Android zeigt ihn schon überall an.
 
 Dies ist eine eigenständige Kotlin- / Jetpack-Compose-App, keine Portierung des WinForms-Codes. Sie übernimmt nur die Idee, die Farbthemen und das Layout der Windows-App.
 
-| Dashboard | Cockpit | Widget und Einstellungen |
+| Live | Cockpit | Optionen |
 |---|---|---|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Cockpit](docs/screenshots/cockpit.png) | ![Widget-Tab](docs/screenshots/widget-tab.png) |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Cockpit](docs/screenshots/cockpit.png) | ![Optionen](docs/screenshots/widget-tab.png) |
 
 | Widget auf dem Startbildschirm | Benachrichtigung | Sperrbildschirm |
 |---|---|---|
@@ -35,6 +35,17 @@ Dies ist eine eigenständige Kotlin- / Jetpack-Compose-App, keine Portierung des
 [Datenschutzerklärung](PRIVACY.de.md): Die App sammelt nichts und sendet nichts, außer einer Ping-Verbindung zu `1.1.1.1` (und, nur wenn du es einschaltest, einer täglichen Update-Prüfung bei GitHub).
 
 Alle Screenshots stammen aus einem Android-15-Emulator mit eigenem (erfundenem) Datenverkehr; keine personenbezogenen Daten. Die Screenshots zeigen die englische Oberfläche.
+
+## Navigation
+
+Eine untere Leiste mit fünf festen Plätzen: **Live** (das Dashboard, mit einer Schaltfläche für das Cockpit), **Apps**, **Verlauf**, **Warnungen** und **Optionen**. Optionen ist eine Übersicht mit je einer kurzen Seite pro Thema: *Statusleisten-Streifen* (mit der Vorschau fest oben, sodass du jede Änderung sofort siehst; die Kamera hat eine eigene Seite), *Benachrichtigung und Symbole* (ein Symbol, einzelne Symbole oder wechselnd, als eine Auswahl), *Welche Werte*, *Startbildschirm-Widgets*, *Kacheln*, *Thema* (mit Editor für eigene Farben), *Schrift und Größe* (Schrift, Textgröße, Fett), *Berechtigungen* (mit einer Zahl, was noch fehlt), *Updates*, *Einrichtung erneut ausführen* und *Info* (Version, Links, Lizenz). Die Zurück-Taste geht einen Schritt nach oben.
+
+| Live | Optionen | Streifen und Kamera | Benachrichtigung und Symbole |
+|---|---|---|---|
+| ![Live](docs/screenshots/dashboard.png) | ![Optionen](docs/screenshots/widget-tab.png) | ![Streifen und Kamera](docs/screenshots/strip-preview.png) | \1
+| Thema | Thema bearbeiten | Schrift und Größe |
+|---|---|---|
+| ![Thema](docs/screenshots/themes.png) | ![Thema bearbeiten](docs/screenshots/theme-edit.png) | ![Schrift und Größe](docs/screenshots/font-page.png) |
 
 ## Was sie anzeigt und was Android erlaubt
 
@@ -63,17 +74,17 @@ Android lässt Apps nicht in die Statusleiste zeichnen. Daher zeigt die App ein 
 
 ## Kacheln (Sichtbarkeit und Reihenfolge)
 
-Im Tab **Kacheln** schaltest du jede Kachel (Arbeitsspeicher, Netzwerk, Speicher, Ping, Temperatur, CPU, Verbindung, WLAN-Daten, Mobilfunkdaten, Laufzeit) ein oder aus und verschiebst sie nach oben oder unten. Reihenfolge und Sichtbarkeit gelten für das Dashboard (Ping und Temperatur stehen nebeneinander, wenn sie aufeinanderfolgen) und für das Vollbild-Cockpit (das Netzwerk wird zu einer Download- und einer Upload-Zelle). *Kacheln zurücksetzen* stellt den Standard wieder her.
+Unter **Optionen → Kacheln** schaltest du jede Kachel (Arbeitsspeicher, Netzwerk, Speicher, Ping, Temperatur, CPU, Verbindung, WLAN-Daten, Mobilfunkdaten, Laufzeit) ein oder aus und verschiebst sie nach oben oder unten. Reihenfolge und Sichtbarkeit gelten für das Dashboard (Ping und Temperatur stehen nebeneinander, wenn sie aufeinanderfolgen) und für das Vollbild-Cockpit (das Netzwerk wird zu einer Download- und einer Upload-Zelle). *Kacheln zurücksetzen* stellt den Standard wieder her.
 
-Die Kacheln für WLAN- und Mobilfunkdaten zeigen den Datenverbrauch über einen Zeitraum, den du oben im Tab wählst (heute, 7 oder 30 Tage; erfordert Nutzungszugriff).
+Die Kacheln für WLAN- und Mobilfunkdaten zeigen den Datenverbrauch über einen Zeitraum, den du oben auf der Seite wählst (heute, 7 oder 30 Tage; erfordert Nutzungszugriff).
 
-![Der Tab Kacheln mit dem Datenzeitraum](docs/screenshots/tiles.png)
+![Optionen → Kacheln mit dem Datenzeitraum](docs/screenshots/tiles.png)
 
 ## Widgets und Schnelleinstellungs-Kachel
 
-Im Tab Widget wird jeder Typ als lebendes Bild gezeigt; tippe auf ein Bild, um dieses Widget auf deinen Startbildschirm zu legen. Es gibt sechs Widget-Typen, die du mischen und beliebig oft platzieren kannst: **Mini** (1x1, eine Zahl), **Duo** (2x1, zwei Werte), **Small** (2x2, ein Wert, standardmäßig Netzwerk), **Strip** (4x1, ohne Grafiken), **Dashboard** (4x2, mit Grafiken) und **Large** (4x3, alle Infos in zwei Zeilen: Arbeitsspeicher, Netzwerk, CPU, Speicher, Datenverbrauch, Ping, Verbindung und Laufzeit). Jedes Widget auf dem Startbildschirm hat eigene Einstellungen (Zellen MEM / NET / CPU / DISK / DATA / PING / TEMP / LINK / UPTIME, Grafiken und Balken an oder aus, und die Deckkraft des Hintergrunds, 20-100 %), gespeichert pro Widget-ID. Öffne sie mit **Widget N Einstellungen** im Tab Widget (Launcher öffnen die Einstellungen eines angehefteten Widgets nicht von selbst) oder mit *Neu konfigurieren* am Widget. Das Widget ist in der Größe veränderbar und zeichnet sich im Seitenverhältnis, das du ihm gibst. Die **Schnelleinstellungs-Kachel** (über den Kachel-Editor hinzufügen) zeigt `RAM 46%` und die Netzwerkgeschwindigkeit und schaltet den Live-Monitor mit einem Tipp ein oder aus.
+Unter **Optionen → Startbildschirm-Widgets** wird jeder Typ als lebendes Bild gezeigt; tippe auf ein Bild, um dieses Widget auf deinen Startbildschirm zu legen. Es gibt sechs Widget-Typen, die du mischen und beliebig oft platzieren kannst: **Mini** (1x1, eine Zahl), **Duo** (2x1, zwei Werte), **Small** (2x2, ein Wert, standardmäßig Netzwerk), **Strip** (4x1, ohne Grafiken), **Dashboard** (4x2, mit Grafiken) und **Large** (4x3, alle Infos in zwei Zeilen: Arbeitsspeicher, Netzwerk, CPU, Speicher, Datenverbrauch, Ping, Verbindung und Laufzeit). Jedes Widget auf dem Startbildschirm hat eigene Einstellungen (Zellen MEM / NET / CPU / DISK / DATA / PING / TEMP / LINK / UPTIME, Grafiken und Balken an oder aus, und die Deckkraft des Hintergrunds, 20-100 %), gespeichert pro Widget-ID. Öffne sie mit **Widget N Einstellungen** auf derselben Seite (Launcher öffnen die Einstellungen eines angehefteten Widgets nicht von selbst) oder mit *Neu konfigurieren* am Widget. Das Widget ist in der Größe veränderbar und zeichnet sich im Seitenverhältnis, das du ihm gibst. Die **Schnelleinstellungs-Kachel** (über den Kachel-Editor hinzufügen) zeigt `RAM 46%` und die Netzwerkgeschwindigkeit und schaltet den Live-Monitor mit einem Tipp ein oder aus.
 
-Die Galerie im Tab Widget (jedes Bild ist eine Schaltfläche):
+Die Galerie unter Optionen → Startbildschirm-Widgets (jedes Bild ist eine Schaltfläche):
 
 ![Widget-Galerie](docs/screenshots/widget-gallery.png)
 
@@ -85,9 +96,9 @@ Widget-Einstellungen (mit dem Grafik-Schalter) und die Schnelleinstellungs-Kache
 
 ![Widget-Einstellungen und Schnelleinstellungs-Kachel](docs/screenshots/widget-settings-qs.png)
 
-## Weitere Tabs: Apps, Verlauf, Warnungen, Berechtigungen
+## Weitere Bildschirme: Apps, Verlauf, Warnungen, Berechtigungen
 
-| Tab | Was er tut | Benötigt |
+| Bildschirm | Was er tut | Benötigt |
 |---|---|---|
 | **Apps → Datenverbrauch** | WLAN- und Mobilfunkdaten pro Tag, letzte 7 oder 30 Tage, mit Summe | Nutzungszugriff |
 | **Apps → Datenverkehr pro App** | Download / Upload pro App (heute, 7 oder 30 Tage) | Nutzungszugriff |
@@ -97,7 +108,7 @@ Widget-Einstellungen (mit dem Grafik-Schalter) und die Schnelleinstellungs-Kache
 | **Apps → Prozesse** | laufende Prozesse mit CPU und RAM, alle 3 s. Tippe auf einen für Details (Befehlszeile, wer ihn gestartet hat, Benutzer, Alter, was ihn am Laufen hält, seine Komponenten) und Aktionen: App öffnen (holt sie nach vorn), App-Info, Beenden erzwingen, den Prozess beenden, die Befehlszeile kopieren | Shizuku |
 | **Verlauf** | Minutenmittel von Arbeitsspeicher, Netzwerk, Ping und CPU bis zu 24 h (im Speicher: er baut sich auf, solange die App offen ist oder der Live-Monitor läuft) | nichts |
 | **Warnungen** | Benachrichtigung, wenn Arbeitsspeicher, Speicher, Ping oder Temperatur einen Grenzwert überschreiten (standardmäßig aus, höchstens eine pro 10 min und Wert, benötigt den Live-Monitor) | Benachrichtigungen |
-| **Berechtigungen** | eine Karte pro optionaler Berechtigung mit Status und einer Schaltfläche, die genau die richtige Android-Seite öffnet (Benachrichtigungen, über anderen Apps einblenden, Nutzungszugriff, Akku-Optimierung, Shizuku) | - |
+| **Optionen → Berechtigungen** | eine Karte pro optionaler Berechtigung mit Status und einer Schaltfläche, die genau die richtige Android-Seite öffnet (Benachrichtigungen, über anderen Apps einblenden, Nutzungszugriff, Akku-Optimierung, Shizuku) | - |
 
 Zwei weitere Kacheln: **Verbindung** (WLAN / Mobilfunk, Signal in dBm, Verbindungsgeschwindigkeit, Band) und **Laufzeit**. Alles, was eine Sonderberechtigung braucht, wird dort erklärt, wo es genutzt wird, und verlinkt direkt auf die richtige Einstellungsseite; der Status wird beim Zurückkehren neu gelesen. Nichts verlässt das Gerät.
 
@@ -109,12 +120,12 @@ Zwei weitere Kacheln: **Verbindung** (WLAN / Mobilfunk, Signal in dBm, Verbindun
 
 ## Erster Start und Statusleisten-Einträge
 
-Beim ersten Start (und über *Einrichtung erneut ausführen* im Tab Widget) fragt ein Einrichtungsbildschirm, **was** angezeigt werden soll (Download, Upload, Arbeitsspeicher, CPU, Speicher, Ping, Temperatur - beliebig kombinierbar) und **wo**:
+Beim ersten Start (und über *Einrichtung erneut ausführen* unter Optionen) fragt ein Einrichtungsbildschirm, **was** angezeigt werden soll (Download, Upload, Arbeitsspeicher, CPU, Speicher, Ping, Temperatur - beliebig kombinierbar) und **wo**:
 
 - **Symbole neben der Uhr**: ein Statusleistensymbol pro Wert, mit dem Wert hineingezeichnet (ein kleines Label über dem Wert, z. B. `RAM 46%`, `↓ 123B`). Braucht keine zusätzliche Berechtigung. Android bestimmt die genaue Reihenfolge und Stelle (immer links, neben der Uhr). Der erste Wert sitzt auf dem Symbol der Hauptbenachrichtigung, die anderen bekommen je eine eigene Benachrichtigung (getrennte Gruppen, sonst faltet Android sie zu einem allgemeinen Symbol zusammen; normale Wichtigkeit, aber ohne Ton, weil manche Telefone die Symbole stummer Benachrichtigungen ausblenden).
 - **Textleiste**: eine Leiste mit allen gewählten Werten nach der Uhr oder vor den Systemsymbolen (braucht *Über anderen Apps einblenden*; die Einrichtung öffnet die richtige Seite). Sind die Symbole ebenfalls an, beginnt die Leiste danach. Download und Upload teilen sich eine zweizeilige Zelle.
 
-Beides kann gleichzeitig an sein. *Start* startet den Live-Monitor sofort. Im Tab Widget blendet *Benachrichtigung* → *Nur bei Verbindung* die Symbole aus, solange keine Verbindung besteht (die Hauptbenachrichtigung muss bleiben: Android verlangt eine für einen Vordergrunddienst).
+Beides kann gleichzeitig an sein. *Start* startet den Live-Monitor sofort. Unter Optionen → Benachrichtigung und Symbole blendet *Nur bei Verbindung* die Symbole aus, solange keine Verbindung besteht (die Hauptbenachrichtigung muss bleiben: Android verlangt eine für einen Vordergrunddienst).
 
 ![Einrichtung](docs/screenshots/setup.png)
 
@@ -126,7 +137,7 @@ Beides kann gleichzeitig an sein. *Start* startet den Live-Monitor sofort. Im Ta
 
 ## Kamera-Aussparung
 
-Eine Frontkamera in der Mitte des oberen Rands verdeckt keinen Teil der App mehr. Mit **Kamera freihalten** (Tab Widget, standardmäßig an) werden Dashboard, Vollbild-Cockpit und Statusleistenstreifen um die Aussparung herum gezeichnet statt dahinter; der Streifen bleibt auf seiner Seite der Kamera und schrumpft oder lässt Zellen weg, wenn zu wenig Platz ist. Wähle als Position **Mitte, um die Kamera** und der Streifen wird in zwei Hälften geteilt, eine links und eine rechts der Kamera (ohne Kamera ist es ein zentrierter Streifen). Jeder gewählte Wert bleibt im Streifen (CPU, Ping, Temperatur, Speicher usw.); bei Platzmangel wird nur der Text kleiner. Schalte **Werte bei Platzmangel ausblenden** ein, damit CPU, Ping, Temperatur und Speicher stattdessen wegfallen. Die Hälften werden nach dem Platz auf beiden Seiten verteilt. Oben: mit eingeschaltetem Schalter; unten: Kameraoption aus.
+Eine Frontkamera in der Mitte des oberen Rands verdeckt keinen Teil der App mehr. Mit **Kamera freihalten** (Optionen → Statusleisten-Streifen, standardmäßig an) werden Dashboard, Vollbild-Cockpit und Statusleistenstreifen um die Aussparung herum gezeichnet statt dahinter; der Streifen bleibt auf seiner Seite der Kamera und schrumpft oder lässt Zellen weg, wenn zu wenig Platz ist. Wähle als Position **Mitte, um die Kamera** und der Streifen wird in zwei Hälften geteilt, eine links und eine rechts der Kamera (ohne Kamera ist es ein zentrierter Streifen). Jeder gewählte Wert bleibt im Streifen (CPU, Ping, Temperatur, Speicher usw.); bei Platzmangel wird nur der Text kleiner. Schalte **Werte bei Platzmangel ausblenden** ein, damit CPU, Ping, Temperatur und Speicher stattdessen wegfallen. Die Hälften werden nach dem Platz auf beiden Seiten verteilt. Oben: mit eingeschaltetem Schalter; unten: Kameraoption aus.
 
 ![Alle Positionen des Statusleistenstreifens, mit den Einstellungen](docs/screenshots/statusbar-positions.png)
 
@@ -134,7 +145,7 @@ Wähle die Position in einer **Vorschau der Statusleiste**: Tippe links (neben d
 
 ![Die Vorschau und die Kamera-Einstellungen](docs/screenshots/strip-preview.png)
 
-**Der Up-/Download-Zähler neben der Uhr:** Solange der Streifen an ist, würde das eigene Werte-Symbol neben der Uhr dieselben Zahlen doppelt zeigen. *Eigenes Symbol ausblenden, solange der Streifen an ist* (standardmäßig an) macht es unsichtbar. Nicht bei einzelnen oder wechselnden Symbolen.
+**Der Up-/Download-Zähler neben der Uhr:** Solange der Streifen an ist, würde das eigene Werte-Symbol neben der Uhr dieselben Zahlen doppelt zeigen. *Meine Symbole neben der Uhr ausblenden, solange der Streifen an ist* (standardmäßig an) macht sie unsichtbar, egal ob ein Symbol, einzelne oder wechselnde Symbole. Android hält eine leere Stelle für die Benachrichtigung frei: eine App kann sie nicht entfernen.
 
 **Das App-Logo neben der Uhr:** Solange der Streifen an ist, zeigt Android selbst ein kleines "über anderen Apps einblenden"-Symbol mit dem App-Logo. Eine App kann es nicht entfernen, aber die Schaltfläche *Android-Symbol "über anderen Apps" ausblenden* öffnet die Systemeinstellung, in der du diese Benachrichtigung ausschalten kannst (auf vielen Telefonen; manche sperren es).
 
@@ -154,7 +165,7 @@ Dieselben 14 Farbthemen wie die Windows-App (Default, Dark, Light, Love, CGA, Ma
 
 ## Updates
 
-Optional und standardmäßig aus: *Nach Updates suchen* (Tab Widget) fragt einmal täglich bei GitHub nach der neuesten Version und meldet eine neue Version einmal. *Herunterladen und installieren* öffnet den APK-Link im Browser; Android fragt vor der Installation nach Bestätigung. Ausgeblendet, wenn die App aus dem Play Store stammt. Siehe die [Datenschutzerklärung](PRIVACY.de.md).
+Optional und standardmäßig aus: *Nach Updates suchen* (Optionen → Updates) fragt einmal täglich bei GitHub nach der neuesten Version und meldet eine neue Version einmal. *Herunterladen und installieren* öffnet den APK-Link im Browser; Android fragt vor der Installation nach Bestätigung. Ausgeblendet, wenn die App aus dem Play Store stammt. Siehe die [Datenschutzerklärung](PRIVACY.de.md).
 
 ![Die Update-Prüfung in vier Zuständen](docs/screenshots/updates.png)
 
@@ -196,7 +207,7 @@ local.properties (mit `sdk.dir`) steht in der .gitignore. Nur auf einem Android-
 | `StatsRenderer.kt` | zeichnet das Widget in eine einfache `Bitmap` (derselbe Renderer für Widget, Benachrichtigung und Vorschau in der App) |
 | `StatusBarOverlay.kt` | die Statusleisten-Pille: Platzierung, Anpassung, Vollbild-Erkennung (Window Insets) |
 | `MonitorService.kt`, `StatsWidget.kt` | Vordergrunddienst (Widget + Benachrichtigung alle 2 s), `AppWidgetProvider` |
-| `MainActivity.kt` | Compose-UI: Dashboard, Cockpit (immersiv, hält den Bildschirm an), Tab Widget/Einstellungen |
+| `MainActivity.kt` | Compose-UI: Dashboard, Cockpit (immersiv, hält den Bildschirm an), die untere Leiste und die Seiten Live und Cockpit |
 | `Tiles.kt` | welche Kacheln in welcher Reihenfolge gezeigt werden (Dashboard und Cockpit) |
 | `WidgetOptions.kt`, `WidgetConfigActivity.kt` | Zellen und Deckkraft pro Widget und der Einstellungsbildschirm |
 | `StatsTileService.kt` | die Schnelleinstellungs-Kachel |
@@ -206,6 +217,7 @@ local.properties (mit `sdk.dir`) steht in der .gitignore. Nur auf einem Android-
 | `Alerts.kt` | Schwellenwert-Benachrichtigungen |
 | `StatusItems.kt`, `Setup.kt` | die gewählten Statusleisten-Einträge (Symbole zeichnen, Werte) und der Einrichtungsbildschirm beim ersten Start |
 | `Tabs2.kt` | die Tabs Apps, Verlauf, Warnungen und Berechtigungen |
+| `SettingsPages.kt` | die Übersicht Optionen und ihre Seiten (Streifen, Kamera, Benachrichtigung und Symbole, Werte, Widgets, Thema, Updates) |
 
 ## Noch nicht erledigt
 

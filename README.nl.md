@@ -22,9 +22,9 @@ De batterij is bewust weggelaten: Android toont die al overal.
 
 Dit is een aparte Kotlin / Jetpack Compose-app, geen port van de WinForms-code. Alleen het idee, de kleurthema's en de indeling komen van de Windows-app.
 
-| Dashboard | Cockpit | Widget en instellingen |
+| Live | Cockpit | Instellingen |
 |---|---|---|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Cockpit](docs/screenshots/cockpit.png) | ![Widget-tab](docs/screenshots/widget-tab.png) |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Cockpit](docs/screenshots/cockpit.png) | ![Instellingen](docs/screenshots/widget-tab.png) |
 
 | Widget op het beginscherm | Melding | Vergrendelscherm |
 |---|---|---|
@@ -35,6 +35,17 @@ Dit is een aparte Kotlin / Jetpack Compose-app, geen port van de WinForms-code. 
 [Privacyverklaring](PRIVACY.nl.md): de app verzamelt niets en verstuurt niets behalve één ping-verbinding naar `1.1.1.1` (en, alleen als je dat aanzet, een dagelijkse updatecontrole bij GitHub).
 
 Alle screenshots komen uit een Android 15-emulator met eigen (verzonnen) verkeer; geen persoonlijke gegevens. De screenshots tonen de Engelse interface.
+
+## Navigatie
+
+Een onderbalk met vijf vaste plekken: **Live** (het dashboard, met een knop voor de cockpit), **Apps**, **Geschiedenis**, **Meldingen** en **Instellingen**. Instellingen is een overzicht met per onderwerp één korte pagina: *Statusbalkstrook* (met het voorbeeld vast bovenaan, zodat je elke wijziging meteen ziet; de camera heeft een eigen pagina), *Melding en iconen* (één icoon, losse iconen of wisselend, als één keuze), *Welke cijfers*, *Startschermwidgets*, *Tegels*, *Thema* (met een editor voor eigen kleuren), *Lettertype en grootte* (lettertype, tekstgrootte, vet), *Rechten* (met een teller van wat nog ontbreekt), *Updates*, *Installatie opnieuw uitvoeren* en *Over* (versie, links, licentie). De terugknop gaat één stap omhoog.
+
+| Live | Instellingen | Strook en camera | Melding en iconen |
+|---|---|---|---|
+| ![Live](docs/screenshots/dashboard.png) | ![Instellingen](docs/screenshots/widget-tab.png) | ![Strook en camera](docs/screenshots/strip-preview.png) | \1
+| Thema | Thema bewerken | Lettertype en grootte |
+|---|---|---|
+| ![Thema](docs/screenshots/themes.png) | ![Thema bewerken](docs/screenshots/theme-edit.png) | ![Lettertype en grootte](docs/screenshots/font-page.png) |
 
 ## Wat de app toont en wat Android toestaat
 
@@ -63,17 +74,17 @@ Android laat apps niet in de statusbalk tekenen. Daarom toont de app een klein, 
 
 ## Tegels (zichtbaarheid en volgorde)
 
-Op het tabblad **Tegels** zet je elke tegel (geheugen, netwerk, opslag, ping, temperatuur, CPU, verbinding, wifi-data, mobiele data, uptime) aan of uit en verplaats je hem omhoog of omlaag. Volgorde en zichtbaarheid gelden voor het dashboard (ping en temperatuur staan naast elkaar als ze op elkaar volgen) en voor de fullscreen cockpit (netwerk wordt een download- en een uploadcel). *Tegels herstellen* zet de standaard terug.
+Onder **Instellingen → Tegels** zet je elke tegel (geheugen, netwerk, opslag, ping, temperatuur, CPU, verbinding, wifi-data, mobiele data, uptime) aan of uit en verplaats je hem omhoog of omlaag. Volgorde en zichtbaarheid gelden voor het dashboard (ping en temperatuur staan naast elkaar als ze op elkaar volgen) en voor de fullscreen cockpit (netwerk wordt een download- en een uploadcel). *Tegels herstellen* zet de standaard terug.
 
-De tegels voor wifi- en mobiele data tonen het dataverbruik over een periode die je bovenaan het tabblad kiest (vandaag, 7 of 30 dagen; vereist Gebruikstoegang).
+De tegels voor wifi- en mobiele data tonen het dataverbruik over een periode die je bovenaan de pagina kiest (vandaag, 7 of 30 dagen; vereist Gebruikstoegang).
 
-![Het tabblad Tegels met de dataperiode](docs/screenshots/tiles.png)
+![Instellingen → Tegels met de dataperiode](docs/screenshots/tiles.png)
 
 ## Widgets en Snelle-instellingen-tegel
 
-Op het tabblad Widget wordt elk type als levend plaatje getoond; tik op een plaatje om die widget op je beginscherm te zetten. Er zijn zes widgettypen die je kunt mengen en zo vaak plaatsen als je wilt: **Mini** (1x1, één getal), **Duo** (2x1, twee onderdelen), **Small** (2x2, één onderdeel, standaard netwerk), **Strip** (4x1, zonder grafieken), **Dashboard** (4x2, met grafieken) en **Large** (4x3, alle info in twee rijen: geheugen, netwerk, CPU, opslag, dataverbruik, ping, verbinding en uptime). Elke widget op het beginscherm heeft eigen instellingen (cellen MEM / NET / CPU / DISK / DATA / PING / TEMP / LINK / UPTIME, grafieken en balken aan of uit, en de dekking van de achtergrond, 20-100 %), opgeslagen per widget-id. Open ze met **Widget N instellingen** op het tabblad Widget (launchers openen de instellingen van een vastgezette widget niet uit zichzelf) of met *Opnieuw instellen* op de widget. De widget is vergrootbaar en tekent zichzelf in de beeldverhouding die jij hem geeft. De **Snelle-instellingen-tegel** (toevoegen via de tegelbewerker) toont `RAM 46%` en de netwerksnelheid en zet de live monitor met één tik aan of uit.
+Onder **Instellingen → Startschermwidgets** wordt elk type als levend plaatje getoond; tik op een plaatje om die widget op je beginscherm te zetten. Er zijn zes widgettypen die je kunt mengen en zo vaak plaatsen als je wilt: **Mini** (1x1, één getal), **Duo** (2x1, twee onderdelen), **Small** (2x2, één onderdeel, standaard netwerk), **Strip** (4x1, zonder grafieken), **Dashboard** (4x2, met grafieken) en **Large** (4x3, alle info in twee rijen: geheugen, netwerk, CPU, opslag, dataverbruik, ping, verbinding en uptime). Elke widget op het beginscherm heeft eigen instellingen (cellen MEM / NET / CPU / DISK / DATA / PING / TEMP / LINK / UPTIME, grafieken en balken aan of uit, en de dekking van de achtergrond, 20-100 %), opgeslagen per widget-id. Open ze met **Widget N instellingen** op diezelfde pagina (launchers openen de instellingen van een vastgezette widget niet uit zichzelf) of met *Opnieuw instellen* op de widget. De widget is vergrootbaar en tekent zichzelf in de beeldverhouding die jij hem geeft. De **Snelle-instellingen-tegel** (toevoegen via de tegelbewerker) toont `RAM 46%` en de netwerksnelheid en zet de live monitor met één tik aan of uit.
 
-De galerij op het tabblad Widget (elk plaatje is een knop):
+De galerij onder Instellingen → Startschermwidgets (elk plaatje is een knop):
 
 ![Widgetgalerij](docs/screenshots/widget-gallery.png)
 
@@ -85,9 +96,9 @@ Widgetinstellingen (met de grafiekenschakelaar) en de Snelle-instellingen-tegel:
 
 ![Widgetinstellingen en Snelle-instellingen-tegel](docs/screenshots/widget-settings-qs.png)
 
-## Meer tabbladen: Apps, Geschiedenis, Meldingen, Rechten
+## Meer schermen: Apps, Geschiedenis, Meldingen, Rechten
 
-| Tabblad | Wat het doet | Vereist |
+| Scherm | Wat het doet | Vereist |
 |---|---|---|
 | **Apps → Dataverbruik** | wifi- en mobiele data per dag, laatste 7 of 30 dagen, met een totaal | Gebruikstoegang |
 | **Apps → Verkeer per app** | download / upload per app (vandaag, 7 of 30 dagen) | Gebruikstoegang |
@@ -97,7 +108,7 @@ Widgetinstellingen (met de grafiekenschakelaar) en de Snelle-instellingen-tegel:
 | **Apps → Processen** | draaiende processen met CPU en RAM, elke 3 s. Tik op een proces voor details (opdrachtregel, wie het startte, gebruiker, leeftijd, wat het draaiend houdt, de componenten) en acties: de app openen (haalt hem naar voren), appinfo, geforceerd stoppen, het proces beëindigen, de opdrachtregel kopiëren | Shizuku |
 | **Geschiedenis** | gemiddelden per minuut van geheugen, netwerk, ping en CPU tot 24 uur (in het geheugen: het bouwt zich op zolang de app open is of de live monitor draait) | niets |
 | **Meldingen** | melding als geheugen, opslag, ping of temperatuur boven een grens komt (standaard uit, maximaal één per 10 min per onderdeel, vereist de live monitor) | meldingen |
-| **Rechten** | één kaart per optionele toestemming met de status en een knop die precies de juiste Android-pagina opent (meldingen, weergeven over andere apps, gebruikstoegang, batterij-optimalisatie, Shizuku) | - |
+| **Instellingen → Rechten** | één kaart per optionele toestemming met de status en een knop die precies de juiste Android-pagina opent (meldingen, weergeven over andere apps, gebruikstoegang, batterij-optimalisatie, Shizuku) | - |
 
 Nog twee tegels: **Verbinding** (wifi / mobiel, signaal in dBm, linksnelheid, band) en **Uptime**. Alles wat een speciale toestemming nodig heeft wordt uitgelegd waar het gebruikt wordt en linkt rechtstreeks naar de juiste instellingenpagina; de status wordt opnieuw gelezen als je terugkomt. Er verlaat niets het toestel.
 
@@ -109,12 +120,12 @@ Nog twee tegels: **Verbinding** (wifi / mobiel, signaal in dBm, linksnelheid, ba
 
 ## Eerste start en statusbalk-items
 
-Bij de eerste start (en via *Installatie opnieuw uitvoeren* op het tabblad Widget) vraagt een installatiescherm **wat** je wilt tonen (download, upload, geheugen, CPU, opslag, ping, temperatuur - elke combinatie) en **waar**:
+Bij de eerste start (en via *Installatie opnieuw uitvoeren* onder Instellingen) vraagt een installatiescherm **wat** je wilt tonen (download, upload, geheugen, CPU, opslag, ping, temperatuur - elke combinatie) en **waar**:
 
 - **Iconen naast de klok**: één statusbalkicoon per onderdeel met de waarde erin getekend (een klein label boven de waarde, bv. `RAM 46%`, `↓ 123B`). Vereist geen extra toestemming. Android bepaalt de exacte volgorde en plaats (altijd links, naast de klok). Het eerste onderdeel zit op het icoon van de hoofdmelding, de andere krijgen een eigen melding (aparte groepen, anders vouwt Android ze samen tot één algemeen icoon; normaal belang maar zonder geluid, omdat sommige telefoons de iconen van stille meldingen verbergen).
 - **Tekststrip**: één strip met alle gekozen onderdelen na de klok of vóór de systeemiconen (vereist *Weergeven over andere apps*; het installatiescherm opent de juiste pagina). Staan de iconen ook aan, dan begint de strip erna. Download en upload delen één cel van twee regels.
 
-Beide kunnen tegelijk aan staan. *Start* start de live monitor meteen. Op het tabblad Widget verbergt *Melding* → *Alleen bij verbinding* de iconen zolang er geen verbinding is (de hoofdmelding moet blijven: Android eist er één voor een voorgrondservice).
+Beide kunnen tegelijk aan staan. *Start* start de live monitor meteen. Onder Instellingen → Melding en iconen verbergt *Alleen bij verbinding* de iconen zolang er geen verbinding is (de hoofdmelding moet blijven: Android eist er één voor een voorgrondservice).
 
 ![Installatie](docs/screenshots/setup.png)
 
@@ -126,7 +137,7 @@ Beide kunnen tegelijk aan staan. *Start* start de live monitor meteen. Op het ta
 
 ## Cameragat
 
-Een selfiecamera in het midden van de bovenrand verbergt niet langer een stuk van de app. Met **Camera vrijhouden** (tabblad Widget, standaard aan) worden het dashboard, de fullscreen cockpit en de statusbalkstrook om het cameragat heen getekend in plaats van erachter; de strook blijft aan zijn kant van de camera en krimpt of laat cellen weg als er te weinig ruimte is. Kies als positie **Midden, om de camera** en de strook wordt in twee helften gesplitst, één links en één rechts van de camera (zonder camera is het één gecentreerde strook). Elk gekozen onderdeel blijft in de strook staan (CPU, ping, temperatuur, opslag enzovoort); de tekst wordt alleen kleiner als de ruimte krap is. Zet **Onderdelen weglaten bij te weinig ruimte** aan om CPU, ping, temperatuur en opslag juist te laten wegvallen. De helften worden verdeeld naar de ruimte aan elke kant. Boven: met de schakelaar aan; onder: camera-optie uit.
+Een selfiecamera in het midden van de bovenrand verbergt niet langer een stuk van de app. Met **Camera vrijhouden** (Instellingen → Statusbalkstrook, standaard aan) worden het dashboard, de fullscreen cockpit en de statusbalkstrook om het cameragat heen getekend in plaats van erachter; de strook blijft aan zijn kant van de camera en krimpt of laat cellen weg als er te weinig ruimte is. Kies als positie **Midden, om de camera** en de strook wordt in twee helften gesplitst, één links en één rechts van de camera (zonder camera is het één gecentreerde strook). Elk gekozen onderdeel blijft in de strook staan (CPU, ping, temperatuur, opslag enzovoort); de tekst wordt alleen kleiner als de ruimte krap is. Zet **Onderdelen weglaten bij te weinig ruimte** aan om CPU, ping, temperatuur en opslag juist te laten wegvallen. De helften worden verdeeld naar de ruimte aan elke kant. Boven: met de schakelaar aan; onder: camera-optie uit.
 
 ![Alle posities van de statusbalkstrook, met de instellingen](docs/screenshots/statusbar-positions.png)
 
@@ -134,7 +145,7 @@ Kies de positie in een **voorbeeld van de statusbalk**: tik links (naast de klok
 
 ![Het voorbeeld en de camera-instellingen](docs/screenshots/strip-preview.png)
 
-**De up/download-meter naast de klok:** zolang de strook aan staat, toont het eigen cijfer-icoon naast de klok dezelfde cijfers dubbel. *Eigen icoon verbergen als de strook aan staat* (standaard aan) maakt dat icoon onzichtbaar. Niet gebruikt bij losse of wisselende iconen.
+**De up/download-meter naast de klok:** zolang de strook aan staat, toont het eigen cijfer-icoon naast de klok dezelfde cijfers dubbel. *Mijn iconen naast de klok verbergen als de strook aan staat* (standaard aan) maakt ze onzichtbaar, of je nu één icoon, losse iconen of wisselende iconen gebruikt. Android houdt één lege plek voor de melding vrij: een app kan die niet weghalen.
 
 **Het app-logo naast de klok:** zolang de strook aan staat, zet Android zelf een klein "weergeven over andere apps"-icoon met het app-logo in de statusbalk. Een app kan dat niet weghalen, maar de knop *Android-icoon "over andere apps" verbergen* opent de systeeminstelling waar je die melding kunt uitzetten (op veel telefoons; sommige telefoons vergrendelen het).
 
@@ -154,7 +165,7 @@ Dezelfde 14 kleurthema's als de Windows-app (Default, Dark, Light, Love, CGA, Ma
 
 ## Updates
 
-Optioneel en standaard uit: *Op updates controleren* (tabblad Widget) vraagt één keer per dag bij GitHub naar de nieuwste release en meldt een nieuwe versie één keer. *Downloaden en installeren* opent de APK-link in je browser; Android vraagt om bevestiging voor het installeren. Verborgen als de app uit de Play Store komt. Zie de [privacyverklaring](PRIVACY.nl.md).
+Optioneel en standaard uit: *Op updates controleren* (Instellingen → Updates) vraagt één keer per dag bij GitHub naar de nieuwste release en meldt een nieuwe versie één keer. *Downloaden en installeren* opent de APK-link in je browser; Android vraagt om bevestiging voor het installeren. Verborgen als de app uit de Play Store komt. Zie de [privacyverklaring](PRIVACY.nl.md).
 
 ![De updatecontrole in vier toestanden](docs/screenshots/updates.png)
 
@@ -196,7 +207,7 @@ local.properties (met `sdk.dir`) staat in .gitignore. Alleen getest op een Andro
 | `StatsRenderer.kt` | tekent de widget naar een gewone `Bitmap` (dezelfde renderer voor widget, melding en voorbeeld in de app) |
 | `StatusBarOverlay.kt` | de statusbalkpil: plaatsing, passen, fullscreen-herkenning (window insets) |
 | `MonitorService.kt`, `StatsWidget.kt` | voorgrondservice (widget + melding elke 2 s), `AppWidgetProvider` |
-| `MainActivity.kt` | Compose-UI: Dashboard, Cockpit (immersief, houdt het scherm aan), tabblad Widget/instellingen |
+| `MainActivity.kt` | Compose-UI: Dashboard, Cockpit (immersief, houdt het scherm aan), de onderbalk en de pagina's Live en Cockpit |
 | `Tiles.kt` | welke tegels getoond worden en in welke volgorde (dashboard en cockpit) |
 | `WidgetOptions.kt`, `WidgetConfigActivity.kt` | cellen en dekking per widget, en het instellingenscherm |
 | `StatsTileService.kt` | de Snelle-instellingen-tegel |
@@ -206,6 +217,7 @@ local.properties (met `sdk.dir`) staat in .gitignore. Alleen getest op een Andro
 | `Alerts.kt` | drempelmeldingen |
 | `StatusItems.kt`, `Setup.kt` | de gekozen statusbalk-items (iconen tekenen, waarden) en het installatiescherm bij de eerste start |
 | `Tabs2.kt` | de tabbladen Apps, Geschiedenis, Meldingen en Rechten |
+| `SettingsPages.kt` | het overzicht Instellingen en zijn pagina's (strook, camera, melding en iconen, cijfers, widgets, thema, updates) |
 
 ## Nog niet gedaan
 

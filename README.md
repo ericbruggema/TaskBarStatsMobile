@@ -25,9 +25,9 @@ The battery is left out on purpose: Android already shows it everywhere.
 This is a separate Kotlin / Jetpack Compose app, not a port of the WinForms code. It shares the idea, the
 colour themes and the layout of the Windows app, nothing else.
 
-| Dashboard | Cockpit | Widget & settings |
+| Live | Cockpit | Settings |
 |---|---|---|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Cockpit](docs/screenshots/cockpit.png) | ![Widget tab](docs/screenshots/widget-tab.png) |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Cockpit](docs/screenshots/cockpit.png) | ![Settings](docs/screenshots/widget-tab.png) |
 
 | Home-screen widget | Notification | Lock screen |
 |---|---|---|
@@ -38,6 +38,17 @@ colour themes and the layout of the Windows app, nothing else.
 [Privacy policy](PRIVACY.md) ([nl](PRIVACY.nl.md), [de](PRIVACY.de.md)): the app collects nothing and sends nothing except one ping connection to `1.1.1.1` (and, only if you switch it on, a daily update check on GitHub).
 
 All screenshots come from an Android 15 emulator with its own (fake) traffic; no personal data.
+
+## Navigation
+
+A bottom bar with five fixed places: **Live** (the dashboard, with a button for the cockpit), **Apps**, **History**, **Alerts** and **Settings**. Settings is an overview with one short page per subject: *Status bar strip* (with the preview fixed at the top, so you see every change at once; the camera has its own page), *Notification and icons* (one icon, separate icons or rotating, as one choice), *Which figures*, *Home-screen widgets*, *Tiles*, *Theme* (with an editor for your own colours), *Font and size* (font, text size, bold), *Permissions* (with a count of what is still missing), *Updates*, *Run setup again* and *About* (version, links, licence). The back button goes one step up.
+
+| Live | Settings | Strip and camera | Notification and icons |
+|---|---|---|---|
+| ![Live](docs/screenshots/dashboard.png) | ![Settings](docs/screenshots/widget-tab.png) | ![Strip and camera](docs/screenshots/strip-preview.png) | \1
+| Theme | Edit theme | Font and size |
+|---|---|---|
+| ![Theme](docs/screenshots/themes.png) | ![Edit theme](docs/screenshots/theme-edit.png) | ![Font and size](docs/screenshots/font-page.png) |
 
 ## What it shows, and what Android allows
 
@@ -68,23 +79,23 @@ exactly the status-bar height (permission *Display over other apps*; the button 
 
 ## Tiles (visibility and order)
 
-The **Tiles** tab switches each tile (memory, network, storage, ping, temperature, CPU, connection, Wi-Fi data, mobile data, uptime) on or off and moves it up or
+**Settings → Tiles** switches each tile (memory, network, storage, ping, temperature, CPU, connection, Wi-Fi data, mobile data, uptime) on or off and moves it up or
 down. The order and visibility apply to the dashboard (ping and temperature sit side by side when they follow each
 other) and to the fullscreen cockpit (network becomes a download and an upload cell). *Reset tiles* restores the default.
 
-The Wi-Fi and mobile data tiles show the data use over a period you choose at the top of the tab (today, 7 or 30 days; needs Usage Access).
+The Wi-Fi and mobile data tiles show the data use over a period you choose at the top of the page (today, 7 or 30 days; needs Usage Access).
 
-![The Tiles tab with the data period](docs/screenshots/tiles.png)
+![Settings → Tiles with the data period](docs/screenshots/tiles.png)
 
 ## Widgets and Quick Settings tile
 
-In the Widget tab every type is shown as a live picture; tap a picture to put that widget on your home screen. There are six widget types you can mix and place as often as you like: **Mini** (1x1, one number), **Duo** (2x1, two items), **Small** (2x2, one item, default network), **Strip** (4x1, no graphs), **Dashboard** (4x2, with graphs) and **Large** (4x3, all info in two rows: memory, network, CPU, storage, data use, ping, connection and uptime). Every home-screen widget has its own settings (cells MEM / NET / CPU / DISK / DATA / PING / TEMP / LINK / UPTIME, graphs and bars on or off, and the background opacity, 20-100 %),
-stored per widget id. Open them with **Widget N settings** in the Widget tab (launchers do not open the settings of a
+Under **Settings → Home-screen widgets** every type is shown as a live picture; tap a picture to put that widget on your home screen. There are six widget types you can mix and place as often as you like: **Mini** (1x1, one number), **Duo** (2x1, two items), **Small** (2x2, one item, default network), **Strip** (4x1, no graphs), **Dashboard** (4x2, with graphs) and **Large** (4x3, all info in two rows: memory, network, CPU, storage, data use, ping, connection and uptime). Every home-screen widget has its own settings (cells MEM / NET / CPU / DISK / DATA / PING / TEMP / LINK / UPTIME, graphs and bars on or off, and the background opacity, 20-100 %),
+stored per widget id. Open them with **Widget N settings** on that same page (launchers do not open the settings of a
 pinned widget by themselves) or with *Reconfigure* on the widget. The widget is resizable and draws itself in the
 aspect ratio you give it. The **Quick Settings tile** (add it from the tile editor) shows `RAM 46%` and the network
 speed and switches the live monitor on or off with a tap.
 
-The gallery in the Widget tab (each picture is a button):
+The gallery under Settings → Home-screen widgets (each picture is a button):
 
 ![Widget gallery](docs/screenshots/widget-gallery.png)
 
@@ -96,9 +107,9 @@ Widget settings (with the graphs switch) and the Quick Settings tile:
 
 ![Widget settings and Quick Settings tile](docs/screenshots/widget-settings-qs.png)
 
-## More tabs: Apps, History, Alerts, Permissions
+## More screens: Apps, History, Alerts, Permissions
 
-| Tab | What it does | Needs |
+| Screen | What it does | Needs |
 |---|---|---|
 | **Apps → Data use** | Wi-Fi and mobile data per day, last 7 or 30 days, with a total | Usage access |
 | **Apps → Traffic per app** | download / upload per app (today, 7 or 30 days) | Usage access |
@@ -108,7 +119,7 @@ Widget settings (with the graphs switch) and the Quick Settings tile:
 | **Apps → Processes** | running processes with CPU and RAM, every 3 s. Tap one for details (command line, who started it, user, age, what keeps it running, its components) and actions: open the app (brings it to the front), app info, force stop, end the process, copy the command line | Shizuku |
 | **History** | per-minute averages of memory, network, ping and CPU for up to 24 h (in memory: it builds up while the app is open or the live monitor runs) | nothing |
 | **Alerts** | notification when memory, storage, ping or temperature goes over a limit (off by default, max one per 10 min per item, needs the live monitor) | notifications |
-| **Permissions** | one card per optional permission with its state and a button that opens exactly the right Android page (notifications, display over other apps, usage access, battery optimisation, Shizuku) | - |
+| **Settings → Permissions** | one card per optional permission with its state and a button that opens exactly the right Android page (notifications, display over other apps, usage access, battery optimisation, Shizuku) | - |
 
 Two more tiles: **Connection** (Wi-Fi / mobile, signal in dBm, link speed, band) and **Uptime**. Everything that needs a
 special permission is explained where it is used and links straight to the right settings page; the state is re-read when
@@ -122,7 +133,7 @@ you come back. Nothing leaves the device.
 
 ## First start and status bar items
 
-On first start (and via *Run setup again* in the Widget tab) a setup screen asks **what** to show (download, upload,
+On first start (and via *Run setup again* under Settings) a setup screen asks **what** to show (download, upload,
 memory, CPU, storage, ping, temperature - any combination) and **where**:
 
 - **Icons next to the clock**: one status bar icon per item with the value drawn into it (a small label above the
@@ -134,8 +145,7 @@ memory, CPU, storage, ping, temperature - any combination) and **where**:
   apps*; the setup screen opens the right page). When icons are also on, the strip starts after them. Download and upload
   share one two-line cell.
 
-Both can be on at the same time. *Start* starts the live monitor straight away. In the Widget tab, *Notification* →
-*Only when connected* hides the icons while there is no connection (the main notification must stay: Android requires
+Both can be on at the same time. *Start* starts the live monitor straight away. Under Settings → Notification and icons, *Only when connected* hides the icons while there is no connection (the main notification must stay: Android requires
 one for a foreground service).
 
 ![Setup](docs/screenshots/setup.png)
@@ -148,7 +158,7 @@ one for a foreground service).
 
 ## Camera cut-out
 
-A front camera in the middle of the top edge no longer hides part of the app. With **Keep clear of the camera** (Widget tab, on by default) the dashboard, the fullscreen cockpit and the status bar strip are drawn around the cut-out instead of behind it; the strip stays on its side of the camera and shrinks or drops cells if there is too little room. Choose **Centered, around camera** as the position and the strip is split in two halves, one left and one right of the camera (without a camera it is one centered strip). Every chosen item stays in the strip (CPU, ping, temperature, storage and so on); the text just gets smaller when space is tight. Switch on **Hide items when space is tight** to let CPU, ping, temperature and storage drop out instead. The halves are balanced by the room on each side. Top: with the switch on; bottom: camera option off.
+A front camera in the middle of the top edge no longer hides part of the app. With **Keep clear of the camera** (Settings → Status bar strip, on by default) the dashboard, the fullscreen cockpit and the status bar strip are drawn around the cut-out instead of behind it; the strip stays on its side of the camera and shrinks or drops cells if there is too little room. Choose **Centered, around camera** as the position and the strip is split in two halves, one left and one right of the camera (without a camera it is one centered strip). Every chosen item stays in the strip (CPU, ping, temperature, storage and so on); the text just gets smaller when space is tight. Switch on **Hide items when space is tight** to let CPU, ping, temperature and storage drop out instead. The halves are balanced by the room on each side. Top: with the switch on; bottom: camera option off.
 
 ![All positions of the status bar strip, with the settings](docs/screenshots/statusbar-positions.png)
 
@@ -156,7 +166,7 @@ Pick the position in a **preview of the status bar**: tap the left (next to the 
 
 ![The preview and the camera settings](docs/screenshots/strip-preview.png)
 
-**The up/down meter next to the clock:** while the strip is on, the app's own stats icon next to the clock would show the same numbers twice. *Hide my own icon while the strip is on* (on by default) makes it invisible. It is not used when separate or rotating icons are on.
+**The up/down meter next to the clock:** while the strip is on, the app's own stats icon next to the clock would show the same numbers twice. *Hide my icons next to the clock while the strip is on* (on by default) makes them invisible, whether you use one icon, separate icons or rotating icons. Android keeps one blank spot for the notification: an app cannot remove that.
 
 **The app logo next to the clock:** while the strip is on, Android itself adds a small "displaying over other apps" icon with the app logo. An app cannot remove it, but the button *Hide the Android "over other apps" icon* opens the system setting where you can switch that notification off (on many phones; some phones lock it).
 
@@ -180,7 +190,7 @@ reads a theme file from the Windows app (`TextColor`, `BackgroundColor`, `Accent
 
 ## Updates
 
-Optional and off by default: *Check for updates* (Widget tab) asks GitHub once a day for the latest release and tells you once per new version. *Download and install* opens the APK link in your browser; Android asks for confirmation before installing. Hidden when the app comes from the Play Store. See the [privacy policy](PRIVACY.md).
+Optional and off by default: *Check for updates* (Settings → Updates) asks GitHub once a day for the latest release and tells you once per new version. *Download and install* opens the APK link in your browser; Android asks for confirmation before installing. Hidden when the app comes from the Play Store. See the [privacy policy](PRIVACY.md).
 
 ![The update check in its four states](docs/screenshots/updates.png)
 
@@ -228,7 +238,7 @@ Shizuku CPU source all work after shrinking. A draft store listing is in [PLAY-S
 | `StatsRenderer.kt` | draws the widget to a plain `Bitmap` (same renderer for widget, notification and in-app preview) |
 | `StatusBarOverlay.kt` | the status-bar pill: placement, fitting, fullscreen detection (window insets) |
 | `MonitorService.kt`, `StatsWidget.kt` | foreground service (widget + notification every 2 s), `AppWidgetProvider` |
-| `MainActivity.kt` | Compose UI: Dashboard, Cockpit (immersive, keeps screen on), Widget/settings tab |
+| `MainActivity.kt` | Compose UI: Dashboard, Cockpit (immersive, keeps screen on), the bottom bar and the Live, Cockpit pages |
 | `Tiles.kt` | which tiles are shown and in what order (dashboard and cockpit) |
 | `WidgetOptions.kt`, `WidgetConfigActivity.kt` | per-widget cells and opacity, and the settings screen |
 | `StatsTileService.kt` | the Quick Settings tile |
@@ -238,6 +248,7 @@ Shizuku CPU source all work after shrinking. A draft store listing is in [PLAY-S
 | `Alerts.kt` | threshold notifications |
 | `StatusItems.kt`, `Setup.kt` | the chosen status bar items (icon drawing, values) and the first-start setup screen |
 | `Tabs2.kt` | the Apps, History, Alerts and Permissions tabs |
+| `SettingsPages.kt` | the Settings overview and its pages (strip, camera, notification and icons, figures, widgets, theme, updates) |
 
 ## Not done yet
 

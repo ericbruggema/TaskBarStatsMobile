@@ -250,7 +250,7 @@ object StatusBarOverlay {
      */
     private fun render(s: Snapshot, h: Int, density: Float, maxW: Float, items: List<String>, autoHide: Boolean): Bitmap {
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
-        p.typeface = Typeface.DEFAULT_BOLD
+        p.typeface = Fonts.typeface(true)
         p.textSize = h * 0.27f
         class Cell(val key: String, val top: String, val topColor: Int, val bottom: String, val bottomColor: Int, val minText: String)
         val cells = ArrayList<Cell>()
