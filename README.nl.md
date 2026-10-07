@@ -134,6 +134,8 @@ Kies de positie in een **voorbeeld van de statusbalk**: tik links (naast de klok
 
 ![Het voorbeeld en de camera-instellingen](docs/screenshots/strip-preview.png)
 
+**De up/download-meter naast de klok:** zolang de strook aan staat, toont het eigen cijfer-icoon naast de klok dezelfde cijfers dubbel. *Eigen icoon verbergen als de strook aan staat* (standaard aan) maakt dat icoon onzichtbaar. Niet gebruikt bij losse of wisselende iconen.
+
 **Het app-logo naast de klok:** zolang de strook aan staat, zet Android zelf een klein "weergeven over andere apps"-icoon met het app-logo in de statusbalk. Een app kan dat niet weghalen, maar de knop *Android-icoon "over andere apps" verbergen* opent de systeeminstelling waar je die melding kunt uitzetten (op veel telefoons; sommige telefoons vergrendelen het).
 
 **Eén icoon dat wisselt:** veel telefoons tonen maar één van de statusbalkiconen. Zet *Wisselen in één icoon* aan en het ene icoon wisselt om de paar seconden tussen de gekozen onderdelen (standaard uit).

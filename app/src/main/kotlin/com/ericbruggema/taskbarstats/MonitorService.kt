@@ -48,6 +48,15 @@ class MonitorService : Service() {
         return START_STICKY
     }
 
+    /**
+     * Eigen hoofdicoon onzichtbaar maken als de tekststrook al alles toont (en er geen losse of wisselende iconen
+     * gevraagd zijn). De melding kan niet weg (voorgrondservice), maar een leeg icoon tekent niets in de statusbalk.
+     */
+    private fun mainHidden() = StatusBarOverlay.enabled(this) && StatusBarOverlay.canDraw(this) && !StatusItems.iconsOn(this) &&
+        !StatusItems.rotate(this) && StatusBarOverlay.prefs(this).getBoolean("hide_main_icon", true)
+
+    private fun blankIcon(): Icon = Icon.createWithBitmap(android.graphics.Bitmap.createBitmap(96, 96, android.graphics.Bitmap.Config.ARGB_8888))
+
     /** Hoofdmelding, plus (optie) een melding per gekozen onderdeel met de waarde als statusbalkicoon. */
     private fun updateNotifications() {
         val nm = getSystemService(NotificationManager::class.java)
@@ -83,7 +92,7 @@ class MonitorService : Service() {
         val s = Sampler.snapshot
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
         val stop = PendingIntent.getService(this, 1, Intent(this, MonitorService::class.java).setAction(ACTION_STOP), PendingIntent.FLAG_IMMUTABLE)
-        val icon = first?.let { StatusItems.icon(StatusItems.face(it, s)) } ?: Icon.createWithResource(this, R.drawable.ic_stat)
+        val icon = if (mainHidden()) blankIcon() else first?.let { StatusItems.icon(StatusItems.face(it, s)) } ?: Icon.createWithResource(this, R.drawable.ic_stat)
         return Notification.Builder(this, CHANNEL)
             .setSmallIcon(icon)
             .setContentTitle("MEM ${Fmt.percent(s.memPercent)}   ↓ ${Fmt.rate(s.rxBps)}   ↑ ${Fmt.rate(s.txBps)}")

@@ -247,4 +247,6 @@
     <string name="rotate_icon_hint">One status bar icon that switches between the chosen items every few seconds. Use this if your phone shows only one icon. Replaces the separate icons.</string>
     <string name="overlay_notice_hint">Android itself shows a small &quot;displaying over other apps&quot; icon with the app logo while the strip is on. An app cannot remove it, but on many phones you can switch that notification off:</string>
     <string name="overlay_notice_button">Hide the Android &quot;over other apps&quot; icon</string>
+    <string name="hide_main_icon">Hide my own icon while the strip is on</string>
+    <string name="hide_main_icon_hint">The strip already shows your stats, so the stats icon next to the clock becomes invisible (Android keeps a blank spot and the notification stays in the shade). Not used with separate or rotating icons. The app logo from Android itself is a system icon: use the button above.</string>
 </resources>

@@ -241,4 +241,6 @@
     <string name="rotate_icon_hint">Ein Statusleistensymbol, das alle paar Sekunden zwischen den gewählten Werten wechselt. Nützlich, wenn dein Telefon nur ein Symbol zeigt. Ersetzt die einzelnen Symbole.</string>
     <string name="overlay_notice_hint">Android selbst zeigt ein kleines &quot;über anderen Apps einblenden&quot;-Symbol mit dem App-Logo, solange der Streifen an ist. Eine App kann es nicht entfernen, aber auf vielen Telefonen kannst du diese Benachrichtigung ausschalten:</string>
     <string name="overlay_notice_button">Android-Symbol &quot;über anderen Apps&quot; ausblenden</string>
+    <string name="hide_main_icon">Eigenes Symbol ausblenden, solange der Streifen an ist</string>
+    <string name="hide_main_icon_hint">Der Streifen zeigt deine Werte bereits, daher wird das Werte-Symbol neben der Uhr unsichtbar (Android lässt eine leere Stelle frei, die Benachrichtigung bleibt im Benachrichtigungsfeld). Nicht bei einzelnen oder wechselnden Symbolen. Das App-Logo von Android selbst ist ein Systemsymbol: nutze dafür die Schaltfläche oben.</string>
 </resources>

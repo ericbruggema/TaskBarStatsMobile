@@ -416,6 +416,7 @@ private fun WidgetTab(s: Snapshot) {
         Text(stringResource(R.string.items_title), color = Dim, fontSize = 14.sp)
         ItemsPicker(picked) { picked = it; StatusItems.setSelected(ctx, it); StatusBarOverlay.refresh(ctx) }
         PrefSwitch(stringResource(R.string.setup_icons), stringResource(R.string.setup_icons_hint), "icons")
+        PrefSwitch(stringResource(R.string.hide_main_icon), stringResource(R.string.hide_main_icon_hint), "hide_main_icon", true)
         PrefSwitch(stringResource(R.string.rotate_icon), stringResource(R.string.rotate_icon_hint), "rotate")
         Button(onClick = { showSetup = true }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) {
             Text(stringResource(R.string.setup_again))

@@ -241,4 +241,6 @@
     <string name="rotate_icon_hint">Eén statusbalkicoon dat om de paar seconden wisselt tussen de gekozen onderdelen. Handig als je telefoon maar één icoon toont. Vervangt de losse iconen.</string>
     <string name="overlay_notice_hint">Android zelf toont een klein &quot;weergeven over andere apps&quot;-icoon met het app-logo zolang de strook aan staat. Een app kan dat niet weghalen, maar op veel telefoons kun je die melding uitzetten:</string>
     <string name="overlay_notice_button">Android-icoon &quot;over andere apps&quot; verbergen</string>
+    <string name="hide_main_icon">Eigen icoon verbergen als de strook aan staat</string>
+    <string name="hide_main_icon_hint">De strook toont je cijfers al, dus het cijfer-icoon naast de klok wordt onzichtbaar (Android houdt een lege plek vrij en de melding blijft in het meldingenpaneel). Niet gebruikt bij losse of wisselende iconen. Het app-logo van Android zelf is een systeemicoon: gebruik daarvoor de knop hierboven.</string>
 </resources>

@@ -134,6 +134,8 @@ Wähle die Position in einer **Vorschau der Statusleiste**: Tippe links (neben d
 
 ![Die Vorschau und die Kamera-Einstellungen](docs/screenshots/strip-preview.png)
 
+**Der Up-/Download-Zähler neben der Uhr:** Solange der Streifen an ist, würde das eigene Werte-Symbol neben der Uhr dieselben Zahlen doppelt zeigen. *Eigenes Symbol ausblenden, solange der Streifen an ist* (standardmäßig an) macht es unsichtbar. Nicht bei einzelnen oder wechselnden Symbolen.
+
 **Das App-Logo neben der Uhr:** Solange der Streifen an ist, zeigt Android selbst ein kleines "über anderen Apps einblenden"-Symbol mit dem App-Logo. Eine App kann es nicht entfernen, aber die Schaltfläche *Android-Symbol "über anderen Apps" ausblenden* öffnet die Systemeinstellung, in der du diese Benachrichtigung ausschalten kannst (auf vielen Telefonen; manche sperren es).
 
 **Ein Symbol, das wechselt:** Viele Telefone zeigen nur eines der Statusleistensymbole. Schalte *In einem Symbol wechseln* ein, und das eine Symbol wechselt alle paar Sekunden zwischen den gewählten Werten (standardmäßig aus).
