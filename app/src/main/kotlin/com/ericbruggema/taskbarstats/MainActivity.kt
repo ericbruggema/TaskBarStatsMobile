@@ -377,8 +377,8 @@ private fun WidgetTab(s: Snapshot) {
         val density = ctx.resources.displayMetrics.density
         if (ov) {
             Text(stringResource(R.string.strip_preview_hint), color = Dim, fontSize = 14.sp)
-            val camDp = if (camAuto) (detected?.width()?.div(density) ?: 0f) else camW.toFloat()
-            StripPreview(pos, camOn && (!camAuto || detected != null), camDp, camM.toFloat(), camS.toFloat(), dx.toFloat()) {
+            val camDp = (if (camAuto && detected != null) detected.width() else camW) / density
+            StripPreview(pos, camOn, camDp, camM / density, camS / density, dx.toFloat()) {
                 pos = it; StatusBarOverlay.prefs(ctx).edit().putInt("overlay_pos", it).apply(); StatusBarOverlay.refresh(ctx)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -393,19 +393,21 @@ private fun WidgetTab(s: Snapshot) {
         PrefSwitch(stringResource(R.string.avoid_cutout), stringResource(R.string.avoid_cutout_hint), "avoid_cutout", true) { camOn = it }
         if (camOn) {
             PrefSwitch(stringResource(R.string.cam_auto), stringResource(R.string.cam_auto_hint), "cam_auto", true) { camAuto = it }
-            if (camAuto) Text(
-                if (detected != null) stringResource(R.string.cam_detected, (detected.width() / density).toInt()) else stringResource(R.string.cam_none),
-                color = Dim, fontSize = 14.sp,
-            ) else PrefSlider(stringResource(R.string.cam_width), "cam_width", 40, 8..240) { camW = it }
-            PrefSlider(stringResource(R.string.cam_margin), "cam_margin", 0, 0..80) { camM = it }
-            PrefSlider(stringResource(R.string.cam_shift), "cam_shift", 0, -120..120) { camS = it }
+            val auto = camAuto && detected != null
+            if (auto) Text(stringResource(R.string.cam_detected, detected!!.width()), color = Dim, fontSize = 14.sp)
+            else {
+                if (camAuto) Text(stringResource(R.string.cam_none), color = Dim, fontSize = 14.sp)
+                PrefSlider(stringResource(R.string.cam_width), "cam_w", 100, 0..400, "px") { camW = it }
+            }
+            PrefSlider(stringResource(R.string.cam_margin), "cam_m", 8, 0..120, "px") { camM = it }
+            PrefSlider(stringResource(R.string.cam_shift), "cam_s", 0, -300..300, "px") { camS = it }
         }
         PrefSwitch(stringResource(R.string.strip_autohide), stringResource(R.string.strip_autohide_hint), "strip_autohide")
         Text(stringResource(R.string.notif_opts_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
         PrefSwitch(stringResource(R.string.notif_only_online), stringResource(R.string.notif_only_online_hint), "notif_online_only")
         var picked by remember { mutableStateOf(StatusItems.selected(ctx).toSet()) }
         Text(stringResource(R.string.items_title), color = Dim, fontSize = 14.sp)
-        ItemsPicker(picked) { picked = it; StatusItems.setSelected(ctx, it) }
+        ItemsPicker(picked) { picked = it; StatusItems.setSelected(ctx, it); StatusBarOverlay.refresh(ctx) }
         PrefSwitch(stringResource(R.string.setup_icons), stringResource(R.string.setup_icons_hint), "icons")
         PrefSwitch(stringResource(R.string.rotate_icon), stringResource(R.string.rotate_icon_hint), "rotate")
         Button(onClick = { showSetup = true }, colors = ButtonDefaults.buttonColors(containerColor = Card, contentColor = Fg)) {

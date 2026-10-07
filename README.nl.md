@@ -130,7 +130,7 @@ Een selfiecamera in het midden van de bovenrand verbergt niet langer een stuk va
 
 ![Alle posities van de statusbalkstrook, met de instellingen](docs/screenshots/statusbar-positions.png)
 
-Kies de positie in een **voorbeeld van de statusbalk**: tik links (naast de klok), in het midden (om de camera) of rechts (voor de iconen). Het voorbeeld toont de camera, de vrije ruimte en de strook op schaal. Komt er toch nog een stuk achter de camera, zet dan *Camera automatisch herkennen* uit en stel zelf de **breedte van de camera**, de **extra vrije ruimte** aan beide kanten en de **plek** in; het voorbeeld en de echte statusbalk volgen direct.
+Kies de positie in een **voorbeeld van de statusbalk**: tik links (naast de klok), in het midden (om de camera) of rechts (voor de iconen). Het voorbeeld toont de camera, de vrije ruimte en de strook op schaal. Komt er toch nog een stuk achter de camera, zet dan *Camera automatisch herkennen* uit en stel zelf de **breedte van de camera**, de **extra vrije ruimte** aan beide kanten en de **plek** in; alle maten zijn in schermpixels (bijvoorbeeld camera 50 px, 5 px vrij aan elke kant). Het voorbeeld en de echte statusbalk volgen direct, en terwijl je aan een schuifregelaar zit toont een rode markering op de echte statusbalk de camera (donker) en de vrije ruimte (licht). Meldt je telefoon geen cameragat, dan is de breedte-regelaar ook beschikbaar als automatisch herkennen aan staat.
 
 ![Het voorbeeld en de camera-instellingen](docs/screenshots/strip-preview.png)
 

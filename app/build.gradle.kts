@@ -14,8 +14,8 @@ android {
         applicationId = "com.ericbruggema.taskbarstatsmobile"
         minSdk = 26
         targetSdk = 35
-        versionCode = 6
-        versionName = "0.4.2"
+        versionCode = 7
+        versionName = "0.4.3"
     }
     // Ondertekening voor de release-build: keystore.properties + .jks staan naast gradlew en zijn git-ignored
     val ksProps = Properties().apply {

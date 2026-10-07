@@ -152,7 +152,7 @@ A front camera in the middle of the top edge no longer hides part of the app. Wi
 
 ![All positions of the status bar strip, with the settings](docs/screenshots/statusbar-positions.png)
 
-Pick the position in a **preview of the status bar**: tap the left (next to the clock), the middle (around the camera) or the right (before the icons). The preview shows the camera, the free space and the strip to scale. If part of the strip still ends up behind the camera, switch off *Detect the camera automatically* and set the **camera width**, the **extra free space** on both sides and the **position** yourself; the preview and the real status bar follow immediately.
+Pick the position in a **preview of the status bar**: tap the left (next to the clock), the middle (around the camera) or the right (before the icons). The preview shows the camera, the free space and the strip to scale. If part of the strip still ends up behind the camera, switch off *Detect the camera automatically* and set the **camera width**, the **extra free space** on both sides and the **position** yourself; all sizes are in screen pixels (for example camera 50 px, 5 px free on each side). The preview and the real status bar follow immediately, and while you move a slider a red marker shows the camera (dark) and the free space (light) on the real status bar. If your phone does not report a camera cut-out, the width slider is available even with automatic detection on.
 
 ![The preview and the camera settings](docs/screenshots/strip-preview.png)
 

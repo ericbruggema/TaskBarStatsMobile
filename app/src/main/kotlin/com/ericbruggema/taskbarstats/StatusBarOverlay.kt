@@ -14,6 +14,8 @@ import android.widget.ImageView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 
 /**
  * Piepkleine statistieken in de statusbalk, naast klok / camera-gaatje / systeemiconen.
@@ -27,8 +29,8 @@ object StatusBarOverlay {
     const val RIGHT = 2
 
     // twee vensters: bij "midden" met een cameragat staat er één links en één rechts van de camera
-    private val views = arrayOfNulls<ImageView>(2)
-    private val lps = arrayOfNulls<WindowManager.LayoutParams>(2)
+    private val views = arrayOfNulls<ImageView>(3)   // 0 en 1 = strook, 2 = hulpmarkering van het vrije gebied
+    private val lps = arrayOfNulls<WindowManager.LayoutParams>(3)
 
     fun prefs(ctx: Context) = ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
     fun enabled(ctx: Context) = prefs(ctx).getBoolean("overlay", false)
@@ -41,11 +43,12 @@ object StatusBarOverlay {
     fun autoHide(ctx: Context) = prefs(ctx).getBoolean("strip_autohide", false)
     fun avoidCutout(ctx: Context) = prefs(ctx).getBoolean("avoid_cutout", true)
 
-    /** Camera automatisch herkennen (standaard) of zelf de breedte en plek instellen (dp). */
+    /** Camera automatisch herkennen (standaard) of zelf de breedte en plek instellen. Alle maten in pixels van het scherm. */
     fun camAuto(ctx: Context) = prefs(ctx).getBoolean("cam_auto", true)
-    fun camWidth(ctx: Context) = prefs(ctx).getInt("cam_width", 40)
-    fun camMargin(ctx: Context) = prefs(ctx).getInt("cam_margin", 0)
-    fun camShift(ctx: Context) = prefs(ctx).getInt("cam_shift", 0)
+    fun camWidth(ctx: Context) = prefs(ctx).getInt("cam_w", 100)
+    /** Vrije ruimte links én rechts van de camera. */
+    fun camMargin(ctx: Context) = prefs(ctx).getInt("cam_m", 8)
+    fun camShift(ctx: Context) = prefs(ctx).getInt("cam_s", 0)
 
     /** Wat Android over het cameragat meldt (voor de weergave in de app), of null. */
     fun detected(view: android.view.View): android.graphics.Rect? {
@@ -55,23 +58,51 @@ object StatusBarOverlay {
     }
 
     /**
-     * Het deel van de statusbalk dat vrij moet blijven (in pixels van links) of null: het gemelde cameragat of een zelf
-     * ingestelde breedte en plek, plus de extra ruimte aan beide kanten.
+     * De camera zelf (pixels van links, op de plek die de gebruiker koos): het gemelde cameragat, of de zelf ingestelde
+     * breedte in het midden als automatisch herkennen uit staat of de telefoon niets meldt.
      */
-    private fun cameraRect(ctx: Context, wm: WindowManager): android.graphics.Rect? {
+    private fun cameraBase(ctx: Context, wm: WindowManager): android.graphics.Rect? {
         if (!avoidCutout(ctx)) return null
         val d = ctx.resources.displayMetrics
-        val r = if (camAuto(ctx)) cutoutTop(wm) ?: return null
-        else {
-            val half = (camWidth(ctx) * d.density / 2).toInt(); val c = d.widthPixels / 2
+        val r = (if (camAuto(ctx)) cutoutTop(wm) else null) ?: run {
+            val half = camWidth(ctx) / 2; val c = d.widthPixels / 2
             android.graphics.Rect(c - half, 0, c + half, statusBarHeight(ctx))
         }
-        val shift = (camShift(ctx) * d.density).toInt(); val m = (camMargin(ctx) * d.density).toInt()
-        return android.graphics.Rect(r.left + shift - m, r.top, r.right + shift + m, r.bottom)
+        val shift = camShift(ctx)
+        return android.graphics.Rect(r.left + shift, r.top, r.right + shift, r.bottom)
     }
 
-    /** Past de strook direct aan als de instellingen veranderen (anders pas bij de volgende verversing). */
-    fun refresh(ctx: Context) { if (enabled(ctx)) update(ctx, Sampler.snapshot) }
+    /** Het deel van de statusbalk dat vrij moet blijven: de camera plus de ingestelde ruimte links en rechts. */
+    private fun cameraRect(ctx: Context, wm: WindowManager): android.graphics.Rect? {
+        val r = cameraBase(ctx, wm) ?: return null
+        val m = camMargin(ctx)
+        return android.graphics.Rect(r.left - m, r.top, r.right + m, r.bottom)
+    }
+
+    private val guideHandler = Handler(Looper.getMainLooper())
+    private var guideUntil = 0L
+
+    /** Toont een paar seconden een rode markering op de échte statusbalk: donker = camera, licht = vrije ruimte. */
+    private fun showGuide(ctx: Context) {
+        if (!canDraw(ctx)) return
+        val wm = ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val base = cameraBase(ctx, wm) ?: run { removeSlot(ctx, 2); return }
+        val full = cameraRect(ctx, wm)!!
+        val h = statusBarHeight(ctx)
+        val bmp = Bitmap.createBitmap(full.width().coerceAtLeast(1), h, Bitmap.Config.ARGB_8888)
+        val c = Canvas(bmp); val p = Paint()
+        p.color = 0x66FF5A4D; c.drawRect(0f, 0f, bmp.width.toFloat(), h.toFloat(), p)
+        p.color = 0xCCFF1A1A.toInt(); c.drawRect((base.left - full.left).toFloat(), 0f, (base.right - full.left).toFloat(), h.toFloat(), p)
+        show(ctx, wm, 2, bmp, h, Gravity.TOP or Gravity.START, full.left)
+        guideUntil = System.currentTimeMillis() + 3500
+        guideHandler.postDelayed({ if (System.currentTimeMillis() >= guideUntil) removeSlot(ctx, 2) }, 3600)
+    }
+
+    /** Past de strook direct aan als de instellingen veranderen en toont even het vrije gebied. */
+    fun refresh(ctx: Context) {
+        if (enabled(ctx)) update(ctx, Sampler.snapshot)
+        showGuide(ctx)
+    }
 
     private fun cutoutTop(wm: WindowManager) = if (android.os.Build.VERSION.SDK_INT >= 28) cutoutTopApi28(wm) else null
 
@@ -112,7 +143,7 @@ object StatusBarOverlay {
         val cut = cameraRect(ctx, wm)
         var minW = 120 * d.density
         if (cut != null) {
-            val gap = 6 * d.density
+            val gap = 0f
             if (pos == LEFT) {
                 val start = (112 + dx) * d.density
                 if (start < cut.right) { free = minOf(free, cut.left - gap - start); minW = 60 * d.density }
@@ -140,7 +171,7 @@ object StatusBarOverlay {
             show(ctx, wm, 0, render(s, h, d.density, free, items, autoHide(ctx)), h, Gravity.TOP or Gravity.CENTER_HORIZONTAL, (nudge(ctx) * d.density).toInt())
             removeSlot(ctx, 1); return
         }
-        val gap = 6 * d.density
+        val gap = 0f
         val groups = ArrayList<List<String>>()
         for (id in items) when {
             id == "up" && "down" in items -> { }
@@ -199,7 +230,7 @@ object StatusBarOverlay {
         views[i] = null; lps[i] = null
     }
 
-    fun remove(ctx: Context) { removeSlot(ctx, 0); removeSlot(ctx, 1) }
+    fun remove(ctx: Context) { removeSlot(ctx, 0); removeSlot(ctx, 1); removeSlot(ctx, 2) }
 
     /**
      * Tweeregelige cellen voor de gekozen onderdelen. Elke cel is minstens zo breed als zijn langste mogelijke

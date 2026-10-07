@@ -130,7 +130,7 @@ Eine Frontkamera in der Mitte des oberen Rands verdeckt keinen Teil der App mehr
 
 ![Alle Positionen des Statusleistenstreifens, mit den Einstellungen](docs/screenshots/statusbar-positions.png)
 
-Wähle die Position in einer **Vorschau der Statusleiste**: Tippe links (neben der Uhr), in die Mitte (um die Kamera) oder rechts (vor den Symbolen). Die Vorschau zeigt Kamera, freien Platz und Streifen maßstabsgetreu. Landet trotzdem ein Teil hinter der Kamera, schalte *Kamera automatisch erkennen* aus und stelle **Kamerabreite**, **zusätzlichen freien Platz** auf beiden Seiten und **Position** selbst ein; Vorschau und echte Statusleiste folgen sofort.
+Wähle die Position in einer **Vorschau der Statusleiste**: Tippe links (neben der Uhr), in die Mitte (um die Kamera) oder rechts (vor den Symbolen). Die Vorschau zeigt Kamera, freien Platz und Streifen maßstabsgetreu. Landet trotzdem ein Teil hinter der Kamera, schalte *Kamera automatisch erkennen* aus und stelle **Kamerabreite**, **zusätzlichen freien Platz** auf beiden Seiten und **Position** selbst ein; alle Maße sind in Bildschirmpixeln (z. B. Kamera 50 px, 5 px frei auf jeder Seite). Vorschau und echte Statusleiste folgen sofort, und beim Bewegen eines Reglers zeigt eine rote Markierung auf der echten Statusleiste die Kamera (dunkel) und den freien Platz (hell). Meldet dein Telefon keine Kamera-Aussparung, ist der Breitenregler auch bei eingeschalteter automatischer Erkennung verfügbar.
 
 ![Die Vorschau und die Kamera-Einstellungen](docs/screenshots/strip-preview.png)
 
