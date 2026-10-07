@@ -41,10 +41,13 @@ object StatusBarOverlay {
     fun autoHide(ctx: Context) = prefs(ctx).getBoolean("strip_autohide", false)
     fun avoidCutout(ctx: Context) = prefs(ctx).getBoolean("avoid_cutout", true)
 
+    private fun cutoutTop(wm: WindowManager) = if (android.os.Build.VERSION.SDK_INT >= 28) cutoutTopApi28(wm) else null
+
     /** Het cameragat bovenin (in pixels van links), of null als het toestel geen uitsparing heeft. */
-    private fun cutoutTop(wm: WindowManager): android.graphics.Rect? {
+    @androidx.annotation.RequiresApi(28)
+    private fun cutoutTopApi28(wm: WindowManager): android.graphics.Rect? {
         val cut = if (android.os.Build.VERSION.SDK_INT >= 30) wm.currentWindowMetrics.windowInsets.displayCutout
-        else if (android.os.Build.VERSION.SDK_INT >= 28) views[0]?.rootWindowInsets?.displayCutout else null
+        else views[0]?.rootWindowInsets?.displayCutout
         val r = cut?.boundingRects?.firstOrNull { it.top <= 0 && it.width() > 0 } ?: return null
         return android.graphics.Rect(r)
     }
