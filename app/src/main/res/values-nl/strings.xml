@@ -212,4 +212,9 @@
     <string name="kind_large">Groot (4x3, alle info)</string>
     <string name="widget_pin_unsupported">Je launcher kan hier geen widgets toevoegen. Houd een lege plek op het startscherm ingedrukt en kies TaskBarStatsMobile onder Widgets.</string>
     <string name="add_short">+ Toevoegen</string>
+    <string name="avoid_cutout">Camera vrijhouden</string>
+    <string name="avoid_cutout_hint">Tekent dashboard, cockpit en statusbalkstrook om het cameragat van de selfiecamera heen in plaats van erachter.</string>
+    <string name="pos_center">Midden, om de camera</string>
+    <string name="strip_autohide">Onderdelen weglaten bij te weinig ruimte</string>
+    <string name="strip_autohide_hint">Uit: elk gekozen onderdeel blijft in de strook (de tekst wordt alleen kleiner). Aan: CPU, ping, temperatuur en opslag vallen eerst weg.</string>
 </resources>

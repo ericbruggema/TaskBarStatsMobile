@@ -133,6 +133,14 @@ one for a foreground service).
 |---|---|---|
 | ![Process details](docs/screenshots/process-details.png) | ![Cache](docs/screenshots/cache.png) | ![Icons only](docs/screenshots/icons-only.png) |
 
+## Camera cut-out
+
+A front camera in the middle of the top edge no longer hides part of the app. With **Keep clear of the camera** (Widget tab, on by default) the dashboard, the fullscreen cockpit and the status bar strip are drawn around the cut-out instead of behind it; the strip stays on its side of the camera and shrinks or drops cells if there is too little room. Choose **Centered, around camera** as the position and the strip is split in two halves, one left and one right of the camera (without a camera it is one centered strip). Every chosen item stays in the strip (CPU, ping, temperature, storage and so on); the text just gets smaller when space is tight. Switch on **Hide items when space is tight** to let CPU, ping, temperature and storage drop out instead. The halves are balanced by the room on each side. Top: with the switch on; bottom: camera option off.
+
+![Centered strip around the camera](docs/screenshots/statusbar-center.png) The main notification icon always shows a live figure (the first chosen item, by default the download speed), never the fixed app icon.
+
+![Cockpit with the switch off and on](docs/screenshots/camera-cutout.png)
+
 ## Lock screen
 
 The ongoing notification (`MEM 50% ↓ ↑ / Disk 13% Ping 17 ms`, with a **Stop** button that ends the live monitor) is public on the lock screen. The channel has normal

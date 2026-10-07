@@ -111,6 +111,14 @@ Beides kann gleichzeitig an sein. *Start* startet den Live-Monitor sofort. Im Ta
 |---|---|---|
 | ![Prozessdetails](docs/screenshots/process-details.png) | ![Cache](docs/screenshots/cache.png) | ![Nur Symbole](docs/screenshots/icons-only.png) |
 
+## Kamera-Aussparung
+
+Eine Frontkamera in der Mitte des oberen Rands verdeckt keinen Teil der App mehr. Mit **Kamera freihalten** (Tab Widget, standardmäßig an) werden Dashboard, Vollbild-Cockpit und Statusleistenstreifen um die Aussparung herum gezeichnet statt dahinter; der Streifen bleibt auf seiner Seite der Kamera und schrumpft oder lässt Zellen weg, wenn zu wenig Platz ist. Wähle als Position **Mitte, um die Kamera** und der Streifen wird in zwei Hälften geteilt, eine links und eine rechts der Kamera (ohne Kamera ist es ein zentrierter Streifen). Jeder gewählte Wert bleibt im Streifen (CPU, Ping, Temperatur, Speicher usw.); bei Platzmangel wird nur der Text kleiner. Schalte **Werte bei Platzmangel ausblenden** ein, damit CPU, Ping, Temperatur und Speicher stattdessen wegfallen. Die Hälften werden nach dem Platz auf beiden Seiten verteilt. Oben: mit eingeschaltetem Schalter; unten: Kameraoption aus.
+
+![Zentrierter Streifen um die Kamera](docs/screenshots/statusbar-center.png) Das Hauptsymbol der Benachrichtigung zeigt immer einen Live-Wert (den ersten gewählten Wert, standardmäßig die Download-Geschwindigkeit), nie das feste App-Symbol.
+
+![Cockpit mit ausgeschaltetem und eingeschaltetem Schalter](docs/screenshots/camera-cutout.png)
+
 ## Sperrbildschirm
 
 Die dauerhafte Benachrichtigung (`MEM 50% ↓ ↑ / Disk 13% Ping 17 ms`, mit einer **Stopp**-Schaltfläche, die den Live-Monitor beendet) ist auf dem Sperrbildschirm öffentlich. Der Kanal hat normale Wichtigkeit (Android blendet Benachrichtigungen mit niedriger Wichtigkeit auf dem Sperrbildschirm aus), aber keinen Ton und keine Vibration.

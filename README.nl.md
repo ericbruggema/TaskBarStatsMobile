@@ -111,6 +111,14 @@ Beide kunnen tegelijk aan staan. *Start* start de live monitor meteen. Op het ta
 |---|---|---|
 | ![Procesdetails](docs/screenshots/process-details.png) | ![Cache](docs/screenshots/cache.png) | ![Alleen iconen](docs/screenshots/icons-only.png) |
 
+## Cameragat
+
+Een selfiecamera in het midden van de bovenrand verbergt niet langer een stuk van de app. Met **Camera vrijhouden** (tabblad Widget, standaard aan) worden het dashboard, de fullscreen cockpit en de statusbalkstrook om het cameragat heen getekend in plaats van erachter; de strook blijft aan zijn kant van de camera en krimpt of laat cellen weg als er te weinig ruimte is. Kies als positie **Midden, om de camera** en de strook wordt in twee helften gesplitst, één links en één rechts van de camera (zonder camera is het één gecentreerde strook). Elk gekozen onderdeel blijft in de strook staan (CPU, ping, temperatuur, opslag enzovoort); de tekst wordt alleen kleiner als de ruimte krap is. Zet **Onderdelen weglaten bij te weinig ruimte** aan om CPU, ping, temperatuur en opslag juist te laten wegvallen. De helften worden verdeeld naar de ruimte aan elke kant. Boven: met de schakelaar aan; onder: camera-optie uit.
+
+![Gecentreerde strook om de camera](docs/screenshots/statusbar-center.png) Het hoofdicoon van de melding toont altijd een live cijfer (het eerste gekozen onderdeel, standaard de downloadsnelheid), nooit het vaste app-icoon.
+
+![Cockpit met de schakelaar uit en aan](docs/screenshots/camera-cutout.png)
+
 ## Vergrendelscherm
 
 De doorlopende melding (`MEM 50% ↓ ↑ / Disk 13% Ping 17 ms`, met een **Stop**-knop die de live monitor beëindigt) is openbaar op het vergrendelscherm. Het kanaal heeft normaal belang (Android verbergt meldingen met laag belang op het vergrendelscherm) maar geen geluid of trilling.

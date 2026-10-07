@@ -218,4 +218,9 @@
     <string name="kind_large">Large (4x3, all info)</string>
     <string name="widget_pin_unsupported">Your launcher cannot add widgets from here. Touch and hold an empty spot on the home screen and pick TaskBarStatsMobile under Widgets.</string>
     <string name="add_short">+ Add</string>
+    <string name="avoid_cutout">Keep clear of the camera</string>
+    <string name="avoid_cutout_hint">Draws the dashboard, cockpit and status bar strip around the front camera cut-out instead of behind it.</string>
+    <string name="pos_center">Centered, around camera</string>
+    <string name="strip_autohide">Hide items when space is tight</string>
+    <string name="strip_autohide_hint">Off: every chosen item stays in the strip (the text just gets smaller). On: CPU, ping, temperature and storage drop out first.</string>
 </resources>

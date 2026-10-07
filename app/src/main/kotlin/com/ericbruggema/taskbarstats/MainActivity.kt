@@ -20,6 +20,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.horizontalScroll
@@ -110,7 +113,9 @@ private fun App() {
         androidx.core.view.WindowCompat.getInsetsController(act.window, act.window.decorView).isAppearanceLightStatusBars =
             androidx.core.graphics.ColorUtils.calculateLuminance(StatsRenderer.BG) > 0.5
     }
-    Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding()) {
+    val appCtx = LocalContext.current
+    val cutoutMod = if (StatusBarOverlay.avoidCutout(appCtx)) Modifier.windowInsetsPadding(WindowInsets.displayCutout) else Modifier
+    Column(Modifier.fillMaxSize().background(Bg).statusBarsPadding().navigationBarsPadding().then(cutoutMod)) {
         if (tab != 1) Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             listOf(R.string.tab_dashboard, R.string.tab_cockpit, R.string.tab_widget, R.string.tab_tiles, R.string.tab_apps, R.string.tab_history, R.string.tab_alerts, R.string.tab_permissions).forEachIndexed { i, id ->
                 val sel = i == tab
@@ -299,7 +304,9 @@ private fun Cockpit(s: Snapshot, onExit: () -> Unit) {
         "mobiledata" -> cells += { mod -> val (v, sub) = dataText(s, false); Big(stringResource(R.string.tile_mobiledata), v, sub, CUp, emptyList(), null, mod) }
         "cpu" -> cells += { mod -> Big(stringResource(R.string.cpu), s.cpuPercent?.let { Fmt.percent(it) } ?: "\u2014", if (s.cpuPercent == null) stringResource(R.string.cpu_unavailable) else "", CCpu, s.cpuHist, 100f, mod) }
     }
-    Column(Modifier.fillMaxSize().clickable { onExit() }.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+    // zonder systeembalken ligt de inhoud anders deels achter de selfiecamera (bovenin of opzij in landschap)
+    val cutoutMod = if (StatusBarOverlay.avoidCutout(LocalContext.current)) Modifier.windowInsetsPadding(WindowInsets.displayCutout) else Modifier
+    Column(Modifier.fillMaxSize().then(cutoutMod).clickable { onExit() }.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         for (row in cells.chunked(2)) Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             row.forEach { it(Modifier.weight(1f)) }
         }
@@ -347,7 +354,7 @@ private fun WidgetTab(s: Snapshot) {
         ) { Text(stringResource(if (ov) R.string.statusbar_on else R.string.statusbar_off)) }
         var dx by remember { mutableIntStateOf(StatusBarOverlay.nudge(ctx)) }
         if (ov) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf(R.string.pos_left to StatusBarOverlay.LEFT, R.string.pos_right to StatusBarOverlay.RIGHT).forEach { (id, i) ->
+            listOf(R.string.pos_left to StatusBarOverlay.LEFT, R.string.pos_center to StatusBarOverlay.CENTER, R.string.pos_right to StatusBarOverlay.RIGHT).forEach { (id, i) ->
                 val sel = i == pos
                 Text(
                     stringResource(id), color = if (sel) Bg else Fg, fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
@@ -363,6 +370,8 @@ private fun WidgetTab(s: Snapshot) {
                     .padding(horizontal = 14.dp, vertical = 8.dp),
             )
         }
+        PrefSwitch(stringResource(R.string.avoid_cutout), stringResource(R.string.avoid_cutout_hint), "avoid_cutout", true)
+        PrefSwitch(stringResource(R.string.strip_autohide), stringResource(R.string.strip_autohide_hint), "strip_autohide")
         Text(stringResource(R.string.notif_opts_title), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 8.dp))
         PrefSwitch(stringResource(R.string.notif_only_online), stringResource(R.string.notif_only_online_hint), "notif_online_only")
         var picked by remember { mutableStateOf(StatusItems.selected(ctx).toSet()) }

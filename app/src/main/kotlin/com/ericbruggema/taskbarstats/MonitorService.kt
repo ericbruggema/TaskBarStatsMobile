@@ -40,8 +40,8 @@ class MonitorService : Service() {
         nm.createNotificationChannel(NotificationChannel(CHANNEL_ICONS, getString(R.string.notif_channel_icons), NotificationManager.IMPORTANCE_DEFAULT)
             .also { it.setSound(null, null); it.enableVibration(false) })
         if (android.os.Build.VERSION.SDK_INT >= 29)
-            startForeground(ID, build(StatusItems.selected(this).firstOrNull()), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
-        else startForeground(ID, build(StatusItems.selected(this).firstOrNull()))
+            startForeground(ID, build(mainItem()), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+        else startForeground(ID, build(mainItem()))
         ShizukuCpu.init(this)
         if (!running) { running = true; Sampler.acquire(this); handler.post(tick) }
         return START_STICKY
@@ -55,11 +55,14 @@ class MonitorService : Service() {
         val chosen = StatusItems.selected(this)
         val shown = if (offline || !StatusItems.iconsOn(this)) emptyList() else chosen
         // het eerste onderdeel zit altijd op het icoon van de hoofdmelding (die melding moet er toch zijn), ook bij alleen de tekststrook
-        nm.notify(ID, build(chosen.firstOrNull()))
+        nm.notify(ID, build(mainItem()))
         for ((i, id) in StatusItems.ALL.withIndex()) {
             if (id in shown.drop(1)) nm.notify(ID_ITEM + i, itemNotification(id, s)) else nm.cancel(ID_ITEM + i)
         }
     }
+
+    /** Het onderdeel op het hoofdicoon: het eerste gekozen onderdeel, of de downloadsnelheid; nooit het vaste app-icoon. */
+    private fun mainItem() = StatusItems.selected(this).firstOrNull() ?: "down"
 
     private fun itemNotification(id: String, s: Snapshot): Notification {
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)

@@ -212,4 +212,9 @@
     <string name="kind_large">Groß (4x3, alle Infos)</string>
     <string name="widget_pin_unsupported">Dein Launcher kann hier keine Widgets hinzufügen. Halte eine freie Stelle auf dem Startbildschirm gedrückt und wähle TaskBarStatsMobile unter Widgets.</string>
     <string name="add_short">+ Hinzufügen</string>
+    <string name="avoid_cutout">Kamera freihalten</string>
+    <string name="avoid_cutout_hint">Zeichnet Dashboard, Cockpit und Statusleistenstreifen um die Frontkamera-Aussparung herum statt dahinter.</string>
+    <string name="pos_center">Mitte, um die Kamera</string>
+    <string name="strip_autohide">Werte bei Platzmangel ausblenden</string>
+    <string name="strip_autohide_hint">Aus: Jeder gewählte Wert bleibt im Streifen (nur der Text wird kleiner). An: CPU, Ping, Temperatur und Speicher fallen zuerst weg.</string>
 </resources>
