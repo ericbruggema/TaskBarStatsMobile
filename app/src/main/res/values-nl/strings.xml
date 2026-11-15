@@ -224,7 +224,7 @@
     <string name="update_none">Je hebt de nieuwste versie (%1$s).</string>
     <string name="update_failed">Controleren lukte niet (geen verbinding?).</string>
     <string name="update_available">Versie %1$s is beschikbaar</string>
-    <string name="update_text">Download de nieuwe APK; Android vraagt om je bevestiging voor het installeren.</string>
+    <string name="update_text">De app haalt de nieuwe versie van GitHub, controleert hem (naam, versie en handtekening) en opent het installatiescherm van Android. Jij bevestigt de installatie altijd zelf.</string>
     <string name="update_download">Downloaden en installeren</string>
     <string name="update_later">Later</string>
     <string name="update_tap">Tik om de app te openen.</string>
@@ -300,4 +300,22 @@
     <string name="col_hex">Kleur (hex)</string>
     <string name="theme_done">Klaar</string>
     <string name="theme_undo">Wijzigingen ongedaan maken</string>
+    <string name="website_title">taskbarstats.com ›</string>
+    <string name="website_sub">Website, downloads en nieuws</string>
+    <string name="star_title">Geef een ster op GitHub</string>
+    <string name="star_sub">Gratis en open source. Een ster helpt anderen het te vinden.</string>
+    <string name="items_explain">Wat elk cijfer toont (live voorbeeld)</string>
+    <string name="item_desc_down">Downloadsnelheid: hoe snel er nu data binnenkomt.</string>
+    <string name="item_desc_up">Uploadsnelheid: hoe snel je telefoon data verstuurt.</string>
+    <string name="item_desc_mem">Gebruikt geheugen (RAM). Hoge waarden maken de telefoon traag.</string>
+    <string name="item_desc_cpu">Processorbelasting. Vraagt Shizuku, zie Rechten.</string>
+    <string name="item_desc_disk">Hoe vol de opslag van de telefoon is.</string>
+    <string name="item_desc_ping">Heen-en-terugtijd naar internet in ms. Lager is beter.</string>
+    <string name="item_desc_temp">Accutemperatuur in °C.</string>
+    <string name="notif_example">Voorbeeld van de melding (live)</string>
+    <string name="notif_now">nu</string>
+    <string name="alerts_example">Voorbeeld: %1$s</string>
+    <string name="update_downloading">De update wordt gedownload…</string>
+    <string name="update_bad">De update kon niet worden gecontroleerd, daarom opent de downloadpagina.</string>
+    <string name="update_allow">Sta op het volgende scherm toe dat deze app updates installeert en tik dan opnieuw op Downloaden en installeren.</string>
 </resources>

@@ -15,7 +15,8 @@ import java.net.URL
 /**
  * Optionele updatecontrole (standaard uit): vraagt hooguit één keer per dag de nieuwste GitHub-release op
  * (api.github.com, zonder enige gegevens van de gebruiker) en meldt een nieuwe versie maar één keer per versie.
- * Downloaden en installeren gaat via de browser / het installatiescherm van Android; de app installeert niets zelf.
+ * "Downloaden en installeren" haalt de APK van de GitHub-release op, controleert naam, versie en handtekening en opent
+ * dan het installatiescherm van Android; installeren kan alleen na jouw bevestiging (Android laat niets stil installeren).
  * Uit als de app uit de Play Store komt (die werkt zichzelf bij).
  */
 object UpdateChecker {
@@ -96,10 +97,61 @@ object UpdateChecker {
 
     fun clearPending(ctx: Context) = prefs(ctx).edit().remove("update_pv").remove("update_pp").remove("update_pa").apply()
 
-    /** Opent de APK-link (de browser downloadt, daarna installeert Android na jouw bevestiging) of anders de releasepagina. */
-    fun open(ctx: Context, i: Info) {
+    /** Opent de releasepagina (of de APK-link) in de browser: de terugvaloptie. */
+    fun openInBrowser(ctx: Context, i: Info) {
         ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(i.apk ?: i.page)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
+
+    private fun toast(ctx: Context, res: Int) = main.post { android.widget.Toast.makeText(ctx, res, android.widget.Toast.LENGTH_LONG).show() }
+
+    /**
+     * Zelf bijwerken: download de APK, controleer hem en open het installatiescherm. Zonder toestemming "apps van deze
+     * bron installeren" opent eerst dat Android-scherm; tik daarna nog een keer. Valt terug op de browser bij een fout.
+     */
+    fun open(ctx: Context, i: Info) {
+        val app = ctx.applicationContext
+        val apk = i.apk
+        if (apk == null || !apk.startsWith("https://")) { openInBrowser(app, i); return }
+        if (!app.packageManager.canRequestPackageInstalls()) {
+            toast(app, R.string.update_allow)
+            app.startActivity(Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + app.packageName)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            return
+        }
+        toast(app, R.string.update_downloading)
+        Thread {
+            val file = try { download(app, apk) } catch (_: Exception) { null }
+            if (file == null || !verify(app, file, i.version)) { file?.delete(); toast(app, R.string.update_bad); main.post { openInBrowser(app, i) }; return@Thread }
+            main.post {
+                val uri = androidx.core.content.FileProvider.getUriForFile(app, app.packageName + ".files", file)
+                app.startActivity(Intent(Intent.ACTION_VIEW).setDataAndType(uri, "application/vnd.android.package-archive")
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK))
+            }
+        }.start()
+    }
+
+    private fun download(ctx: Context, url: String): java.io.File {
+        val dir = java.io.File(ctx.cacheDir, "updates").also { it.mkdirs(); it.listFiles()?.forEach { f -> f.delete() } }
+        val file = java.io.File(dir, "update.apk")
+        val c = URL(url).openConnection() as HttpURLConnection   // volgt de GitHub-doorverwijzing (https naar https)
+        c.connectTimeout = 10_000; c.readTimeout = 20_000
+        c.setRequestProperty("User-Agent", "TaskBarStatsMobile/" + current(ctx))
+        c.inputStream.use { inp -> file.outputStream().use { inp.copyTo(it) } }
+        return file
+    }
+
+    /** Is dit echt onze app, nieuwer, en met dezelfde handtekening? (Android zou een andere sleutel ook weigeren.) */
+    private fun verify(ctx: Context, f: java.io.File, version: String): Boolean = try {
+        if (f.length() < 1_000_000) false else {
+            val pm = ctx.packageManager
+            val flags = if (android.os.Build.VERSION.SDK_INT >= 28) android.content.pm.PackageManager.GET_SIGNING_CERTIFICATES else 0
+            val arch = pm.getPackageArchiveInfo(f.path, flags)
+            val mine = pm.getPackageInfo(ctx.packageName, flags)
+            fun sigs(p: android.content.pm.PackageInfo?) = if (android.os.Build.VERSION.SDK_INT >= 28)
+                p?.signingInfo?.apkContentsSigners?.map { it.toCharsString() }?.toSet() else emptySet()
+            arch != null && arch.packageName == ctx.packageName && newer(arch.versionName ?: "0", current(ctx)) &&
+                newer(version, current(ctx)) && sigs(arch) == sigs(mine)
+        }
+    } catch (_: Exception) { false }
 
     /** Eenmalige melding (vanuit de live monitor) als de app niet open is. */
     fun notify(ctx: Context, i: Info) {

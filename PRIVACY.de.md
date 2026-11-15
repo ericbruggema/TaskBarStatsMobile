@@ -2,7 +2,7 @@
 
 [English](PRIVACY.md) · [Nederlands](PRIVACY.nl.md) · **Deutsch**
 
-_Zuletzt aktualisiert: 7. Oktober 2026_
+_Zuletzt aktualisiert: 15. November 2026_
 
 TaskBarStatsMobile zeigt Live-Statistiken deines eigenen Telefons. Die App ist Open Source (MIT):
 https://github.com/ericbruggema/TaskBarStatsMobile
@@ -31,7 +31,7 @@ Jede Sonderberechtigung ist optional und lässt sich in den Android-Einstellunge
 
 Zur Ping-Messung öffnet die App eine kurze TCP-Verbindung zu `1.1.1.1` (dem öffentlichen DNS-Dienst von Cloudflare) auf Port 443 und misst, wie lange sie dauert. Es werden keine personenbezogenen Daten und keine Kennung gesendet. Cloudflare kann sehen, dass sich deine IP-Adresse mit seinem Dienst verbunden hat, wie bei jeder Verbindung dorthin. Wenn du das nicht möchtest, lass den Ping-Wert ausgeschaltet.
 
-**Update-Prüfung (standardmäßig aus).** Schaltest du *Nach Updates suchen* ein, fragt die App einmal täglich bei `api.github.com` nach der neuesten Version dieses Repositorys und meldet eine neue Version einmal. Gesendet wird nur die Anfrage selbst (wie bei jeder Webanfrage kann GitHub deine IP-Adresse sehen); nichts über dich oder dein Telefon. Die App installiert nie selbst etwas: *Herunterladen und installieren* öffnet den APK-Link im Browser, und Android fragt nach deiner Bestätigung. Die Prüfung ist nicht verfügbar, wenn die App aus dem Google Play Store installiert wurde.
+**Update-Prüfung (standardmäßig aus).** Schaltest du *Nach Updates suchen* ein, fragt die App einmal täglich bei `api.github.com` nach der neuesten Version dieses Repositorys und meldet eine neue Version einmal. Gesendet wird nur die Anfrage selbst (wie bei jeder Webanfrage kann GitHub deine IP-Adresse sehen); nichts über dich oder dein Telefon. Die App installiert nie etwas ohne dich: Tippst du auf *Herunterladen und installieren*, lädt die App die APK aus dem GitHub-Release dieses Repositorys, prüft Name, Version und Signatur und öffnet das Android-Installationsfenster, das nach deiner Bestätigung fragt. Die Prüfung ist nicht verfügbar, wenn die App aus dem Google Play Store installiert wurde.
 
 ## Speicherung und Löschung
 

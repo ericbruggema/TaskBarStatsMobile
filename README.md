@@ -4,7 +4,9 @@
 
 **Live memory, network, storage and ping on your Android phone: status bar, widgets, notification and cockpit.**
 
-<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Download latest APK" src="https://img.shields.io/badge/Download%20latest%20APK-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile"><img alt="Like it? Give it a star on GitHub" src="https://img.shields.io/badge/%E2%98%85%20Like%20it?%20Give%20it%20a%20star%20on%20GitHub-FFC107?style=for-the-badge"></a>
+<a href="https://taskbarstats.com"><img alt="taskbarstats.com" src="https://img.shields.io/badge/%F0%9F%8C%90%20taskbarstats.com-3DDC84?style=for-the-badge"></a>
+ src="https://img.shields.io/badge/Download%20latest%20APK-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
 
 <sub>Open the page and tap the <code>.apk</code> under <em>Assets</em>. The app can also check for updates itself (off by default).</sub>
 
@@ -190,7 +192,7 @@ reads a theme file from the Windows app (`TextColor`, `BackgroundColor`, `Accent
 
 ## Updates
 
-Optional and off by default: *Check for updates* (Settings → Updates) asks GitHub once a day for the latest release and tells you once per new version. *Download and install* opens the APK link in your browser; Android asks for confirmation before installing. Hidden when the app comes from the Play Store. See the [privacy policy](PRIVACY.md).
+Optional and off by default: *Check for updates* (Settings → Updates) asks GitHub once a day for the latest release and tells you once per new version. *Download and install* downloads the APK from the GitHub release, checks its name, version and signature, and opens the Android installer; Android asks for your confirmation (the first time also to allow this app to install updates). If the check fails, the download page opens in your browser instead. Hidden when the app comes from the Play Store. See the [privacy policy](PRIVACY.md).
 
 ![The update check in its four states](docs/screenshots/updates.png)
 

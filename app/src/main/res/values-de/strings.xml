@@ -224,7 +224,7 @@
     <string name="update_none">Du hast die neueste Version (%1$s).</string>
     <string name="update_failed">Prüfung fehlgeschlagen (keine Verbindung?).</string>
     <string name="update_available">Version %1$s ist verfügbar</string>
-    <string name="update_text">Lade die neue APK herunter; Android fragt vor der Installation nach deiner Bestätigung.</string>
+    <string name="update_text">Die App lädt die neue Version von GitHub, prüft sie (Name, Version und Signatur) und öffnet das Android-Installationsfenster. Du bestätigst die Installation immer selbst.</string>
     <string name="update_download">Herunterladen und installieren</string>
     <string name="update_later">Später</string>
     <string name="update_tap">Tippen, um die App zu öffnen.</string>
@@ -300,4 +300,22 @@
     <string name="col_hex">Farbe (Hex)</string>
     <string name="theme_done">Fertig</string>
     <string name="theme_undo">Änderungen verwerfen</string>
+    <string name="website_title">taskbarstats.com ›</string>
+    <string name="website_sub">Website, Downloads und Neuigkeiten</string>
+    <string name="star_title">Gib uns einen Stern auf GitHub</string>
+    <string name="star_sub">Kostenlos und Open Source. Ein Stern hilft anderen, es zu finden.</string>
+    <string name="items_explain">Was jede Zahl zeigt (Live-Beispiel)</string>
+    <string name="item_desc_down">Download-Tempo: wie schnell gerade Daten ankommen.</string>
+    <string name="item_desc_up">Upload-Tempo: wie schnell dein Handy Daten sendet.</string>
+    <string name="item_desc_mem">Belegter Arbeitsspeicher (RAM). Hohe Werte machen das Handy langsam.</string>
+    <string name="item_desc_cpu">Prozessorlast. Braucht Shizuku, siehe Berechtigungen.</string>
+    <string name="item_desc_disk">Wie voll der Speicher des Handys ist.</string>
+    <string name="item_desc_ping">Hin- und Rückweg ins Internet in ms. Niedriger ist besser.</string>
+    <string name="item_desc_temp">Akkutemperatur in °C.</string>
+    <string name="notif_example">Beispiel der Benachrichtigung (live)</string>
+    <string name="notif_now">jetzt</string>
+    <string name="alerts_example">Beispiel: %1$s</string>
+    <string name="update_downloading">Das Update wird heruntergeladen…</string>
+    <string name="update_bad">Das Update konnte nicht geprüft werden, deshalb öffnet sich die Download-Seite.</string>
+    <string name="update_allow">Erlaube auf dem nächsten Bildschirm, dass diese App Updates installiert, und tippe dann erneut auf Herunterladen und installieren.</string>
 </resources>

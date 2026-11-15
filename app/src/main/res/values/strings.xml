@@ -230,7 +230,7 @@
     <string name="update_none">You have the latest version (%1$s).</string>
     <string name="update_failed">Could not check (no connection?).</string>
     <string name="update_available">Version %1$s is available</string>
-    <string name="update_text">Download the new APK; Android asks for your confirmation before installing.</string>
+    <string name="update_text">The app downloads the new version from GitHub, checks it (name, version and signature) and opens the Android installer. You always confirm the install yourself.</string>
     <string name="update_download">Download and install</string>
     <string name="update_later">Later</string>
     <string name="update_tap">Tap to open the app.</string>
@@ -306,4 +306,22 @@
     <string name="col_hex">Colour (hex)</string>
     <string name="theme_done">Done</string>
     <string name="theme_undo">Undo changes</string>
+    <string name="website_title">taskbarstats.com ›</string>
+    <string name="website_sub">Website, downloads and news</string>
+    <string name="star_title">Give it a star on GitHub</string>
+    <string name="star_sub">Free and open source. A star helps others find it.</string>
+    <string name="items_explain">What each figure shows (live example)</string>
+    <string name="item_desc_down">Download speed: how fast data arrives right now.</string>
+    <string name="item_desc_up">Upload speed: how fast your phone sends data.</string>
+    <string name="item_desc_mem">Memory (RAM) in use. High values slow the phone down.</string>
+    <string name="item_desc_cpu">Processor load. Needs Shizuku, see Permissions.</string>
+    <string name="item_desc_disk">How full the phone storage is.</string>
+    <string name="item_desc_ping">Round trip to the internet in ms. Lower is better.</string>
+    <string name="item_desc_temp">Battery temperature in °C.</string>
+    <string name="notif_example">Example of the notification (live)</string>
+    <string name="notif_now">now</string>
+    <string name="alerts_example">Example: %1$s</string>
+    <string name="update_downloading">Downloading the update…</string>
+    <string name="update_bad">The update could not be verified, so the download page opens instead.</string>
+    <string name="update_allow">Allow this app to install updates on the next screen, then tap Download and install again.</string>
 </resources>

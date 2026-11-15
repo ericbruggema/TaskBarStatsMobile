@@ -71,6 +71,9 @@ object Sampler {
         private set
     private const val HISTORY = 60
     private const val MINUTES = 1440
+    private val WHITESPACE = Regex("\\s+")
+    /** Scherm uit = niemand kijkt: dan meten we zelden (zuiniger voor de accu). */
+    @Volatile private var screenOn = true
     private val main = Handler(Looper.getMainLooper())
     private var users = 0
     @Volatile private var running = false
@@ -94,6 +97,9 @@ object Sampler {
         thread = Thread({ loop(app) }, "sampler").also { it.isDaemon = true; it.start() }
         pingThread = Thread({ pingLoop() }, "ping").also { it.isDaemon = true; it.start() }
     }
+
+    /** Scherm gaat aan: de wachttijd van beide threads meteen afbreken, zodat de cijfers direct vers zijn. */
+    fun wake() { thread?.interrupt(); pingThread?.interrupt() }
 
     @Synchronized fun release() {
         if (--users > 0) return
@@ -198,7 +204,8 @@ object Sampler {
                 uptimeMs = SystemClock.elapsedRealtime(),
             )
             main.post { snapshot = s }
-            try { Thread.sleep(1000) } catch (_: InterruptedException) { }
+            screenOn = pm.isInteractive
+            try { Thread.sleep(if (screenOn) 1000 else 5000) } catch (_: InterruptedException) { }
         }
     }
 
@@ -207,7 +214,7 @@ object Sampler {
 
     private fun readCpuRaw(): LongArray? = try {
         val line = try { File("/proc/stat").bufferedReader().use { it.readLine() } } catch (_: Exception) { ShizukuCpu.readProcStat() }
-        val p = line?.trim()?.split(Regex("\\s+"))?.drop(1)?.map { it.toLong() }
+        val p = line?.trim()?.split(WHITESPACE)?.drop(1)?.map { it.toLong() }
         if (p == null) null else longArrayOf(p[3] + p[4], p.sum())
     } catch (_: Exception) { null }
 
@@ -218,7 +225,7 @@ object Sampler {
                 Socket().use { it.connect(InetSocketAddress("1.1.1.1", 443), 1500) }
                 lastPing = (SystemClock.elapsedRealtime() - t0).toInt(); lastPingFailed = false
             } catch (_: Exception) { lastPing = null; lastPingFailed = true }
-            try { Thread.sleep(3000) } catch (_: InterruptedException) { }
+            try { Thread.sleep(if (screenOn) 3000 else 15000) } catch (_: InterruptedException) { }
         }
     }
 }

@@ -4,7 +4,9 @@
 
 **Live geheugen, netwerk, opslag en ping op je Android-telefoon: statusbalk, widgets, melding en cockpit.**
 
-<a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Download nieuwste APK" src="https://img.shields.io/badge/Download%20nieuwste%20APK-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile"><img alt="Bevalt het? Geef een ster op GitHub" src="https://img.shields.io/badge/%E2%98%85%20Bevalt%20het?%20Geef%20een%20ster%20op%20GitHub-FFC107?style=for-the-badge"></a>
+<a href="https://taskbarstats.com"><img alt="taskbarstats.com" src="https://img.shields.io/badge/%F0%9F%8C%90%20taskbarstats.com-3DDC84?style=for-the-badge"></a>
+ nieuwste APK" src="https://img.shields.io/badge/Download%20nieuwste%20APK-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
 
 <sub>Open de pagina en tik op het <code>.apk</code>-bestand onder <em>Assets</em>. De app kan ook zelf op updates controleren (standaard uit).</sub>
 
@@ -165,7 +167,7 @@ Dezelfde 14 kleurthema's als de Windows-app (Default, Dark, Light, Love, CGA, Ma
 
 ## Updates
 
-Optioneel en standaard uit: *Op updates controleren* (Instellingen → Updates) vraagt één keer per dag bij GitHub naar de nieuwste release en meldt een nieuwe versie één keer. *Downloaden en installeren* opent de APK-link in je browser; Android vraagt om bevestiging voor het installeren. Verborgen als de app uit de Play Store komt. Zie de [privacyverklaring](PRIVACY.nl.md).
+Optioneel en standaard uit: *Op updates controleren* (Instellingen → Updates) vraagt één keer per dag bij GitHub naar de nieuwste release en meldt een nieuwe versie één keer. *Downloaden en installeren* haalt de APK van de GitHub-release, controleert naam, versie en handtekening en opent het installatiescherm van Android; Android vraagt om jouw bevestiging (de eerste keer ook om deze app updates te laten installeren). Mislukt de controle, dan opent de downloadpagina in je browser. Verborgen als de app uit de Play Store komt. Zie de [privacyverklaring](PRIVACY.nl.md).
 
 ![De updatecontrole in vier toestanden](docs/screenshots/updates.png)
 

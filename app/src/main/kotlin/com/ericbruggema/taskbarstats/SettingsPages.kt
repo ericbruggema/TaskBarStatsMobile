@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -171,6 +172,41 @@ private fun HubRow(title: String, summary: String, onLong: (() -> Unit)? = null,
 
 // ---------- overzicht ----------
 
+const val WEBSITE = "https://taskbarstats.com"
+const val REPO_URL = "https://github.com/ericbruggema/TaskBarStatsMobile"
+
+/** Vraagt om een ster op GitHub; goud, zodat hij opvalt naast de website-kaart. */
+@Composable
+private fun StarCard() {
+    val ctx = LocalContext.current
+    Row(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(18.dp)).background(GoldColor)
+            .clickable { try { ctx.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(REPO_URL)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } catch (_: Exception) { } }
+            .padding(horizontal = 18.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text("★", color = Bg, fontSize = 30.sp, modifier = Modifier.padding(end = 14.dp))
+        Column {
+            Text(stringResource(R.string.star_title), color = Bg, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.star_sub), color = Bg, fontSize = 13.sp)
+        }
+    }
+}
+
+/** Opvallende kaart met de website; staat bovenaan het instellingenoverzicht en op de Over-pagina. */
+@Composable
+private fun WebsiteCard() {
+    val ctx = LocalContext.current
+    Column(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(18.dp)).background(CMem)
+            .clickable { try { ctx.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(WEBSITE)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } catch (_: Exception) { } }
+            .padding(horizontal = 18.dp, vertical = 14.dp),
+    ) {
+        Text(stringResource(R.string.website_title), color = Bg, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.website_sub), color = Bg, fontSize = 13.sp)
+    }
+}
+
 @Composable
 private fun Hub() {
     val ctx = LocalContext.current
@@ -187,6 +223,8 @@ private fun Hub() {
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Text(stringResource(R.string.nav_settings), color = Fg, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+        WebsiteCard()
+        StarCard()
         HubRow(stringResource(R.string.set_strip), if (stripOn) on else off) { settingsPage = SP_STRIP }
         HubRow(stringResource(R.string.set_notif), "") { settingsPage = SP_NOTIF }
         HubRow(stringResource(R.string.set_items), stringResource(R.string.set_items_n, StatusItems.selected(ctx).size)) { settingsPage = SP_ITEMS }
@@ -300,6 +338,13 @@ private fun NotifPage(s: Snapshot) {
     Page(stringResource(R.string.set_notif)) {
         SectionNote(stringResource(R.string.widget_hint))
         Image(bmp.asImageBitmap(), null, Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)), contentScale = ContentScale.FillWidth)
+        // voorbeeld van de melding zelf (zelfde tekst als de echte melding, live)
+        Text(stringResource(R.string.notif_example), color = Dim, fontSize = 13.sp)
+        Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Card).padding(14.dp)) {
+            Text("TaskBarStats · " + stringResource(R.string.notif_now), color = Dim, fontSize = 12.sp)
+            Text("MEM ${Fmt.percent(s.memPercent)}   ↓ ${Fmt.rate(s.rxBps)}   ↑ ${Fmt.rate(s.txBps)}", color = Fg, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+            Text("Disk ${Fmt.percent(s.storagePercent)}   Ping ${s.pingMs?.let { "$it ms" } ?: "—"}", color = Dim, fontSize = 14.sp)
+        }
         BtnCard(stringResource(if (live) R.string.stop_monitor else R.string.start_monitor), accent = true) {
             if (live) MonitorService.stop(ctx) else MonitorService.start(ctx); live = !live
         }
@@ -321,6 +366,24 @@ private fun ItemsPage() {
     Page(stringResource(R.string.set_items)) {
         SectionNote(stringResource(R.string.items_title))
         ItemsPicker(picked) { picked = it; StatusItems.setSelected(ctx, it); StatusBarOverlay.refresh(ctx) }
+        // uitleg met voorbeelden: zo ziet elk onderdeel eruit in de statusbalk, met de waarde van dit moment
+        Text(stringResource(R.string.items_explain), color = Fg, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        val s = Sampler.snapshot
+        val desc = mapOf("down" to R.string.item_desc_down, "up" to R.string.item_desc_up, "mem" to R.string.item_desc_mem, "cpu" to R.string.item_desc_cpu,
+            "disk" to R.string.item_desc_disk, "ping" to R.string.item_desc_ping, "temp" to R.string.item_desc_temp)
+        for (id in StatusItems.ALL) {
+            val f = StatusItems.face(id, s)
+            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Card).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.width(76.dp).clip(RoundedCornerShape(10.dp)).background(Bg).padding(vertical = 6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(f.top, color = Dim, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    Text(f.value, color = Color(f.color), fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                }
+                Column(Modifier.padding(start = 12.dp)) {
+                    Text(stringResource(StatusItems.nameRes(id)), color = Fg, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(desc.getValue(id)), color = Dim, fontSize = 13.sp)
+                }
+            }
+        }
     }
 }
 
@@ -435,6 +498,7 @@ private fun UpdatesPage() {
         var upInfo by remember { mutableStateOf<UpdateChecker.Info?>(null) }
         val upNone = stringResource(R.string.update_none, UpdateChecker.current(ctx))
         val upFail = stringResource(R.string.update_failed)
+        SectionNote(stringResource(R.string.update_text))
         BtnCard(stringResource(R.string.update_now)) {
             upMsg = "…"
             UpdateChecker.checkNow(ctx) { i, ok -> upInfo = i; upMsg = if (!ok) upFail else if (i == null) upNone else ctx.getString(R.string.update_available, i.version) }
@@ -478,8 +542,10 @@ private fun AboutPage() {
             Text(stringResource(R.string.about_version, UpdateChecker.current(ctx)), color = CMem, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
             Text(stringResource(R.string.about_tagline), color = Dim, fontSize = 14.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
         }
+        WebsiteCard()
+        StarCard()
         SectionNote(stringResource(R.string.about_by))
-        BtnCard(stringResource(R.string.about_github), accent = true) { open("https://github.com/ericbruggema/TaskBarStatsMobile") }
+        BtnCard(stringResource(R.string.about_github)) { open("https://github.com/ericbruggema/TaskBarStatsMobile") }
         BtnCard(stringResource(R.string.about_releases)) { open("https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest") }
         BtnCard(stringResource(R.string.about_privacy)) { open("https://github.com/ericbruggema/TaskBarStatsMobile/blob/main/PRIVACY.md") }
         BtnCard(stringResource(R.string.about_windows)) { open("https://github.com/ericbruggema/TaskbarStats") }

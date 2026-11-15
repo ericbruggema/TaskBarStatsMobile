@@ -12,20 +12,34 @@ import android.graphics.drawable.Icon
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.PowerManager
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
 
 /** Live-monitor: ververst de widget en een doorlopende melding elke 2 s zolang de gebruiker dit aanzet. */
 class MonitorService : Service() {
     private val handler = Handler(Looper.getMainLooper())
     private val tick = object : Runnable {
         override fun run() {
-            StatsWidget.update(this@MonitorService)
-            StatusBarOverlay.update(this@MonitorService, Sampler.snapshot)
+            // scherm uit: alleen de meldingen bewaken en zelden ticken; SCREEN_ON start meteen een nieuwe tik
+            val on = getSystemService(PowerManager::class.java).isInteractive
+            if (on) {
+                StatsWidget.update(this@MonitorService)
+                StatusBarOverlay.update(this@MonitorService, Sampler.snapshot)
+                updateNotifications()
+            }
             Alerts.check(this@MonitorService, Sampler.snapshot)
-            updateNotifications()
             UpdateChecker.checkIfDue(this@MonitorService) { UpdateChecker.notify(this@MonitorService, it) }
-            handler.postDelayed(this, 2000)
+            handler.postDelayed(this, if (on) 2000 else 10_000)
         }
     }
+
+    private val screenOn = object : BroadcastReceiver() {
+        override fun onReceive(c: Context?, i: Intent?) { Sampler.wake(); handler.removeCallbacks(tick); handler.post(tick) }
+    }
+    /** Laatst getoonde inhoud per melding: ongewijzigd = niet opnieuw melden (scheelt iconen tekenen en IPC). */
+    private val sigs = HashMap<Int, String>()
+    private var ticks = 0
 
     override fun onBind(i: Intent?): IBinder? = null
 
@@ -44,7 +58,11 @@ class MonitorService : Service() {
             startForeground(ID, build(mainItem()), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
         else startForeground(ID, build(mainItem()))
         ShizukuCpu.init(this)
-        if (!running) { running = true; Sampler.acquire(this); handler.post(tick) }
+        if (!running) {
+            running = true; Sampler.acquire(this)
+            registerReceiver(screenOn, IntentFilter(Intent.ACTION_SCREEN_ON))
+            handler.post(tick)
+        }
         return START_STICKY
     }
 
@@ -62,10 +80,17 @@ class MonitorService : Service() {
         val offline = s.netKind == NET_NONE && StatusBarOverlay.prefs(this).getBoolean("notif_online_only", false)
         val chosen = StatusItems.selected(this)
         val shown = if (offline || StatusItems.stripHides(this) || !StatusItems.iconsOn(this) || StatusItems.rotate(this)) emptyList() else chosen
+        // elke ~30 s alles opnieuw melden, voor het geval een telefoon een melding vergeten is
+        if (++ticks % 15 == 0) sigs.clear()
         // het eerste onderdeel zit altijd op het icoon van de hoofdmelding (die melding moet er toch zijn), ook bij alleen de tekststrook
-        nm.notify(ID, build(mainItem()))
+        val first = mainItem(); val f = StatusItems.face(first, s)
+        val mainSig = "${mainHidden()}|${f.top}|${f.value}|${mainTitle(s)}|${mainText(s)}"
+        if (sigs.put(ID, mainSig) != mainSig) nm.notify(ID, build(first))
         for ((i, id) in StatusItems.ALL.withIndex()) {
-            if (id in shown.drop(1)) nm.notify(ID_ITEM + i, itemNotification(id, s)) else nm.cancel(ID_ITEM + i)
+            if (id in shown.drop(1)) {
+                val fi = StatusItems.face(id, s); val sig = "${fi.top}|${fi.value}|${StatusItems.detail(id, s)}"
+                if (sigs.put(ID_ITEM + i, sig) != sig) nm.notify(ID_ITEM + i, itemNotification(id, s))
+            } else if (sigs.remove(ID_ITEM + i) != null) nm.cancel(ID_ITEM + i)
         }
     }
 
@@ -86,6 +111,9 @@ class MonitorService : Service() {
             .setOngoing(true).setOnlyAlertOnce(true).setContentIntent(open).build()
     }
 
+    private fun mainTitle(s: Snapshot) = "MEM ${Fmt.percent(s.memPercent)}   ↓ ${Fmt.rate(s.rxBps)}   ↑ ${Fmt.rate(s.txBps)}"
+    private fun mainText(s: Snapshot) = "Disk ${Fmt.percent(s.storagePercent)}   Ping ${s.pingMs?.let { "$it ms" } ?: "—"}"
+
     private fun build(first: String? = null): Notification {
         val s = Sampler.snapshot
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
@@ -93,8 +121,8 @@ class MonitorService : Service() {
         val icon = if (mainHidden()) blankIcon() else first?.let { StatusItems.icon(StatusItems.face(it, s)) } ?: Icon.createWithResource(this, R.drawable.ic_stat)
         return Notification.Builder(this, CHANNEL)
             .setSmallIcon(icon)
-            .setContentTitle("MEM ${Fmt.percent(s.memPercent)}   ↓ ${Fmt.rate(s.rxBps)}   ↑ ${Fmt.rate(s.txBps)}")
-            .setContentText("Disk ${Fmt.percent(s.storagePercent)}   Ping ${s.pingMs?.let { "$it ms" } ?: "—"}")
+            .setContentTitle(mainTitle(s))
+            .setContentText(mainText(s))
             .setVisibility(Notification.VISIBILITY_PUBLIC) // ook op het lockscreen
             .addAction(Notification.Action.Builder(null, getString(R.string.notif_stop), stop).build())
             .setGroup("live").setContentIntent(open).setOngoing(true).setOnlyAlertOnce(true).build()
@@ -102,6 +130,8 @@ class MonitorService : Service() {
 
     override fun onDestroy() {
         handler.removeCallbacks(tick)
+        try { unregisterReceiver(screenOn) } catch (_: Exception) { }
+        sigs.clear()
         StatusBarOverlay.remove(this)
         getSystemService(NotificationManager::class.java).apply { for (i in StatusItems.ALL.indices) cancel(ID_ITEM + i) }
         if (running) { running = false; Sampler.release() }

@@ -319,6 +319,8 @@ internal fun AlertsTab() {
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
                     Text(stringResource(r.label), color = if (on) Fg else Dim, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                     Text("$v${r.unit}", color = Dim, fontSize = 14.sp)
+                    // voorbeeld van wat je te zien krijgt zodra de waarde de grens passeert
+                    Text(stringResource(R.string.alerts_example, stringResource(r.message, v + r.step, v)), color = Dim, fontSize = 12.sp)
                 }
                 for ((label, d) in listOf("−" to -r.step, "+" to r.step)) Text(
                     label, color = Fg, fontSize = 20.sp,

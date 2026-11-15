@@ -4,6 +4,8 @@
 
 **Arbeitsspeicher, Netzwerk, Speicher und Ping live auf deinem Android-Telefon: Statusleiste, Widgets, Benachrichtigung und Cockpit.**
 
+<a href="https://github.com/ericbruggema/TaskBarStatsMobile"><img alt="Gefällt es dir? Gib einen Stern auf GitHub" src="https://img.shields.io/badge/%E2%98%85%20Gef%C3%A4llt%20es%20dir?%20Gib%20einen%20Stern%20auf%20GitHub-FFC107?style=for-the-badge"></a>
+<a href="https://taskbarstats.com"><img alt="taskbarstats.com" src="https://img.shields.io/badge/%F0%9F%8C%90%20taskbarstats.com-3DDC84?style=for-the-badge"></a>
 <a href="https://github.com/ericbruggema/TaskBarStatsMobile/releases/latest"><img alt="Neueste APK herunterladen" src="https://img.shields.io/badge/Neueste%20APK%20herunterladen-4FC3F7?style=for-the-badge&logo=android&logoColor=white"></a>
 
 <sub>Öffne die Seite und tippe unter <em>Assets</em> auf die <code>.apk</code>-Datei. Die App kann auch selbst nach Updates suchen (standardmäßig aus).</sub>
@@ -165,7 +167,7 @@ Dieselben 14 Farbthemen wie die Windows-App (Default, Dark, Light, Love, CGA, Ma
 
 ## Updates
 
-Optional und standardmäßig aus: *Nach Updates suchen* (Optionen → Updates) fragt einmal täglich bei GitHub nach der neuesten Version und meldet eine neue Version einmal. *Herunterladen und installieren* öffnet den APK-Link im Browser; Android fragt vor der Installation nach Bestätigung. Ausgeblendet, wenn die App aus dem Play Store stammt. Siehe die [Datenschutzerklärung](PRIVACY.de.md).
+Optional und standardmäßig aus: *Nach Updates suchen* (Optionen → Updates) fragt einmal täglich bei GitHub nach der neuesten Version und meldet eine neue Version einmal. *Herunterladen und installieren* lädt die APK aus dem GitHub-Release, prüft Name, Version und Signatur und öffnet das Android-Installationsfenster; Android fragt nach deiner Bestätigung (beim ersten Mal auch, ob diese App Updates installieren darf). Schlägt die Prüfung fehl, öffnet sich stattdessen die Download-Seite im Browser. Ausgeblendet, wenn die App aus dem Play Store stammt. Siehe die [Datenschutzerklärung](PRIVACY.de.md).
 
 ![Die Update-Prüfung in vier Zuständen](docs/screenshots/updates.png)
 
